@@ -1429,6 +1429,11 @@ var SUBS = [
    now:"<b>In peer review.</b> 1 of 2 reviews received. A decision is expected around 24 November.",
    history:[["12 Sep 2026","Submitted",""],["15 Sep 2026","Passed editor checks","Handling editor: Dr Ruth Ellison"],["22 Sep 2026","Reviewers invited","Two reviewers accepted"],["30 Oct 2026","First review received","",1]],
    files:[["Manuscript","Okafor_riparian_shading_v3.docx"],["Supplementary data","Riparian_temperature_logs.xlsx"]], authors:"Amara Okafor, James Whitfield"},
+  {id:"s4", title:"Beaver dams increase macroinvertebrate diversity in lowland headwater streams", j:"pjle", type:"research",
+   ref:"PJLE-2026-1187", submitted:"28 Aug 2026", updated:"21 Oct 2026", stage:2, status:["","In peer review"],
+   now:"<b>In peer review.</b> 1 of 2 reviews received.",
+   history:[["28 Aug 2026","Submitted",""],["2 Sep 2026","Passed editor checks","Handling editor: Dr Laura Mendes"],["9 Sep 2026","Reviewers invited","Two reviewers accepted"],["21 Oct 2026","First review received","",1]],
+   files:[["Manuscript","Okafor_beaver_dams_v1.docx"],["Supplementary data","Beaver_invertebrate_counts.xlsx"]], authors:"Amara Okafor, Li Wei"},
   {id:"s2", title:"A lightweight benchmark for detecting invasive plant species from smartphone images", j:"pjcs", type:"research",
    ref:"PJCS-2026-0412", submitted:"18 Feb 2026", updated:"3 Jun 2026", stage:5, done:true, status:["ok","Published"],
    now:"<b>Published</b> on 3 June 2026.",
@@ -1753,6 +1758,43 @@ var AUTH = {editor:"Dr Ruth Ellison",
     {id:"q3", rv:1, blk:"abs", quote:"Riparian tree planting could be an effective, low-cost way", text:"‘Low-cost’ isn’t supported by data in the paper. Please remove it or add a reference."}
   ]};
 function dAt(n){ return Date.now() + n * 864e5; }
+/* a second submission, s4, that arrives with a minor-revision decision: the author fixes a few points and sends it back */
+AMS.s4 = {ref:"PJLE-2026-1187", file:"Okafor_beaver_dams_v1.docx", kw:"beaver, ecosystem engineering, headwater streams, macroinvertebrates, rewilding", nref:42, pages:16,
+  fig:"Figure 2. Number of invertebrate families upstream of, within and downstream of 12 beaver dam complexes.",
+  ref1:"Law A, McLean F, Willby NJ. 2016. Habitat engineering by beaver benefits aquatic biodiversity and ecosystem processes in agricultural streams. Freshwater Biology 61:486–499.",
+  text:{
+    abs:"Eurasian beavers are being reintroduced across Britain, but their effects on stream invertebrates are poorly known. We sampled macroinvertebrates above, within and below 12 beaver dam complexes on four lowland headwater streams in Devon in spring and autumn 2025. Pond habitat created by the dams supported 41% more invertebrate families than unmodified reaches upstream. Downstream reaches did not differ from upstream reaches. Beaver dams could be a simple, natural way to increase freshwater biodiversity in farmed landscapes.",
+    intro:"Beavers were extinct in Britain for about 400 years. Since 2010, licensed releases and wild populations have spread across several catchments. Beaver dams slow the flow, trap sediment and create ponds and wet margins. These changes are known to benefit amphibians and some fish, but evidence for stream invertebrates in lowland Britain is limited and mostly comes from single sites.",
+    methods:"We selected 12 dam complexes on four streams, each at least 2 km apart. At each complex we sampled three zones: an unmodified reach 100 m upstream, the beaver pond, and a reach 100 m downstream of the lowest dam. Invertebrates were collected with a three-minute kick or sweep sample in April and October 2025 and identified to family.",
+    methods2:"We compared family richness between zones using linear mixed models with stream and complex as random effects. Flow velocity, depth and fine sediment cover were recorded at five points in each zone.",
+    results:"Beaver ponds supported on average 41% more families than upstream reaches, mainly because of dragonflies, water beetles and true bugs that prefer still water. Downstream reaches did not differ from upstream reaches in family richness. Fine sediment cover was three times higher in ponds than in flowing reaches. Mayfly and stonefly families were less common in ponds.",
+    disc:"Beaver dams added still-water habitat to streams that otherwise had very little, and this increased invertebrate diversity at the scale of the stream. Some flow-loving families were lost from the ponds themselves, but not from the reaches below. Our study covered a single year, so we cannot say how communities change as dams age. Even so, allowing beavers to build dams is likely to benefit freshwater biodiversity in farmed lowland catchments."
+  }};
+var AUTH4 = {editor:"Dr Laura Mendes", by:'<div class="by">Amara Okafor<sup>1</sup>, Li Wei<sup>2</sup></div>', v2pdf:"Okafor_beaver_dams_v2.pdf", v2doc:"Okafor_beaver_dams_v2.docx",
+  letters:{minor:["Dear Dr Okafor,","Thank you for submitting your manuscript to PeerJ Life &amp; Environment. Both reviewers found it a clear and useful study, and it can be accepted after a few small amendments.","I&rsquo;ve marked the points you must address. Please also respond to the other comments, either by making a change or explaining why you haven&rsquo;t.","I&rsquo;ll check your changes myself, without sending the paper back to the reviewers."]},
+  recs:{minor:["Minor revision","Minor revision"]},
+  generals:["A well-designed comparison across a good number of dam complexes, and a timely topic. My main concern is that family-level identification may hide real changes in the community. The other points are minor.",
+    "The results are clear and the conclusions are mostly supported. I&rsquo;d like more detail on how the upstream reaches were chosen, and the abstract overstates how easy beaver dams are to manage."],
+  own:[{id:"ep4", text:"Please state in the Methods whether you had landowner permission to sample on private land.", grp:"req"}],
+  comments:[
+    {id:"b1", rv:0, blk:"methods", quote:"identified to family", text:"Family-level identification may hide changes in species composition, especially among mayflies. Please discuss this limitation, or give genus-level results for a subset of samples.", grp:"req"},
+    {id:"b2", rv:0, blk:"results", quote:"Downstream reaches did not differ from upstream reaches in family richness", text:"Please give the test statistics and effect size here, as you do for the pond comparison.", grp:"sug"},
+    {id:"b3", rv:0, blk:"disc", quote:"Our study covered a single year", text:"Could you say roughly how old the dams were? Approximate ages from landowners would help readers interpret the results."},
+    {id:"c1", rv:1, blk:"methods", quote:"an unmodified reach 100 m upstream", text:"A reach only 100 m upstream may still be affected by the dam, for example by backwater. Please confirm these reaches were free-flowing, or report flow velocity for each zone.", grp:"req"},
+    {id:"c2", rv:1, blk:"abs", quote:"Beaver dams could be a simple, natural way", text:"‘Simple’ overstates it, given conflicts with landowners over flooding. Please soften this or acknowledge the management issues.", grp:"sug"},
+    {id:"c3", rv:1, blk:"results", quote:"Fine sediment cover was three times higher in ponds", text:"It would help to show sediment cover for each zone as a figure or a table."}
+  ],
+  init:function(){ var at = dAt(-1); return {k:"minor", at:at, due:at + DEC_DAYS.minor * 864e5, st:"open", resp:{}, edits:{}, file:null, seen:false, read:false, how:null, changes:""}; }};
+AUTH.by = '<div class="by">Amara Okafor<sup>1</sup>, James Whitfield<sup>1</sup></div>'; AUTH.v2pdf = "Okafor_riparian_shading_v4.pdf"; AUTH.v2doc = "Okafor_riparian_shading_v4.docx";
+/* which article the author revision screens are showing: s1 keeps its state in S.A (set from the Prototype menu), others in S.AX */
+var AUTHS = {s1:AUTH, s4:AUTH4}, AREV = ["s4","s1"], AID = "s1";
+function AU(){ return AUTHS[AID]; }
+function AA(){ if (AID === "s1") return S.A; S.AX = S.AX || {}; if (!S.AX[AID]) S.AX[AID] = AUTHS[AID].init(); return S.AX[AID]; }
+function setAA(v){ if (AID === "s1") S.A = v; else { S.AX = S.AX || {}; S.AX[AID] = v; } }
+function withA(id, fn){ var k = AID; AID = id; try { return fn(); } finally { AID = k; } }
+function subById(id){ return SUBS.filter(function(x){ return x.id === id; })[0]; }
+function aOpenAny(){ return AREV.filter(function(id){ return withA(id, aOpen); }).length; }
+
 function mkInv(c, st, o){ var p = CAND.filter(function(x){ return x.id === c; })[0] || {}; o = o || {}; o.c = c; o.st = st; o.name = o.name || p.name; o.inst = o.inst || p.inst; return o; }
 function heavySeed(m, i){
   var R = ["Dr Anna Berg","Dr Luis Ortega","Prof. Karen Doyle","Dr Mehmet Kaya","Dr Hana Sato","Dr Paul Kerr","Dr Nia Evans","Prof. Ole Hansen"], u = "University of ";
@@ -1811,7 +1853,7 @@ if (!S.authMode) S.authMode = "future";
 if (S.Ev !== 2) { S.E = freshE(); S.Ev = 2; }   /* editor data changed (screening, backups): start it again */
 if (!S.E.h1) { var fe0 = freshE(); ED_MORE.forEach(function(m){ S.E[m.id] = fe0[m.id]; }); }
 S.empty = S.role === "author";
-function fresh(){ return {loggedIn:false, D:null, sent:[], lastSent:null, R:freshR(), empty:false, role:"all", load:"heavy", authMode:"future", E:freshE(), Ev:2, A:null}; }
+function fresh(){ return {loggedIn:false, D:null, sent:[], lastSent:null, R:freshR(), empty:false, role:"all", load:"heavy", authMode:"future", E:freshE(), Ev:2, A:null, AX:{}}; }
 /* Details screen: the proposed version (one column, authors filled in from the file) or the current one */
 /* the "Current" Journal and authors screen was chosen (2026-11-05); the proposed one-column version is switched off */
 function newDet(){ return false; }
@@ -1950,6 +1992,7 @@ function render(nav){
   if (r !== "check") editing = false;
   if (RVROUTES.indexOf(r) >= 0) { var bad = rvGuard(r); if (bad) { location.replace("#" + bad); return; } }
   if (EDROUTES.indexOf(r) >= 0) { var bad2 = edGuard(r); if (bad2) { location.replace("#" + bad2); return; } }
+  if ((AROUTES.indexOf(r) >= 0 || r === "sub") && AUTHS[parts()[1]]) AID = parts()[1];
   if (AROUTES.indexOf(r) >= 0) { var bad3 = aGuard(r); if (bad3) { location.replace("#" + bad3); return; } }
   if (r !== "esum" && r !== "erv" && r !== "arev" && r !== "arr" && r !== "rw") { wsUI.sel = null; wsUI.page = null; }
   if (r !== "arev") aUI.editing = false;
@@ -1999,7 +2042,7 @@ function hdrHTML(r){
     h += '<nav class="nav" aria-label="Main">' + tab("dashboard", "Dashboard") +
       (isEd() ? tab("editing", "Editing", edNeeds().length, "to do") : "") +
       (isRv() ? tab("reviews", "Reviews", todoRevs().length, "to do") : "") +
-      tab("submissions", "Submissions", aOpen() ? 1 : 0, "to do") + '</nav>' +
+      tab("submissions", "Submissions", aOpenAny(), "to do") + '</nav>' +
       '<div class="acct"><button class="acctbtn" type="button" data-a="acct" aria-expanded="false" aria-label="Your account">' +
       '<span class="av">' + USER.initials + '</span>' + I.chev + '</button>' +
       '<div class="menu" id="acctMenu"><div class="who"><b>' + USER.name + '</b><span class="small muted">' + USER.email + '</span></div>' +
@@ -2070,7 +2113,7 @@ function subCard(s){
     '<div class="meta">Submitted ' + s.submitted + ', reference ' + s.ref + '</div>' +
     '<div class="tbox">' + tracker(s.stage) + '</div>' +
     '<p class="now">' + s.now + '</p>' +
-    '<div class="acts">' + (s.id === "s1" && aOpen() ? '<a class="btn pri sm" href="#' + aStart() + '">' + aCta() + '</a>' : "") +
+    '<div class="acts">' + (s.aOpen ? '<a class="btn pri sm" href="#' + s.aHref + '">' + s.aCta + '</a>' : "") +
       '<a class="btn sm" href="#sub/' + s.id + '">View submission</a></div></article>';
 }
 function draftSteps(){
@@ -2105,7 +2148,7 @@ function wRow(href, title, stage, labels, stLabel, wait, when){
     '<span class="ww">' + wait + '</span><span class="wd">' + when + '</span></a></li>';
 }
 function subWait(s){ return s.stage <= 1 ? "Waiting on the editor" : s.stage === 2 ? "Waiting on reviewers" : "Waiting on the editor"; }
-function waitSubs(){ return allSubs().filter(function(s){ return !s.done && !(s.id === "s1" && aOpen()); }); }
+function waitSubs(){ return allSubs().filter(function(s){ return !s.done && !s.aOpen; }); }
 SCREENS.dashboard = function(){
   var ny = needsYou(), late = ny.filter(function(x){ return x.late; }), first = ny.filter(function(x){ return x.due !== Infinity; })[0];
   var lede;
@@ -2163,7 +2206,7 @@ SCREENS.sub = function(){
         '<div class="letter">' + s.decision.letter.map(function(p){ return "<p>" + p + "</p>"; }).join("") + '</div>' +
         '<h2 style="font-size:18px;margin:28px 0 4px">Reviewers&rsquo; comments</h2>' +
         s.reviews.map(function(r){ return '<div class="rcomm"><h4>' + r[0] + '<span class="badge">' + r[1] + '</span></h4><p>' + r[2] + '</p></div>'; }).join("") +
-        (s.id === "s1" && S.A ? '<h2 style="font-size:18px;margin:28px 0 4px">Comments on your manuscript (' + (AUTH.comments.length + AUTH.own.length) + ')</h2>' + aCommentsRead() : "")
+        (AUTHS[s.id] && AA() ? '<h2 style="font-size:18px;margin:28px 0 4px">Comments on your manuscript (' + (AU().comments.length + AU().own.length) + ')</h2>' + aCommentsRead() : "")
       : '<div class="card emptyst" style="padding:36px"><h3>No decision yet</h3><p>The editor&rsquo;s decision and the reviewers&rsquo; comments will appear here together.</p></div>';
   } else if (tab === "files") {
     main = '<div class="card" style="padding:4px 20px">' + s.files.map(function(f){ return '<div class="filerow"><span class="fext">' + f[1].split(".").pop().toUpperCase() + '</span><div><div style="font-weight:600;color:var(--indigo)">' + f[0] + '</div><div class="xs muted">' + esc(f[1]) + '</div></div><button class="btn sm" style="margin-left:auto" data-a="soon" data-msg="The file would download here.">Download</button></div>'; }).join("") + '</div>';
@@ -2171,7 +2214,7 @@ SCREENS.sub = function(){
     main = '<ol class="hist">' + s.history.slice().reverse().map(function(h){
       return '<li class="' + (h[3] ? "now" : "") + '"><span class="hd">' + h[0] + '</span><b>' + h[1] + '</b>' + (h[2] ? '<div class="hx">' + h[2] + '</div>' : "") + '</li>'; }).join("") + '</ol>';
   }
-  var dec = s.id === "s1" && S.A ? S.A : null, side;
+  var dec = AUTHS[s.id] && AA() ? AA() : null, side;
   if (dec) { if (!dec.seen) { dec.seen = true; save(); } }
   if (dec && dec.k === "reject") side = '<div class="card sidecard"><h3>This submission is closed</h3><p class="small">The editor&rsquo;s decision is final, so there&rsquo;s nothing more to do here. You can still read the decision and the reviews.</p></div>';
   else if (dec && aOpen()) side = '<div class="card sidecard"><h3>Your revision</h3><div class="big' + (daysTo(dec.due) <= 3 ? " urgent" : "") + '" style="display:flex;align-items:baseline;gap:8px;margin:2px 0 12px"><b style="font-size:24px;line-height:32px;color:var(--indigo)">' + Math.max(0, daysTo(dec.due)) + '</b><span class="small muted">days left. Due ' + dLong(new Date(dec.due)) + '</span></div>' +
@@ -3752,9 +3795,11 @@ function needsYou(){
   if (isRv()) todoRevs().forEach(function(r){ var st = rvSt(r), iv = st === "invite"; out.push({role:"rv", task:"reviews", what:r.round ? (iv ? "Reply to an invitation to review a revised version" : "Review the revised version") : iv ? "Reply to an invitation to review" : st === "accepted" ? "Start your review" : "Finish your review",
     title:r.title, href:"#" + (iv ? "ra/" : "rw/") + r.id, btn:iv ? "View and respond" : st === "accepted" ? "Start review" : "Continue review", due:rvDate(r).getTime(), late:false,
     sub:esc(journalById(r.j).name) + ". " + (iv ? "Reply by " : "Review due ") + dLong(rvDate(r)) + "."}); });
-  if (aOpen()) { var s = subView(SUBS[0]); out.push({role:"au", task:"subs", what:S.A.k === "minor" ? "Make minor revisions" : "Revise and resubmit", title:s.title, href:"#" + aStart(), fresh:!S.A.seen,
-    btn:aCta(), due:S.A.due, late:S.A.due < Date.now(),
-    sub:esc(journalById(s.j).name) + ", " + s.ref + ". " + (S.A.read ? aProg() : "The editor&rsquo;s decision is in. Read the reviews first.")}); }
+  AREV.forEach(function(id){ withA(id, function(){
+  if (aOpen()) { var s = subView(subById(id)); out.push({role:"au", task:"subs", what:AA().k === "minor" ? "Make minor revisions" : "Revise and resubmit", title:s.title, href:"#" + aStart(), fresh:!AA().seen,
+    btn:aCta(), due:AA().due, late:AA().due < Date.now(),
+    sub:esc(journalById(s.j).name) + ", " + s.ref + ". " + (AA().read ? aProg() : "The editor&rsquo;s decision is in. Read the reviews first.")}); }
+  }); });
   if (S.D) { var ds = draftSteps(); out.push({role:"au", task:"subs", what:"Finish your draft", title:checks().byline ? title() : S.D.file.name, act:"resume", btn:"Continue: " + STEPS[ds.next][1].toLowerCase(), due:Infinity, late:false,
     sub:ds.rows.filter(function(r){ return r[1]; }).length + " of 5 steps done. Last edited " + fmtDate(S.D.edited, {day:"numeric", month:"short"}) + "."}); }
   return out.sort(function(a, b){ return urg({needs:1, late:a.late, key:a.key, due:a.due}, {needs:1, late:b.late, key:b.key, due:b.due}); });
@@ -3786,28 +3831,32 @@ function nyHTML(ny){
     (nyTab === "all" && ny.length > 6 ? '<div class="nyf"><button class="link small" type="button" data-a="nyAll">' + (nyAll ? "Show fewer" : "Show all " + ny.length) + '</button></div>' : "") + '</div>';
 }
 /* ================= author: a decision on submission s1 ================= */
-function aOpen(){ return !!(S.A && S.A.k !== "reject" && S.A.st === "open"); }
-function aStart(){ var A = S.A; return !A.read ? "arr/s1" : !A.how ? "ahow/s1" : A.how === "upload" ? (A.file && (A.changes || "").trim() ? "arevs/s1" : "aup/s1") : "arev/s1"; }
-function aProg(){ var A = S.A; return A.how === "upload" ? (A.file ? "Version 2 uploaded." : "Version 2 not uploaded yet.") : aAnswered() + " of " + aItems().length + " comments answered."; }
-function aCta(){ return S.A.read ? "Continue your revision" : "Read the reviews"; }
-function aText(b){ var e = S.A && S.A.edits[b]; return e != null ? e : AMS.s1.text[b]; }
+function aOpen(){ return !!(AA() && AA().k !== "reject" && AA().st === "open"); }
+function aStart(){ var A = AA(); return !A.read ? "arr/" + AID : !A.how ? "ahow/" + AID : A.how === "upload" ? (A.file && (A.changes || "").trim() ? "arevs/" + AID : "aup/" + AID) : "arev/" + AID; }
+function aProg(){ var A = AA(); return A.how === "upload" ? (A.file ? "Version 2 uploaded." : "Version 2 not uploaded yet.") : aAnswered() + " of " + aItems().length + " comments answered."; }
+function aCta(){ return AA().read ? "Continue your revision" : "Read the reviews"; }
+function aText(b){ var e = AA() && AA().edits[b]; return e != null ? e : AMS[AID].text[b]; }
 /* the editor's own points first, then every reviewer comment in reading order, re-anchored to any edited text */
 function aItems(){
   var order = MSBLK.map(function(b){ return b[0]; });
-  var cs = AUTH.comments.map(function(c){ var s0 = aText(c.blk).indexOf(c.quote);
-    return {id:c.id, rv:c.rv, blk:c.blk, quote:c.quote, text:c.text, grp:c.grp, s:s0, e:s0 < 0 ? -1 : s0 + c.quote.length, o:AMS.s1.text[c.blk].indexOf(c.quote)}; })
+  var cs = AU().comments.map(function(c){ var s0 = aText(c.blk).indexOf(c.quote);
+    return {id:c.id, rv:c.rv, blk:c.blk, quote:c.quote, text:c.text, grp:c.grp, s:s0, e:s0 < 0 ? -1 : s0 + c.quote.length, o:AMS[AID].text[c.blk].indexOf(c.quote)}; })
     .sort(function(a, b){ return order.indexOf(a.blk) - order.indexOf(b.blk) || a.o - b.o; });
-  return AUTH.own.map(function(o){ return {id:o.id, own:true, text:o.text, grp:o.grp}; }).concat(cs);
+  return AU().own.map(function(o){ return {id:o.id, own:true, text:o.text, grp:o.grp}; }).concat(cs);
 }
-function aAnswered(){ return aItems().filter(function(c){ return ((S.A.resp || {})[c.id] || "").trim(); }).length; }
+function aAnswered(){ return aItems().filter(function(c){ return ((AA().resp || {})[c.id] || "").trim(); }).length; }
 function subView(s){
-  if (s.id !== "s1" || !S.A) return s;
-  var A = S.A, k = A.k, o = {}, x;
+  if (!AUTHS[s.id]) return s;
+  return withA(s.id, function(){ var o = subView1(s); if (o !== s) { o.aOpen = aOpen(); if (o.aOpen) { o.aHref = aStart(); o.aCta = aCta(); } } return o; });
+}
+function subView1(s){
+  if (!AA()) return s;
+  var A = AA(), k = A.k, o = {}, x;
   for (x in s) o[x] = s[x];
   var nm = k === "reject" ? "Not accepted" : DEC_NAME[k];
-  o.decision = {title:nm, date:fmtDate(A.at), editor:AUTH.editor, letter:AUTH.letters[k]};
-  o.reviews = AUTH.recs[k].map(function(r, i){ return ["Reviewer " + (i + 1), r, AUTH.generals[i]]; });
-  o.history = s.history.map(function(h){ return h.slice(0, 3); }).concat([[fmtDate(dAt(-3)), "Second review received", ""], [fmtDate(A.at), "Decision: " + nm.toLowerCase(), "From the editor, " + AUTH.editor, 1]]);
+  o.decision = {title:nm, date:fmtDate(A.at), editor:AU().editor, letter:AU().letters[k]};
+  o.reviews = AU().recs[k].map(function(r, i){ return ["Reviewer " + (i + 1), r, AU().generals[i]]; });
+  o.history = s.history.map(function(h){ return h.slice(0, 3); }).concat([[fmtDate(dAt(-3)), "Second review received", ""], [fmtDate(A.at), "Decision: " + nm.toLowerCase(), "From the editor, " + AU().editor, 1]]);
   o.updated = fmtDate(A.at); o.stage = 3;
   if (k === "reject") { o.done = true; o.declined = true; o.status = ["alert","Not accepted"]; o.now = "<b>Not accepted</b> on " + fmtDate(A.at, {day:"numeric", month:"long"}) + ". You can read the decision and the reviews."; }
   else if (A.st === "open") { o.status = ["warn", nm + " requested"]; o.now = "<b>" + nm + " requested.</b> Respond to the comments by " + dLong(new Date(A.due)) + "."; }
@@ -3816,24 +3865,25 @@ function subView(s){
     o.history[o.history.length - 1] = o.history[o.history.length - 1].slice(0, 3);
     var up = A.how === "upload";
     o.history.push([fmtDate(A.sentAt), "Revision submitted", up ? "Version 2, with a summary of what changed" : "Changes made online, with your responses to every comment", 1]);
-    o.files = [up && A.file ? ["Manuscript (version 2)", A.file.name] : ["Manuscript (version 2, edited online)", "Okafor_riparian_shading_v4.pdf"]].concat(up ? [["Summary of changes", "Summary_of_changes.pdf"]] : [["Responses to comments", "Responses_to_comments.pdf"]], s.files);
+    o.files = [up && A.file ? ["Manuscript (version 2)", A.file.name] : ["Manuscript (version 2, edited online)", AU().v2pdf]].concat(up ? [["Summary of changes", "Summary_of_changes.pdf"]] : [["Responses to comments", "Responses_to_comments.pdf"]], s.files);
   }
   return o;
 }
 /* the notification on the dashboard, until they've opened it */
-function aNotice(){
-  var A = S.A; if (!A || A.seen || A.k !== "reject") return "";
-  var s = subView(SUBS[0]), rej = true;
+function aNotice(){ return withA("s1", aNotice1); }
+function aNotice1(){
+  var A = AA(); if (!A || A.seen || A.k !== "reject") return "";
+  var s = subView(subById(AID)), rej = true;
   return '<div class="banner ' + (rej ? "alert" : "warn") + ' big" style="margin-bottom:24px" role="status"><span class="bi">' + I.info + '</span><div>' +
     '<b>New decision on your submission: ' + (rej ? "not accepted" : DEC_NAME[A.k].toLowerCase()) + '</b>' +
     '<p>' + (rej ? 'The editor of ' + esc(journalById(s.j).name) + ' has decided not to accept &ldquo;' + esc(s.title) + '&rdquo;. You can read the decision and the reviews.'
       : '&ldquo;' + esc(s.title) + '&rdquo; ' + (A.k === "minor" ? "can be accepted after minor changes." : "needs substantial changes before a final decision.") + ' Respond to the comments by ' + dLong(new Date(A.due)) + '.') + '</p>' +
-    '<div class="bact">' + (rej ? '<a class="btn sm" href="#sub/s1/reviews">Read the decision and reviews</a>'
+    '<div class="bact">' + (rej ? '<a class="btn sm" href="#sub/' + AID + '/reviews">Read the decision and reviews</a>'
       : '<a class="btn pri sm" href="#' + aStart() + '">' + aCta() + '</a>') + '</div></div></div>';
 }
 function aBanner(tab){
-  var A = S.A;
-  if (A.k === "reject") return '<div class="banner alert" style="margin-top:16px"><span class="bi">' + I.info + '</span><div><b>Not accepted</b><p>The editor&rsquo;s decision is final, so this submission can&rsquo;t be revised. ' + (tab === "reviews" ? "The decision and reviews are below." : '<a href="#sub/s1/reviews">Read the decision and reviews</a>.') + '</p></div></div>';
+  var A = AA();
+  if (A.k === "reject") return '<div class="banner alert" style="margin-top:16px"><span class="bi">' + I.info + '</span><div><b>Not accepted</b><p>The editor&rsquo;s decision is final, so this submission can&rsquo;t be revised. ' + (tab === "reviews" ? "The decision and reviews are below." : '<a href="#sub/' + AID + '/reviews">Read the decision and reviews</a>.') + '</p></div></div>';
   if (A.st === "sent") return '<div class="banner ok" style="margin-top:16px"><span class="bi">' + I.checkM + '</span><div><b>Revision submitted</b><p>You sent your revision on ' + fmtDate(A.sentAt, {day:"numeric", month:"long"}) + '. The editor will check your changes and let you know.</p></div></div>';
   return '<div class="banner warn" style="margin-top:16px"><span class="bi">' + I.info + '</span><div><b>' + DEC_NAME[A.k] + ' requested. Send your revision by ' + dLong(new Date(A.due)) + '</b><p>Read the reviews and comments, then make your changes here or upload a new version.</p>' +
     '<div class="bact"><a class="btn pri sm" href="#' + aStart() + '">' + aCta() + '</a></div></div></div>';
@@ -3868,14 +3918,14 @@ function edGuard(r){
   return null;
 }
 function aGuard(r){
-  var A = S.A;
-  if (!A || parts()[1] !== "s1") return "submissions";
-  if (r === "arevdone") return A.st === "sent" ? null : "sub/s1";
-  if (A.k === "reject" || A.st !== "open") return "sub/s1";
+  var A = AA();
+  if (!AUTHS[parts()[1]]) return "submissions"; AID = parts()[1]; A = AA(); if (!A) return "submissions";
+  if (r === "arevdone") return A.st === "sent" ? null : "sub/" + AID;
+  if (A.k === "reject" || A.st !== "open") return "sub/" + AID;
   if (r === "arr" || r === "ahow") return null;
-  if (!A.how) return "ahow/s1";
-  if (r === "aup" && A.how !== "upload") return "arev/s1";
-  if (r === "arev" && A.how === "upload") return "aup/s1";   /* uploading needs no comment-by-comment responses */
+  if (!A.how) return "ahow/" + AID;
+  if (r === "aup" && A.how !== "upload") return "arev/" + AID;
+  if (r === "arev" && A.how === "upload") return "aup/" + AID;   /* uploading needs no comment-by-comment responses */
   return null;
 }
 
@@ -4415,18 +4465,18 @@ SCREENS.edone = function(){
 /* ================= author: respond to a decision ================= */
 /* read the reviews, choose how to revise: edit here and respond to each comment, or upload version 2 with a summary of changes; then submit */
 function aSteps(){
-  var h = S.A.how;
-  return [["arr/s1","Read the reviews"],["ahow/s1","Choose how to revise"]].concat(
-    h === "upload" ? [["aup/s1","Upload version 2"]] : [["arev/s1", h === "edit" ? "Edit and respond" : "Make your changes"]],
-    [["arevs/s1","Check and submit"]]);
+  var h = AA().how;
+  return [["arr/" + AID,"Read the reviews"],["ahow/" + AID,"Choose how to revise"]].concat(
+    h === "upload" ? [["aup/" + AID,"Upload version 2"]] : [["arev/" + AID, h === "edit" ? "Edit and respond" : "Make your changes"]],
+    [["arevs/" + AID,"Check and submit"]]);
 }
 function aShell(rt, body, act){
-  var s = subView(SUBS[0]), A = S.A, steps = aSteps(), step = steps.map(function(x){ return x[0].split("/")[0]; }).indexOf(rt);
+  var s = subView(subById(AID)), A = AA(), steps = aSteps(), step = steps.map(function(x){ return x[0].split("/")[0]; }).indexOf(rt);
   return stepShell({t1:s.title, t2:DEC_NAME[A.k] + " for " + esc(journalById(s.j).name) + ". Due " + dLong(new Date(A.due)) + ", " + plural(Math.max(0, daysTo(A.due)), "day") + " left",
-    label:"Revision steps", steps:steps, step:Math.max(0, step), close:["Save and close","sub/s1"], body:body, act:act});
+    label:"Revision steps", steps:steps, step:Math.max(0, step), close:["Save and close","sub/" + AID], body:body, act:act});
 }
 function aDue(){
-  var A = S.A, d = Math.max(0, daysTo(A.due));
+  var A = AA(), d = Math.max(0, daysTo(A.due));
   return '<div class="duebox' + (d <= 3 ? " soon" : "") + '">' + I.cal + '<div><b>Send your revision by ' + fmtDate(A.due, {day:"numeric", month:"long", year:"numeric"}) + '</b><span>' + plural(d, "day") + ' left. Need longer? <button class="link small" type="button" data-a="soon" data-msg="Request sent. The editor will reply by email.">Ask the editor for more time</button></span></div></div>';
 }
 function aCard(c, nums, extra){
@@ -4437,30 +4487,30 @@ function aCard(c, nums, extra){
     '<div class="ct"' + (c.own ? ' style="margin-top:6px"' : "") + '>' + esc(c.text) + '</div>' + (extra ? extra.html : "") + '</div>';
 }
 function aLetterHTML(){
-  var A = S.A;
-  return '<div class="ptext" style="gap:0"><div class="small muted">From ' + AUTH.editor + ', ' + fmtDate(A.at) + '</div><h4 style="margin:4px 0 10px;font-size:16px">Decision: ' + DEC_NAME[A.k].toLowerCase() + '</h4>' +
-      '<div class="letter">' + AUTH.letters[A.k].map(function(p){ return "<p>" + p + "</p>"; }).join("") + '</div></div>' +
-    AUTH.recs[A.k].map(function(r, i){ return '<div class="ovr"><h4>' + rvTag(i) + '<span class="badge" style="margin-left:auto">' + r + '</span></h4><div class="letter" style="margin-top:10px;font-size:14.5px;line-height:23px;padding:12px 14px">' + AUTH.generals[i] + '</div></div>'; }).join("");
+  var A = AA();
+  return '<div class="ptext" style="gap:0"><div class="small muted">From ' + AU().editor + ', ' + fmtDate(A.at) + '</div><h4 style="margin:4px 0 10px;font-size:16px">Decision: ' + DEC_NAME[A.k].toLowerCase() + '</h4>' +
+      '<div class="letter">' + AU().letters[A.k].map(function(p){ return "<p>" + p + "</p>"; }).join("") + '</div></div>' +
+    AU().recs[A.k].map(function(r, i){ return '<div class="ovr"><h4>' + rvTag(i) + '<span class="badge" style="margin-left:auto">' + r + '</span></h4><div class="letter" style="margin-top:10px;font-size:14.5px;line-height:23px;padding:12px 14px">' + AU().generals[i] + '</div></div>'; }).join("");
 }
 
 /* step 1: everything the editor and reviewers said, on the manuscript, before deciding how to revise */
 SCREENS.arr = function(){
   wsFor("arr", "letter");
-  var A = S.A, s = subView(SUBS[0]), its = aItems(), cs = its.filter(function(c){ return !c.own; }), nums = numsOf(cs), tab = wsUI.tab === "comments" ? "comments" : "letter";
+  var A = AA(), s = subView(subById(AID)), its = aItems(), cs = its.filter(function(c){ return !c.own; }), nums = numsOf(cs), tab = wsUI.tab === "comments" ? "comments" : "letter";
   if (!A.seen) { A.seen = true; save(); }
   /* version 1 as the reviewers saw it, so marks use the original positions */
   var orig = cs.map(function(c){ var o = {}, k; for (k in c) o[k] = c[k]; o.s = c.o; o.e = c.o < 0 ? -1 : c.o + c.quote.length; return o; });
   var req = its.filter(function(c){ return c.grp === "req"; }).length;
   var docbar = '<div class="docbar"><span class="fn">' + I.doc + 'Version 1, with the reviewers&rsquo; comments</span>' + legendRv() + '<span class="tip">' + I.cmt + 'Select a highlight to read the comment</span></div>';
-  var paper = msPaper({m:AMS.s1, id:"apaper", title:s.title, right:"Version 1", by:'<div class="by">Amara Okafor<sup>1</sup>, James Whitfield<sup>1</sup></div>',
-    inner:function(b){ return markSpans(AMS.s1.text[b], cMarks(orig, nums, b)); }});
+  var paper = msPaper({m:AMS[AID], id:"apaper", title:s.title, right:"Version 1", by:AU().by,
+    inner:function(b){ return markSpans(AMS[AID].text[b], cMarks(orig, nums, b)); }});
   var pb = tab === "letter" ? '<div class="ptext" style="padding-bottom:0">' + aDue() + '</div>' + aLetterHTML()
     : '<div class="ptip">' + plural(its.length, "comment") + ', ' + req + ' marked <b>Must address</b>. Next, you choose how to revise.</div>' + its.map(function(c){ return aCard(c, nums); }).join("");
   var panel = '<aside class="cpanel" aria-labelledby="cpH"><div class="cph"><h3 id="cpH">The decision and reviews</h3>' +
       '<div class="ptabs" role="tablist" aria-label="Decision">' + [["letter","Decision and reports",""],["comments","Comments",'<span class="c">' + its.length + '</span>']].map(function(t){
         return '<button type="button" role="tab" aria-selected="' + (t[0] === tab) + '" data-a="wsTab" data-v="' + t[0] + '">' + t[1] + t[2] + '</button>'; }).join("") + '</div></div>' +
     '<div class="cpb" data-keep="arb">' + pb + '</div></aside>';
-  var act = '<a class="btn" href="#sub/s1">Back to submission</a><span class="msg" style="color:var(--slate)">' + plural(its.length, "comment") + ' from 2 reviewers and the editor</span>' +
+  var act = '<a class="btn" href="#sub/' + AID + '">Back to submission</a><span class="msg" style="color:var(--slate)">' + plural(its.length, "comment") + ' from 2 reviewers and the editor</span>' +
     '<button class="btn pri lg" type="button" data-a="aRead">Continue: choose how to revise</button>';
   return aShell("arr", '<div class="wsgrid"><div class="docpane" data-keep="doc">' + docbar + paper + '</div>' + panel + '</div>', act);
 };
@@ -4475,7 +4525,7 @@ var HOW = {
     can:["Make any change, including references, tables and figures", "Show your changes with tracked changes, if you can", "Describe what you changed in a short summary. No need to reply to each comment"], cant:[]}
 };
 SCREENS.ahow = function(){
-  var A = S.A, h = A.how, sug = A.k === "minor" ? "edit" : "upload", nEd = Object.keys(A.edits).length;
+  var A = AA(), h = A.how, sug = A.k === "minor" ? "edit" : "upload", nEd = Object.keys(A.edits).length;
   var opt = function(v){
     var o = HOW[v];
     return '<label class="opt howopt"><input type="radio" name="how" data-a="aHow" data-v="' + v + '"' + (h === v ? " checked" : "") + '><span>' +
@@ -4491,17 +4541,17 @@ SCREENS.ahow = function(){
     '<p class="lede">Make small changes here, or upload a new version for anything bigger. You can change your mind later.</p>' +
     '<div style="max-width:560px;margin-bottom:20px">' + aDue() + '</div>' +
     '<fieldset class="howgrid"><legend class="sr">How do you want to revise?</legend>' + opt("edit") + opt("upload") + '</fieldset>' + warn + '</div>';
-  var act = '<a class="btn" href="#arr/s1">Back to the reviews</a><span class="msg ' + (h ? "ok" : "todo") + '">' + (h ? I.checkM + HOW[h].t : "Choose one to continue") + '</span>' +
+  var act = '<a class="btn" href="#arr/' + AID + '">Back to the reviews</a><span class="msg ' + (h ? "ok" : "todo") + '">' + (h ? I.checkM + HOW[h].t : "Choose one to continue") + '</span>' +
     '<button class="btn pri lg" type="button" data-a="aHowGo"' + (h ? "" : " disabled") + '>Continue</button>';
   return aShell("ahow", body, act);
 };
 
 /* upload route, step 3: version 2 and a short summary of what changed */
 SCREENS.aup = function(){
-  var A = S.A, chg = (A.changes || "").trim(), ok = !!(A.file && chg);
+  var A = AA(), chg = (A.changes || "").trim(), ok = !!(A.file && chg);
   var body = '<div class="wrap sbody"><div class="upwrap"><h2 class="pg">Upload your revised manuscript</h2>' +
-    '<p class="lede">It&rsquo;s added to your existing submission, ' + AMS.s1.ref + ', as version 2. Your journal, authors and declarations stay as they are.</p>' +
-    '<div class="fchip" style="margin:0 0 16px"><span class="fext">DOCX</span><div><div class="fn">Version 1: ' + AMS.s1.file + '</div><div class="fm">Submitted 12 Sep 2026. The reviewers&rsquo; comments are on this version.</div></div></div>' +
+    '<p class="lede">It&rsquo;s added to your existing submission, ' + AMS[AID].ref + ', as version 2. Your journal, authors and declarations stay as they are.</p>' +
+    '<div class="fchip" style="margin:0 0 16px"><span class="fext">DOCX</span><div><div class="fn">Version 1: ' + AMS[AID].file + '</div><div class="fm">Submitted ' + subById(AID).submitted + '. The reviewers&rsquo; comments are on this version.</div></div></div>' +
     (A.file ? '<div class="vchip"><span class="fext" style="background:#fff">' + esc(A.file.ext) + '</span><div style="flex:1;min-width:0"><div style="font-weight:600;color:var(--indigo);overflow-wrap:anywhere">Version 2: ' + esc(A.file.name) + '</div><div class="xs muted">' + fmtSize(A.file.size) + '. Added to this submission</div></div><button class="link small" type="button" data-a="aRmFile">Replace</button></div>'
       : '<div class="drop" id="drop"><div class="ic">' + I.upload + '</div><h3>Drag and drop your revised manuscript</h3><div class="or2">or</div><button class="btn pri" type="button" data-a="pick">Choose a file</button>' +
         '<input type="file" id="file" class="sr" accept=".docx,.doc,.pdf,.tex,.zip,.rtf,.odt" tabindex="-1"><div class="fmt">Word, PDF, LaTeX, RTF or ODT, up to 100 MB. Please show your changes, for example with tracked changes.</div></div>' +
@@ -4510,12 +4560,12 @@ SCREENS.aup = function(){
       '<p class="xs muted" style="margin:-2px 0 4px">A short summary for the editor and reviewers. Say how you dealt with the main points, especially those marked Must address.</p>' +
       '<textarea class="inp" id="aChg" data-achg="1" style="min-height:140px" placeholder="For example: We re-ran the models with reach order as a factor, added canopy photographs at three points per reach, and removed the claim about cost.">' + esc(A.changes || "") + '</textarea></div>' +
     '</div></div>';
-  var act = '<button class="btn" type="button" data-a="step" data-r="ahow/s1">Back</button><span class="msg ' + (ok ? "ok" : "todo") + '" id="aUpMsg">' + aUpMsg() + '</span>' +
-    '<button class="btn pri lg" type="button" id="aUpGo" data-a="step" data-r="arevs/s1"' + (ok ? "" : " disabled") + '>Continue: check and submit</button>';
+  var act = '<button class="btn" type="button" data-a="step" data-r="ahow/' + AID + '">Back</button><span class="msg ' + (ok ? "ok" : "todo") + '" id="aUpMsg">' + aUpMsg() + '</span>' +
+    '<button class="btn pri lg" type="button" id="aUpGo" data-a="step" data-r="arevs/' + AID + '"' + (ok ? "" : " disabled") + '>Continue: check and submit</button>';
   return aShell("aup", body, act);
 };
-function aUpMsg(){ var A = S.A, chg = (A.changes || "").trim(); return A.file && chg ? I.checkM + "Version 2 added" : !A.file ? "Upload your revised version to continue" : "Describe what you changed to continue"; }
-function aFile(f){ var mm = /\.([a-z0-9]+)$/i.exec(f.name || ""); S.A.file = {name:f.name, size:f.size, ext:(mm ? mm[1] : "docx").toUpperCase()}; save(); refresh(); toast("Version 2 added to your submission"); }
+function aUpMsg(){ var A = AA(), chg = (A.changes || "").trim(); return A.file && chg ? I.checkM + "Version 2 added" : !A.file ? "Upload your revised version to continue" : "Describe what you changed to continue"; }
+function aFile(f){ var mm = /\.([a-z0-9]+)$/i.exec(f.name || ""); AA().file = {name:f.name, size:f.size, ext:(mm ? mm[1] : "docx").toUpperCase()}; save(); refresh(); toast("Version 2 added to your submission"); }
 AFTER.aup = function(){
   var drop = $("#drop"), input = $("#file"); if (!drop) return;
   input.addEventListener("change", function(){ if (input.files[0]) aFile(input.files[0]); });
@@ -4524,10 +4574,10 @@ AFTER.aup = function(){
   drop.addEventListener("drop", function(e){ var f = e.dataTransfer.files[0]; if (f) aFile(f); });
 };
 function aEditList(){
-  var ks = Object.keys(S.A.edits);
+  var ks = Object.keys(AA().edits);
   if (!ks.length) return '<div id="aEdits" class="small muted" style="margin-top:6px">None yet. Choose <b>Edit text</b> above the document to make a change.</div>';
   return '<div id="aEdits" style="margin-top:6px">' + ks.map(function(k){
-    var n = changedChars(AMS.s1.text[k], S.A.edits[k]);
+    var n = changedChars(AMS[AID].text[k], AA().edits[k]);
     return '<div class="er"><span style="color:var(--cornflower);display:flex">' + I.edit + '</span>' + secName(k) + ' <span class="muted">' + n + ' characters changed</span>' +
       '<button class="link small" style="margin-left:auto" type="button" data-a="aUndo" data-id="' + k + '">Undo</button></div>';
   }).join("") + '</div>';
@@ -4535,15 +4585,15 @@ function aEditList(){
 /* edit route, step 3: change the text and respond to every comment */
 SCREENS.arev = function(){
   wsReset("arev");
-  var A = S.A, s = subView(SUBS[0]), up = A.how === "upload", its = aItems(), cs = its.filter(function(c){ return !c.own; }), nums = numsOf(cs), ed = !up && aUI.editing;
+  var A = AA(), s = subView(subById(AID)), up = A.how === "upload", its = aItems(), cs = its.filter(function(c){ return !c.own; }), nums = numsOf(cs), ed = !up && aUI.editing;
   if (!A.seen) { A.seen = true; save(); }
   var left = its.length - aAnswered(), nEd = Object.keys(A.edits).length, tab = wsUI.tab === "letter" ? "letter" : "comments", pb;
-  var docbar = '<div class="docbar"><span class="fn">' + I.doc + (up ? "Version 1, with the reviewers&rsquo; comments" : AMS.s1.file) + '</span>' +
+  var docbar = '<div class="docbar"><span class="fn">' + I.doc + (up ? "Version 1, with the reviewers&rsquo; comments" : AMS[AID].file) + '</span>' +
     (up ? '<span class="tip">' + I.info + 'Your changes are in version 2. Respond to each comment here.</span>'
       : '<div class="mode" role="group" aria-label="Mode"><button type="button" data-a="aEdit" data-v="" aria-pressed="' + !ed + '">' + I.cmt + 'Comments</button><button type="button" data-a="aEdit" data-v="1" aria-pressed="' + ed + '">' + I.edit + 'Edit text</button></div>' +
         legendRv().replace('</div>', (nEd ? '<span><i style="background:var(--cornflower);width:3px"></i>Edited (' + nEd + ')</span>' : "") + '</div>') +
-        (ed ? '<div class="editnote"><b>Text only.</b> You can&rsquo;t change references, tables or figures here. For those, <button class="link small" type="button" data-a="step" data-r="ahow/s1">upload a revised version</button> instead.</div>' : "")) + '</div>';
-  var paper = msPaper({m:AMS.s1, id:"apaper", title:s.title, right:up ? "Version 1" : "Your revision", by:'<div class="by">Amara Okafor<sup>1</sup>, James Whitfield<sup>1</sup></div>', edit:ed,
+        (ed ? '<div class="editnote"><b>Text only.</b> You can&rsquo;t change references, tables or figures here. For those, <button class="link small" type="button" data-a="step" data-r="ahow/' + AID + '">upload a revised version</button> instead.</div>' : "")) + '</div>';
+  var paper = msPaper({m:AMS[AID], id:"apaper", title:s.title, right:up ? "Version 1" : "Your revision", by:AU().by, edit:ed,
     inner:function(b){ return ed ? esc(aText(b)) : markSpans(aText(b), cMarks(cs, nums, b)); }});
   if (tab === "letter") pb = aLetterHTML();
   else pb = '<div class="ptip">Reply to every comment. Say what you changed, or why you didn&rsquo;t.' + (up ? "" : " To change the text, choose Edit text above the document.") + '</div>' +
@@ -4556,18 +4606,18 @@ SCREENS.arev = function(){
       '<div class="ptabs" role="tablist" aria-label="Decision">' + [["comments","Comments",'<span class="c">' + its.length + '</span>'],["letter","Decision and reports",""]].map(function(t){
         return '<button type="button" role="tab" aria-selected="' + (t[0] === tab) + '" data-a="wsTab" data-v="' + t[0] + '">' + t[1] + t[2] + '</button>'; }).join("") + '</div></div>' +
     '<div class="cpb" data-keep="arb">' + pb + '</div></aside>';
-  var act = '<button class="btn" type="button" data-a="step" data-r="' + (up ? "aup/s1" : "ahow/s1") + '">Back</button><span class="savest" id="saveMsg">' + saveMsg(A) + '</span><button class="btn pri lg" type="button" data-a="step" data-r="arevs/s1">Check and submit</button>';
+  var act = '<button class="btn" type="button" data-a="step" data-r="' + (up ? "aup/" + AID : "ahow/" + AID) + '">Back</button><span class="savest" id="saveMsg">' + saveMsg(A) + '</span><button class="btn pri lg" type="button" data-a="step" data-r="arevs/' + AID + '">Check and submit</button>';
   return aShell("arev", '<div class="wsgrid"><div class="docpane" data-keep="doc">' + docbar + paper + '</div>' + panel + '</div>', act);
 };
 AFTER.arev = function(){
   var p = $("#apaper");
-  [].forEach.call(p.querySelectorAll("[data-blk]"), function(el){ if (S.A.edits[el.getAttribute("data-blk")] != null) el.classList.add("edited"); });
-  if (aUI.editing && S.A.how !== "upload") {
+  [].forEach.call(p.querySelectorAll("[data-blk]"), function(el){ if (AA().edits[el.getAttribute("data-blk")] != null) el.classList.add("edited"); });
+  if (aUI.editing && AA().how !== "upload") {
     p.addEventListener("input", function(e){
       var el = e.target.closest("[data-blk]"); if (!el) return;
       var k = el.getAttribute("data-blk"), v = el.textContent;
-      if (v === AMS.s1.text[k]) delete S.A.edits[k]; else S.A.edits[k] = v;
-      el.classList.toggle("edited", S.A.edits[k] != null); rvTouch(S.A);
+      if (v === AMS[AID].text[k]) delete AA().edits[k]; else AA().edits[k] = v;
+      el.classList.toggle("edited", AA().edits[k] != null); rvTouch(AA());
       var l = $("#aEdits"); if (l) l.outerHTML = aEditList();
     });
     p.addEventListener("paste", function(e){ e.preventDefault(); document.execCommand("insertText", false, (e.clipboardData || window.clipboardData).getData("text")); });
@@ -4580,7 +4630,7 @@ AFTER.arev = function(){
   }
 };
 SCREENS.arevs = function(){
-  var A = S.A, up = A.how === "upload", its = aItems(), left = its.length - aAnswered(), nEd = Object.keys(A.edits).length, chg = (A.changes || "").trim(), ok = up ? !!(A.file && chg) : !left, n = 0;
+  var A = AA(), up = A.how === "upload", its = aItems(), left = its.length - aAnswered(), nEd = Object.keys(A.edits).length, chg = (A.changes || "").trim(), ok = up ? !!(A.file && chg) : !left, n = 0;
   var rows = its.map(function(c){
     var r = (A.resp[c.id] || "").trim();
     return '<div class="scm"><span class="n' + (c.own ? " ed" : c.rv ? " r2" : "") + '">' + (c.own ? "E" : ++n) + '</span><div><div class="sec2">' + (c.own ? '<span class="rvk ed">Editor</span>' : rvTag(c.rv) + ' &middot; ' + secName(c.blk)) + '</div>' +
@@ -4588,31 +4638,31 @@ SCREENS.arevs = function(){
       (r ? '<div class="letter ltext" style="margin-top:8px;font-size:14.5px;line-height:22px;padding:10px 14px">' + esc(r) + '</div>'
         : '<div class="small" style="color:var(--alert-dark);font-weight:600;margin-top:6px;display:flex;gap:6px;align-items:center">' + I.warn + 'No response yet. <button class="link small" type="button" data-a="aGoC" data-id="' + c.id + '">Respond</button></div>') + '</div></div>';
   }).join("");
-  var changes = up ? (A.file ? fields([["Version 2", esc(A.file.name)], ["Replaces", "Version 1, " + AMS.s1.file]]) : '<div class="banner alert"><span class="bi">' + I.warn + '</span><div><b>Upload your revised version</b><p><button class="link" type="button" data-a="step" data-r="aup/s1">Upload it now</button></p></div></div>') +
-      (chg ? '<h4 class="sumh">What you changed</h4><div class="letter ltext" style="font-size:14.5px;line-height:22px;padding:10px 14px">' + esc(chg) + '</div>' : '<div class="banner alert" style="margin-top:12px"><span class="bi">' + I.warn + '</span><div><b>Describe what you changed</b><p><button class="link" type="button" data-a="step" data-r="aup/s1">Add a summary</button></p></div></div>')
-    : nEd ? '<dl style="margin:0">' + Object.keys(A.edits).map(function(k){ return dlRow([secName(k), changedChars(AMS.s1.text[k], A.edits[k]) + " characters changed"]); }).join("") + '</dl><p class="xs muted" style="margin-top:8px">The editor and reviewers see each change marked in the text.</p>'
+  var changes = up ? (A.file ? fields([["Version 2", esc(A.file.name)], ["Replaces", "Version 1, " + AMS[AID].file]]) : '<div class="banner alert"><span class="bi">' + I.warn + '</span><div><b>Upload your revised version</b><p><button class="link" type="button" data-a="step" data-r="aup/' + AID + '">Upload it now</button></p></div></div>') +
+      (chg ? '<h4 class="sumh">What you changed</h4><div class="letter ltext" style="font-size:14.5px;line-height:22px;padding:10px 14px">' + esc(chg) + '</div>' : '<div class="banner alert" style="margin-top:12px"><span class="bi">' + I.warn + '</span><div><b>Describe what you changed</b><p><button class="link" type="button" data-a="step" data-r="aup/' + AID + '">Add a summary</button></p></div></div>')
+    : nEd ? '<dl style="margin:0">' + Object.keys(A.edits).map(function(k){ return dlRow([secName(k), changedChars(AMS[AID].text[k], A.edits[k]) + " characters changed"]); }).join("") + '</dl><p class="xs muted" style="margin-top:8px">The editor and reviewers see each change marked in the text.</p>'
     : '<p class="none2">No changes to the text. That&rsquo;s fine if your responses explain why.</p>';
-  var body = '<div class="wrap sbody"><h2 class="pg">Check and submit your revision</h2><p class="lede">This is everything going back to ' + AUTH.editor + ', the editor.</p>' +
+  var body = '<div class="wrap sbody"><h2 class="pg">Check and submit your revision</h2><p class="lede">This is everything going back to ' + AU().editor + ', the editor.</p>' +
     '<div class="rlay"><div class="card">' +
-      '<section class="rsec"><div class="rh"><h3>How you revised</h3><button class="link" type="button" data-a="step" data-r="ahow/s1">Change</button></div><p class="small">' + HOW[up ? "upload" : "edit"].t + '</p></section>' +
-      '<section class="rsec"><div class="rh"><h3>' + (up ? "Revised manuscript" : "Changes to your manuscript") + '</h3><button class="link" type="button" data-a="step" data-r="' + (up ? "aup/s1" : "arev/s1") + '">Edit</button></div>' + changes + '</section>' +
-      (up ? "" : '<section class="rsec"><div class="rh"><h3>Your responses (' + (its.length - left) + ' of ' + its.length + ')</h3><button class="link" type="button" data-a="step" data-r="arev/s1">Edit</button></div>' + rows + '</section>') + '</div>' +
+      '<section class="rsec"><div class="rh"><h3>How you revised</h3><button class="link" type="button" data-a="step" data-r="ahow/' + AID + '">Change</button></div><p class="small">' + HOW[up ? "upload" : "edit"].t + '</p></section>' +
+      '<section class="rsec"><div class="rh"><h3>' + (up ? "Revised manuscript" : "Changes to your manuscript") + '</h3><button class="link" type="button" data-a="step" data-r="' + (up ? "aup/" + AID : "arev/" + AID) + '">Edit</button></div>' + changes + '</section>' +
+      (up ? "" : '<section class="rsec"><div class="rh"><h3>Your responses (' + (its.length - left) + ' of ' + its.length + ')</h3><button class="link" type="button" data-a="step" data-r="arev/' + AID + '">Edit</button></div>' + rows + '</section>') + '</div>' +
     '<aside class="card ready" aria-labelledby="asH"><h3 id="asH">Ready to send?</h3><ul class="chkl" style="margin-top:14px">' + (up ? chkLi(!!A.file, "Version 2 uploaded") + chkLi(!!chg, "Changes described") : chkLi(!left, "Every comment answered")) + '</ul>' +
       '<p class="small muted" style="margin:-4px 0 14px">Due ' + dLong(new Date(A.due)) + '. ' + (A.k === "major" ? "The editor may send it back to the same reviewers." : "The editor checks it without sending it back to the reviewers.") + '</p>' +
       '<button class="btn pri lg block" type="button" data-a="aSubmit"' + (ok ? "" : " disabled") + '>Submit revision</button><p class="xs muted" style="margin-top:10px;text-align:center">You can&rsquo;t change your revision after you submit.</p></aside></div></div>';
   return aShell("arevs", body);
 };
 SCREENS.arevdone = function(){
-  var A = S.A, s = subView(SUBS[0]), maj = A.k === "major", up = A.how === "upload", at = new Date(A.sentAt);
+  var A = AA(), s = subView(subById(AID)), maj = A.k === "major", up = A.how === "upload", at = new Date(A.sentAt);
   var nx = maj ? [["The editor reads your revision","They read " + (up ? "version 2 and your summary of changes" : "your changes and responses") + ".","Usually within a week"],["The same reviewers look again","Where possible, the reviewers who read version 1 see the new version and what changed.","Usually 2 to 3 weeks"],["Decision","You&rsquo;ll get the editor&rsquo;s decision.","We&rsquo;ll email you"]]
     : [["The editor checks your changes","They read " + (up ? "version 2 and your summary of changes" : "your responses alongside your edits") + ".","Usually within a week"],["Decision","You&rsquo;ll get the editor&rsquo;s decision.","We&rsquo;ll email you"]];
   return '<div class="wrap" style="max-width:820px"><div class="done-hero"><div class="tick">' + I.checkL + '</div><h1>Revision submitted</h1>' +
-      '<p class="ref">' + (up ? "Version 2 and your summary of changes have" : "Your changes and responses have") + ' gone to ' + AUTH.editor + ', the editor of ' + esc(journalById(s.j).name) + '.</p>' +
+      '<p class="ref">' + (up ? "Version 2 and your summary of changes have" : "Your changes and responses have") + ' gone to ' + AU().editor + ', the editor of ' + esc(journalById(s.j).name) + '.</p>' +
       '<p class="small muted" style="margin-top:4px">Sent ' + fmtDate(at, {day:"numeric", month:"long", year:"numeric"}) + ' at ' + at.toLocaleTimeString("en-GB", {hour:"2-digit", minute:"2-digit"}) + '. We&rsquo;ve emailed a copy to ' + USER.email + '.</p></div>' +
     '<section class="card" style="padding:24px;margin-bottom:20px"><h3 style="margin-bottom:18px">Where it is now</h3>' + tracker(3, {lg:true}) + '</section>' +
     '<section class="card" style="padding:24px;margin-bottom:28px"><h3 style="margin-bottom:8px">What happens next</h3><ul class="next">' +
       nx.map(function(x, i){ return '<li><span class="nn">' + (i + 1) + '</span><div><b>' + x[0] + '</b>' + x[1] + '</div><span class="when">' + x[2] + '</span></li>'; }).join("") + '</ul></section>' +
-    '<div style="display:flex;gap:12px;justify-content:center;padding-bottom:56px;flex-wrap:wrap"><a class="btn pri lg" href="#dashboard">Go to your dashboard</a><a class="btn lg" href="#sub/s1">View submission</a></div></div>';
+    '<div style="display:flex;gap:12px;justify-content:center;padding-bottom:56px;flex-wrap:wrap"><a class="btn pri lg" href="#dashboard">Go to your dashboard</a><a class="btn lg" href="#sub/' + AID + '">View submission</a></div></div>';
 };
 
 /* ================= actions ================= */
@@ -5010,16 +5060,16 @@ ACT.eSendDec = function(t){
 };
 ACT.aPick = function(t, e){ if (aUI.editing || e.target.closest("button,textarea,a,input,label")) return; wsPick(t.getAttribute("data-id"), true, "apaper"); };
 ACT.aEdit = function(t){ aUI.editing = !!t.getAttribute("data-v"); refresh(); };
-ACT.aUndo = function(t){ delete S.A.edits[t.getAttribute("data-id")]; rvTouch(S.A); refresh(); };
-ACT.aSample = function(){ aFile({name:"Okafor_riparian_shading_v4.docx", size:2510000}); };
-ACT.aRmFile = function(){ S.A.file = null; save(); refresh(); };
-ACT.aGoC = function(t){ wsUI.page = "arev"; wsUI.tab = "comments"; wsUI.sel = aUI.focus = t.getAttribute("data-id"); go("arev/s1"); };
-ACT.aRead = function(){ S.A.read = true; save(); go("ahow/s1"); };
-ACT.aHow = function(t){ S.A.how = t.getAttribute("data-v"); save(); keepScroll = 'input[name="how"][data-v="' + S.A.how + '"]'; refresh(); };
-ACT.aHowGo = function(){ var A = S.A; A.read = true; save(); aUI.editing = A.how === "edit" && !Object.keys(A.edits).length; go(A.how === "upload" ? "aup/s1" : "arev/s1"); };
+ACT.aUndo = function(t){ delete AA().edits[t.getAttribute("data-id")]; rvTouch(AA()); refresh(); };
+ACT.aSample = function(){ aFile({name:AU().v2doc, size:2510000}); };
+ACT.aRmFile = function(){ AA().file = null; save(); refresh(); };
+ACT.aGoC = function(t){ wsUI.page = "arev"; wsUI.tab = "comments"; wsUI.sel = aUI.focus = t.getAttribute("data-id"); go("arev/" + AID); };
+ACT.aRead = function(){ AA().read = true; save(); go("ahow/" + AID); };
+ACT.aHow = function(t){ AA().how = t.getAttribute("data-v"); save(); keepScroll = 'input[name="how"][data-v="' + AA().how + '"]'; refresh(); };
+ACT.aHowGo = function(){ var A = AA(); A.read = true; save(); aUI.editing = A.how === "edit" && !Object.keys(A.edits).length; go(A.how === "upload" ? "aup/" + AID : "arev/" + AID); };
 ACT.aSubmit = function(t){
-  modal({title:"Submit your revision?", body:(S.A.how === "upload" ? "Version 2 and your summary of changes" : "Your changes and your responses") + " will go to the editor, " + AUTH.editor + ". You can&rsquo;t change them after you submit.",
-    confirm:"Submit revision", from:t, onYes:function(){ S.A.st = "sent"; S.A.sentAt = Date.now(); save(); go("arevdone/s1"); }});
+  modal({title:"Submit your revision?", body:(AA().how === "upload" ? "Version 2 and your summary of changes" : "Your changes and your responses") + " will go to the editor, " + AU().editor + ". You can&rsquo;t change them after you submit.",
+    confirm:"Submit revision", from:t, onYes:function(){ AA().st = "sent"; AA().sentAt = Date.now(); save(); go("arevdone/" + AID); }});
 };
 
 /* waiting for checks if the author is quicker than them */
@@ -5069,13 +5119,13 @@ document.addEventListener("input", function(e){
   if (t.id === "scrLetter") { scrUI.letter = t.value; scrUI.edited = true; return; }
   if (t.id === "fq") { fUI.q = t.value; var fr = $("#fRes"); if (fr) fr.innerHTML = fListHTML(edById(parts()[1])); return; }
   if (t.getAttribute && t.getAttribute("data-achg")) {
-    S.A.changes = t.value; save();
-    var okc = !!(S.A.file && t.value.trim()), gb = $("#aUpGo"), mm = $("#aUpMsg"); if (gb) gb.disabled = !okc; if (mm) { mm.className = "msg " + (okc ? "ok" : "todo"); mm.innerHTML = aUpMsg(); }
+    AA().changes = t.value; save();
+    var okc = !!(AA().file && t.value.trim()), gb = $("#aUpGo"), mm = $("#aUpMsg"); if (gb) gb.disabled = !okc; if (mm) { mm.className = "msg " + (okc ? "ok" : "todo"); mm.innerHTML = aUpMsg(); }
     return;
   }
   var ar = t.getAttribute && t.getAttribute("data-ar");
   if (ar) {
-    S.A.resp[ar] = t.value; rvTouch(S.A);
+    AA().resp[ar] = t.value; rvTouch(AA());
     var card = document.getElementById("cm-" + ar); if (card) card.classList.toggle("done", !!t.value.trim());
     var left = aItems().length - aAnswered(), lb = $("#arLeft"); if (lb) { lb.className = "badge " + (left ? "warn" : "ok"); lb.textContent = left ? left + " left" : "All answered"; }
     return;
@@ -5613,22 +5663,22 @@ $("#proto").addEventListener("click", function(e){
   }
   /* author receives a decision on their submission s1 */
   if (p === "au") {
-    var w2 = t.getAttribute("data-r"), n2 = Date.now(); S.loggedIn = true;
-    var mk = function(k){ S.A = {k:k, at:n2, due:DEC_DAYS[k] ? n2 + DEC_DAYS[k] * 864e5 : null, st:"open", resp:{}, edits:{}, file:null, seen:false, read:false, how:null, changes:""}; };
-    var via = function(h){ S.A.read = true; S.A.how = h; if (h === "upload") { S.A.file = S.A.file || {name:"Okafor_riparian_shading_v4.docx", size:2510000, ext:"DOCX"}; S.A.changes = S.A.changes || "We re-ran the models with reach order (shaded upstream or downstream) as a factor, and added canopy photographs at three points along each reach. We added a heatwave temperature figure (new Figure 3) and removed the claim about cost."; } };
-    var need = function(k){ if (!S.A || S.A.k !== k || S.A.st !== "open") mk(k); S.A.seen = true; };
-    var fill = function(){ aItems().forEach(function(c, i){ S.A.resp[c.id] = S.A.resp[c.id] || SAMPLE_RESP[i % SAMPLE_RESP.length]; }); };
+    var w2 = t.getAttribute("data-r"), n2 = Date.now(); S.loggedIn = true; AID = "s1";
+    var mk = function(k){ setAA({k:k, at:n2, due:DEC_DAYS[k] ? n2 + DEC_DAYS[k] * 864e5 : null, st:"open", resp:{}, edits:{}, file:null, seen:false, read:false, how:null, changes:""}); };
+    var via = function(h){ AA().read = true; AA().how = h; if (h === "upload") { AA().file = AA().file || {name:AU().v2doc, size:2510000, ext:"DOCX"}; AA().changes = AA().changes || "We re-ran the models with reach order (shaded upstream or downstream) as a factor, and added canopy photographs at three points along each reach. We added a heatwave temperature figure (new Figure 3) and removed the claim about cost."; } };
+    var need = function(k){ if (!AA() || AA().k !== k || AA().st !== "open") mk(k); AA().seen = true; };
+    var fill = function(){ aItems().forEach(function(c, i){ AA().resp[c.id] = AA().resp[c.id] || SAMPLE_RESP[i % SAMPLE_RESP.length]; }); };
     aUI.editing = false;
-    if (w2 === "reset") { S.A = null; save(); go("dashboard"); toast("Decision reset"); return; }
+    if (w2 === "reset") { setAA(null); save(); go("dashboard"); toast("Decision reset"); return; }
     if (w2 === "minor" || w2 === "major" || w2 === "reject") { mk(w2); save(); go("dashboard"); return; }
-    if (w2 === "minorread") { need("minor"); wsUI.page = null; save(); go("arr/s1"); return; }
-    if (w2 === "how") { need("minor"); S.A.read = true; save(); go("ahow/s1"); return; }
-    if (w2 === "minorws") { need("minor"); via("edit"); aUI.editing = true; save(); go("arev/s1"); return; }
-    if (w2 === "minorchk") { need("minor"); via("edit"); fill(); if (!Object.keys(S.A.edits).length) S.A.edits.abs = AMS.s1.text.abs.replace("an effective, low-cost way", "an effective way"); save(); go("arevs/s1"); return; }
-    if (w2 === "sent") { if (!S.A || S.A.k === "reject") mk("minor"); S.A.seen = true; if (!S.A.how) via("edit"); fill(); S.A.st = "sent"; S.A.sentAt = n2; save(); go("arevdone/s1"); return; }
-    if (w2 === "majorup") { need("major"); S.A.read = true; S.A.how = "upload"; S.A.file = null; save(); go("aup/s1"); return; }
-    if (w2 === "majorchk") { need("major"); via("upload"); save(); go("arevs/s1"); return; }
-    if (w2 === "rejectview") { mk("reject"); S.A.seen = true; save(); go("sub/s1/reviews"); return; }
+    if (w2 === "minorread") { need("minor"); wsUI.page = null; save(); go("arr/" + AID); return; }
+    if (w2 === "how") { need("minor"); AA().read = true; save(); go("ahow/" + AID); return; }
+    if (w2 === "minorws") { need("minor"); via("edit"); aUI.editing = true; save(); go("arev/" + AID); return; }
+    if (w2 === "minorchk") { need("minor"); via("edit"); fill(); if (!Object.keys(AA().edits).length) AA().edits.abs = AMS[AID].text.abs.replace("an effective, low-cost way", "an effective way"); save(); go("arevs/" + AID); return; }
+    if (w2 === "sent") { if (!AA() || AA().k === "reject") mk("minor"); AA().seen = true; if (!AA().how) via("edit"); fill(); AA().st = "sent"; AA().sentAt = n2; save(); go("arevdone/" + AID); return; }
+    if (w2 === "majorup") { need("major"); AA().read = true; AA().how = "upload"; AA().file = null; save(); go("aup/" + AID); return; }
+    if (w2 === "majorchk") { need("major"); via("upload"); save(); go("arevs/" + AID); return; }
+    if (w2 === "rejectview") { mk("reject"); AA().seen = true; save(); go("sub/s1/reviews"); return; }
   }
   if (p === "rv") {
     var w = t.getAttribute("data-r"); S.loggedIn = true; if (!isRv()) setRole("all");
