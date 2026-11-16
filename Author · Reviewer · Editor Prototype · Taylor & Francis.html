@@ -1847,7 +1847,7 @@ function newDraft(file){
     authors:[{id:"me", name:USER.name, inst:USER.inst, email:USER.email, account:true, you:true, orcid:""}],
     corr:"me", declSel:"ethics",
     decl:{
-      ethics:{done:false, text:"", v:{who:["animals"], body:"University of Reading AWERB", ref:"AWERB-2024-017", hbody:"", href:"", trial:"no", reg:"", regno:"", tdate:"", consent:"na"}},
+      ethics:{done:false, text:"", v:{who:["animals"], body:"Animal Welfare and Ethical Review Body (AWERB)", ainst:"University of Reading", ref:"AWERB-2024-017", adate:"2024-03-12", hbody:"", hinst:"", href:"", hdate:"", trial:"no", reg:"", regno:"", tdate:"", consent:"na"}},
       data:{done:false, text:"", v:{where:"repo", repo:"Zenodo", doi:"10.5281/zenodo.1234567"}},
       ai:{done:false, text:"", v:{used:"no", uses:[], tool:""}},
       funding:{done:false, text:"", v:{mode:"found", text:""}},
@@ -2809,7 +2809,7 @@ function shell(step, body, act){
 /* ---------- 1. upload ---------- */
 SCREENS.upload = function(){
   var D = S.D;
-  var need = [["Ethics approval reference", "If your research involved people or animals"], ["Where your data is stored", "A repository link or DOI, if you have one"],
+  var need = [["Ethics approval details", "Committee and institution name, reference and approval date, if your research involved people or animals"], ["Where your data is stored", "A repository link or DOI, if you have one"],
     ["Funding details", "Funder names and grant numbers"], ["Co-author email addresses", "Only for co-authors without a Taylor &amp; Francis account"], ["ORCID iDs", "Optional, for you and your co-authors"]];
   var before = '<aside class="card before" aria-labelledby="bfH"><h3 id="bfH">Before you start</h3><p>You&rsquo;ll be asked for these. You can save and come back if you need to find anything.</p><ul>' +
     need.map(function(n){ return '<li>' + I.doc + '<div><b>' + n[0] + '</b><span>' + n[1] + '</span></div></li>'; }).join("") + '</ul></aside>';
@@ -3117,15 +3117,15 @@ var DECL = {
     why:"For example consultancy, shares, patents, or personal relationships with people affected by the findings.", detected:"Detected from your file: a competing interests statement"}
 };
 var DECL_ORDER = ["ethics","data","ai","funding","coi"], DECL_NAV = DECL_ORDER;
-var ETH_DET = {who:["animals"], trial:"no", consent:"na", body:"University of Reading AWERB", ref:"AWERB-2024-017"};
+var ETH_DET = {who:["animals"], trial:"no", consent:"na", body:"Animal Welfare and Ethical Review Body (AWERB)", ainst:"University of Reading", ref:"AWERB-2024-017", adate:"2024-03-12"};
 function wmsg(t){ return '<p class="wmsg" role="status">' + I.warn + '<span>' + t + '</span></p>'; }
 function hasW(k){ return ev().who.indexOf(k) >= 0; }
-function ev(){ var v = S.D.decl.ethics.v; if (typeof v.who === "string") v.who = v.who === "neither" ? ["neither"] : [v.who]; if (v.hbody === undefined) { v.hbody = ""; v.href = ""; } if (v.trial === undefined) { v.trial = "no"; v.reg = ""; v.regno = ""; } if (v.consent === undefined) v.consent = "na"; if (v.tdate === undefined) v.tdate = ""; return v; }
+function ev(){ var v = S.D.decl.ethics.v; if (typeof v.who === "string") v.who = v.who === "neither" ? ["neither"] : [v.who]; if (v.hbody === undefined) { v.hbody = ""; v.href = ""; } if (v.trial === undefined) { v.trial = "no"; v.reg = ""; v.regno = ""; } if (v.consent === undefined) v.consent = "na"; if (v.tdate === undefined) v.tdate = ""; if (v.adate === undefined) v.adate = ETH_DET.adate; if (v.hdate === undefined) v.hdate = ""; if (v.ainst === undefined) v.ainst = ""; if (v.hinst === undefined) v.hinst = ""; return v; }
 function peopleStmt(){ var v = ev(), w = v.who; if (!w.length) return "";
   if (w.indexOf("neither") >= 0) return "This research did not involve human participants or animals.";
   var a = w.indexOf("animals") >= 0, h = w.indexOf("humans") >= 0, out = [];
-  if (a) { if (!v.body.trim() || !v.ref.trim()) return ""; out.push("Fish sampling and handling were approved by " + v.body.trim() + " (reference " + v.ref.trim() + "). Fieldwork was carried out under the relevant licence."); }
-  if (h) { if (!v.hbody.trim() || !v.href.trim()) return ""; out.push((a ? "The part of the study involving human participants" : "This study") + " was approved by " + v.hbody.trim() + " (reference " + v.href.trim() + ")."); }
+  if (a) { if (!v.body.trim() || !v.ainst.trim() || !v.ref.trim() || !fmtD(v.adate)) return ""; out.push("Fish sampling and handling were approved by " + v.body.trim() + ", " + v.ainst.trim() + " (reference " + v.ref.trim() + ") on " + fmtD(v.adate) + ". Fieldwork was carried out under the relevant licence."); }
+  if (h) { if (!v.hbody.trim() || !v.hinst.trim() || !v.href.trim() || !fmtD(v.hdate)) return ""; out.push((a ? "The part of the study involving human participants" : "This study") + " was approved by " + v.hbody.trim() + ", " + v.hinst.trim() + " (reference " + v.href.trim() + ") on " + fmtD(v.hdate) + "."); }
   return out.join(" "); }
 function fmtD(d){ var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d || ""); return m ? new Date(+m[1], +m[2] - 1, +m[3]).toLocaleDateString("en-GB", {day:"numeric", month:"long", year:"numeric"}) : ""; }
 function trialStmt(){ var v = ev(); if (v.trial === "no") return "This study was not a clinical trial.";
@@ -3181,11 +3181,12 @@ function declPane(id){
       [["no","No"],["yes","Yes"]],
       E.trial === "yes" ? (E.who.indexOf("humans") < 0 ? '' + wmsg('Clinical trials usually involve people, and &ldquo;People&rdquo; isn&rsquo;t selected below. If that&rsquo;s right, you can carry on.') + '' : "") + '<div class="two">' + txt("reg", "Which registry?", "e.g. ISRCTN or ClinicalTrials.gov") + txt("regno", "Registration number", "e.g. ISRCTN12345678") + '</div><div class="two"><div class="field"><label for="d-ethics-tdate">Trial date</label><input type="date" class="inp" id="d-ethics-tdate" data-d="ethics" data-f="tdate" value="' + esc(E.tdate) + '"></div></div>' : "");
     var wsel = function(k){ return E.who.indexOf(k) >= 0; };
+    var dfield = function(f, lab){ return '<div class="field"><label for="d-ethics-' + f + '">' + lab + '</label><input type="date" class="inp" id="d-ethics-' + f + '" data-d="ethics" data-f="' + f + '" value="' + esc(E[f]) + '"></div>'; };
     var whoSeg = '<div class="seg" role="group" aria-label="People or animals. Select all that apply.">' + [["animals","Animals"],["humans","People"],["neither","Neither"]].map(function(o){
       return '<button type="button" data-a="dwho" data-v="' + o[0] + '" aria-pressed="' + wsel(o[0]) + '">' + o[1] + '</button>'; }).join("") + '</div><p class="src" style="margin:0">Select all that apply. Choose both if the research involved people and animals.</p>';
-    var whoBody = (wsel("neither") ? wmsg('We found animal research in your Methods. If &ldquo;Neither&rdquo; is right, you can carry on.') : "") + (wsel("animals") ? '<p class="subh">Animal research approval</p><div class="two">' + txt("body", "Who approved it?", "e.g. University of Reading AWERB", false, DT.body) + txt("ref", "Approval or licence reference", "e.g. AWERB-2024-017", false, DT.ref) + '</div>' : "") +
-      (wsel("humans") ? '<p class="subh">Human research approval</p><div class="two">' + txt("hbody", "Who approved it?", "e.g. University research ethics committee") + txt("href", "Approval reference", "e.g. UREC 24/017") + '</div>' : "");
-    h += card(2, "Did this research involve people or animals?", "Found in your Methods: &ldquo;Fish were caught by electrofishing at six sites&hellip; approved by the University of Reading AWERB (AWERB-2024-017).&rdquo;", "who", whoSeg, whoBody);
+    var whoBody = (wsel("neither") ? wmsg('We found animal research in your Methods. If &ldquo;Neither&rdquo; is right, you can carry on.') : "") + (wsel("animals") ? '<p class="subh">Animal research approval</p><div class="two">' + txt("body", "Ethics committee name", "e.g. Animal Welfare and Ethical Review Body", false, DT.body) + txt("ainst", "Institution name", "e.g. University of Reading", false, DT.ainst) + '</div><div class="two">' + txt("ref", "Approval or licence reference", "e.g. AWERB-2024-017", false, DT.ref) + dfield("adate", "Approval date") + '</div>' : "") +
+      (wsel("humans") ? '<p class="subh">Human research approval</p><div class="two">' + txt("hbody", "Ethics committee name", "e.g. University Research Ethics Committee") + txt("hinst", "Institution name", "e.g. University of Leeds") + '</div><div class="two">' + txt("href", "Approval reference", "e.g. UREC 24/017") + dfield("hdate", "Approval date") + '</div>' : "");
+    h += card(2, "Did this research involve people or animals?", "Found in your Methods: &ldquo;Fish were caught by electrofishing at six sites&hellip; approved by the University of Reading AWERB (AWERB-2024-017) on 12 March 2024.&rdquo;", "who", whoSeg, whoBody);
     h += card(3, "Did participants give consent to take part?", "We looked for human participants and consent statements in your Methods. None found, so this probably does not apply.", "consent",
       [["yes","Yes, participants gave consent"],["na","Not applicable"]],
       E.consent === "na" && (E.who.indexOf("humans") >= 0 || E.trial === "yes") ? '' + wmsg('Studies with people usually need consent. If it wasn&rsquo;t needed, for example because it was waived, you can carry on.') + '' : "");
