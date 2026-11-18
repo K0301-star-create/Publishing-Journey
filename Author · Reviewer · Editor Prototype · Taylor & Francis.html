@@ -1251,6 +1251,14 @@ html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset
 .ck3 .two{margin-top:2px}
 .subh{margin:6px 0 0;font-size:14px;line-height:20px;font-weight:700;color:var(--indigo)}
 .evid{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.evid .src{font-size:14px;line-height:20px;color:var(--n600)}
+.aifu{margin-top:6px}
+.aifu textarea{min-height:72px}
+.aitool{align-items:end}
+.aiver{display:flex;gap:12px;align-items:center}
+.aiban{margin-top:4px}
+.ck3 > [data-a="aitooladd"]{align-self:flex-start;display:inline-flex;gap:4px;align-items:center}
+.aiflag{display:flex;gap:8px;align-items:flex-start;margin-top:12px;padding-top:10px;border-top:1px solid var(--n200);font-family:var(--sans);font-size:14px;line-height:20px;color:var(--ultramarine)}
+.aiflag svg{flex:none;margin-top:2px}
 .wmsg{display:flex;gap:8px;align-items:flex-start;margin:0;font-size:14px;line-height:20px;color:var(--saffron-dark)}.wmsg svg{flex:none;margin-top:3px}
 .field .dt{margin-left:6px;font-size:11px;font-weight:600;color:var(--ultramarine);background:#fff;border:1px solid var(--vista);border-radius:3px;padding:0 5px}
 </style>
@@ -1922,7 +1930,7 @@ function newDraft(file){
     decl:{
       ethics:{done:false, text:"", v:{who:["animals"], body:"Animal Welfare and Ethical Review Body (AWERB)", ainst:"University of Reading", ref:"AWERB-2024-017", adate:"2024-03-12", hbody:"", hinst:"", href:"", hdate:"", trial:"no", reg:"", regno:"", tdate:"", consent:"na"}},
       data:{done:false, text:"", v:{where:"repo", repo:"Zenodo", doi:"10.5281/zenodo.1234567"}},
-      ai:{done:false, text:"", v:{used:"no", uses:[], tool:""}},
+      ai:{done:false, text:"", v:{used:"yes", uses:["copy"], det:{copy:"Used to improve the language and readability of the manuscript. The authors reviewed and edited all text."}, tools:[{name:"ChatGPT", ver:"GPT-4o"}], terms:null, confirm:null}},
       funding:{done:false, text:"", v:{mode:"found", funder:FUND_DET.funder, grant:FUND_DET.grant, text:""}},
       coi:{done:false, text:"", v:{mode:"declare", det:COI_DET.text, more:null, who:[], stmts:{}}}
     },
@@ -3198,11 +3206,11 @@ var DECL = {
     why:"We read your Methods and Acknowledgements and filled in what we could. Check each answer, change it if it is wrong, and add the missing details.", detected:"Detected from your file: 3 checks"},
   data:{req:true, t:"Data availability", q:"Where can readers find the data behind your results?",
     why:"Your file reports field and lab measurements. Most journals now ask where the underlying data can be found.", detected:"Detected from your file: a repository link"},
-  ai:{req:true, t:"Use of AI tools", q:"Did you use generative AI tools in this work?",
-    why:"Journals ask authors to say whether tools such as chatbots or image generators were used, and how.", detected:"Detected from your file: no AI tools found"},
+  ai:{req:true, t:"Use of AI tools", q:"Have you used generative AI in the research, creation or development of your manuscript?",
+    why:"Journals ask how generative AI was used, so readers and editors can trust the work. Your answers become the AI statement in your article.", detected:"Detected from your file: ChatGPT used for language editing"},
   funding:{req:false, t:"Funding", q:"Who funded this work?",
     why:"We found a grant in your acknowledgements. Check it&rsquo;s right, or tell us about other funding.", detected:"Found in your acknowledgements: NERC grant NE/X012345/1"},
-  coi:{req:false, t:"Competing interests", q:"Is there anything that could be seen as influencing the work?",
+  coi:{req:false, t:"Competing interests", q:"Do you have any competing interests to declare?",
     why:"For example consultancy, shares, patents, or personal relationships with people affected by the findings.", detected:"Detected from your file: a competing interest to declare"}
 };
 var DECL_ORDER = ["ethics","data","ai","funding","coi"], DECL_NAV = DECL_ORDER;
@@ -3230,9 +3238,12 @@ function pvHTML(id){
     if (fb0) return esc(fb0) + " " + '<span class="ph">' + (fv.role === "yes" ? "[Choose what the funder was involved in]" : "[Answer whether the funder had a role]") + '</span>'; }
   if (id === "coi" && S.D.decl.coi.v.mode === "declare") { var r = coiRows();
     var parts = r.who.map(function(x){ return x.line ? esc(x.line) : '<span class="ph">[Add a statement for ' + esc(x.a.name) + ']</span>'; });
-    if (r.more === "yes" && r.who.length === 1) parts.push('<span class="ph">[Choose the other authors who need to declare something]</span>');
+    if (!r.ready) parts.push('<span class="ph">[Choose the authors who have a competing interest]</span>');
     if (r.rest) parts.push(esc(r.rest));
     return '<div class="pvr"><span class="pvl">Competing interests</span>' + parts.join(" ") + '</div>'; }
+  if (id === "ai" && aiV().used === "yes" && !buildStmt("ai")) { var P = aiParts(), ph = 0;
+    return P.out.map(function(x){ return x ? esc(x) : (ph++ < 1 ? '<span class="ph">[' + esc(P.miss[0]) + ']</span>' : ""); }).join(" ") +
+      (P.miss.length > 1 ? ' <span class="ph">(' + (P.miss.length - 1) + ' more to answer)</span>' : ""); }
   var st = buildStmt(id); return st ? esc(st) : '<span class="ph">Answer the question to see the statement.</span>'; }
 function fundV(){ var v = S.D.decl.funding.v; if (v.funder === undefined) v.funder = FUND_DET.funder; if (v.grant === undefined) v.grant = FUND_DET.grant; if (v.role === undefined) v.role = null; if (!v.roles) v.roles = []; return v; }
 var FUND_ROLES = [["design","Study design","study design"],["data","Data collection and analysis","data collection and analysis"],["decision","Decision to publish","the decision to publish"],["prep","Preparation of the manuscript","preparation of the manuscript"]];
@@ -3244,10 +3255,55 @@ function fundRoleStmt(){ var v = fundV();
       not = FUND_ROLES.filter(function(r){ return v.roles.indexOf(r[0]) < 0; }).map(function(r){ return r[2]; });
   return "The funder had a role in " + andList(had) + (not.length ? ", but had no role in " + andList(not, "or") : "") + "."; }
 var FUND_FOUND = "This work was funded by the Natural Environment Research Council (NERC), grant NE/X012345/1.";
-var AI_USES = [["language","Improving the language"],["code","Writing or checking code"],["analysis","Data analysis"],["images","Creating images or figures"]];
+/* use of generative AI: what it was used for, and the follow-up question each use needs (null = none) */
+var AI_USES = [
+  ["pls","Plain language summaries"], ["copy","Copyediting and language refinement"],
+  ["code","Software coding"], ["refs","Reference management"], ["vis","Visualisations of research data"],
+  ["lit","Literature reviews, meta-analysis and bibliometric studies"], ["design","Study design"],
+  ["data","Data collection and analysis"], ["method","Research methodologies"],
+  ["writing","Writing"], ["art","Artistic rendering, concept and process diagrams, or teaching illustrations"]];
+/* the question and example for each use */
+var AI_Q = {
+  pls:["Please explain how generative AI was used for plain language summaries","e.g. Used to draft the plain language summary. The authors checked it against the paper."],
+  copy:["Please explain how generative AI was used for copyediting and language refinement","e.g. Used to improve grammar and readability. The authors reviewed and edited all text."],
+  code:["Please explain how generative AI was used in your coding","e.g. Used GitHub Copilot to suggest R code for the mixed models. We checked and tested all code."],
+  refs:["Please explain how generative AI was used for your references","e.g. Used to format the reference list. Every reference was checked against the original source."],
+  vis:["Please list any figure, table or visualisation that used generative AI, and how it was used","e.g. Figure 2: colour palette suggested by AI. The data and plot are our own."],
+  lit:["Please explain how generative AI was used for literature reviews, meta-analysis or bibliometric studies","e.g. Used to screen abstracts. Two authors checked every decision."],
+  design:["Please explain how generative AI was used in your study design","e.g. Used to compare sampling designs. The final design was chosen by the authors."],
+  data:["Please explain how generative AI was used for data collection and analysis","e.g. Used to suggest a statistical test. All analysis was run and checked by the authors."],
+  method:["Please explain how generative AI was used in your research methodologies","e.g. Used to summarise methods in earlier studies. The authors read every source."],
+  writing:["Please explain how generative AI was used in the writing of your manuscript","e.g. Used to shorten the Introduction. All text was rewritten and checked by the authors."],
+  art:["Please list any artistic rendering that used generative AI, and how it was used","e.g. Graphical abstract background generated with an image tool."]};
+/* generative AI found in the sample file (acknowledgements) */
+var AI_DET = {text:"ChatGPT (GPT-4o, OpenAI) was used to improve the language and readability of the manuscript. The authors reviewed and edited all text.", uses:["copy"], tool:{name:"ChatGPT", ver:"GPT-4o"},
+  det:{copy:"Used to improve the language and readability of the manuscript. The authors reviewed and edited all text."}};
+var AI_RESP = "The authors declare that they take full responsibility for the integrity, originality and accuracy of all manuscript content, including references and any outputs of generative AI.";
+var AI_NORESP = "The authors do not confirm that they take full responsibility for the integrity, originality and accuracy of all manuscript content, including references and any outputs of generative AI.";
+function aiV(){ var v = S.D.decl.ai.v; if (!v.det) v.det = {}; if (!v.tools || !v.tools.length) v.tools = [{name:v.tool || "", ver:""}]; if (v.terms === undefined) v.terms = null; if (v.confirm === undefined) v.confirm = null;
+  v.uses = (v.uses || []).filter(function(k){ return AI_USES.some(function(u){ return u[0] === k; }); }); return v; }
+function aiGroups(){ var v = aiV(); return AI_USES.filter(function(u){ return v.uses.indexOf(u[0]) >= 0; }).map(function(u){ return u[0]; }); }
+function aiResLabel(){ var v = aiV(); return andList(AI_USES.filter(function(u){ return u[2] === "research" && v.uses.indexOf(u[0]) >= 0; }).map(function(u){ return u[1].toLowerCase(); })); }
+function aiTools(){ return aiV().tools.filter(function(x){ return x.name.trim() && x.ver.trim(); }); }
+function aiFlag(){ var v = aiV(); return v.used === "yes" && (v.terms === "no" || v.confirm === "no"); }
+function sent(t){ t = t.trim(); t = t.charAt(0).toUpperCase() + t.slice(1); return /[.!?]$/.test(t) ? t : t + "."; }
+/* the statement, with [placeholders] for anything not answered yet */
+function aiParts(){
+  var v = aiV(), names = AI_USES.filter(function(u){ return v.uses.indexOf(u[0]) >= 0; }).map(function(u){ return u[1].toLowerCase(); });
+  var miss = [], out = [];
+  var aiJoin = function(a){ return a.length > 1 && a.some(function(x){ return / and /.test(x); }) ? a.slice(0, -1).join("; ") + "; and " + a[a.length - 1] : andList(a); };
+  out.push(names.length ? "The authors used generative AI for " + aiJoin(names) + "." : null); if (!names.length) miss.push("Choose how you used generative AI");
+  aiGroups().forEach(function(g){ var t = (v.det[g] || "").trim(); out.push(t ? sent(t) : null); if (!t) miss.push(AI_Q[g][0].replace(/^Please /, "").replace(/^./, function(c){ return c.toUpperCase(); })); });
+  var tl = aiTools(); out.push(tl.length ? "The generative AI " + (tl.length === 1 ? "tool used was " : "tools used were ") + andList(tl.map(function(x){ return x.name.trim() + " (" + x.ver.trim() + ")"; })) + "." : null); if (!tl.length) miss.push("Add the name and version of each tool");
+  if (!v.terms) miss.push("Answer whether you checked the terms of use");
+  out.push(v.confirm === "yes" ? AI_RESP : v.confirm === "no" ? AI_NORESP : null); if (!v.confirm) miss.push("Answer the responsibility question");
+  return {out:out, miss:miss};
+}
 /* competing interests: one statement per selected author, plus a line for everyone else */
-function coiV(){ var v = S.D.decl.coi.v; if (!v.stmts) v.stmts = {}; if (v.det === undefined) v.det = COI_DET.text; if (v.more === undefined) v.more = null;
-  v.who = (v.who || []).filter(function(x){ return x !== COI_DET.id; }); return v; }
+/* competing interests, following the flow: any to declare? > which authors > details for each > statement */
+function coiV(){ var v = S.D.decl.coi.v; if (!v.stmts) v.stmts = {}; if (!v.who) v.who = [];
+  if (!v.flow2) { v.flow2 = true; if (v.who.indexOf(COI_DET.id) < 0) v.who.unshift(COI_DET.id); if (v.stmts[COI_DET.id] === undefined) v.stmts[COI_DET.id] = v.det !== undefined ? v.det : COI_DET.text; }
+  return v; }
 /* who can declare: everyone on the submission, plus anyone named in the file who hasn't been added or removed yet */
 function coiAuthors(){
   var all = auths().slice(), D = S.D, gone = (D.iss && D.iss.removed || []).concat(fb() ? fbState().removed.map(function(x){ return x && x.id || x; }) : []);
@@ -3262,12 +3318,10 @@ function coiAuthors(){
 function coiDetAuthor(){ return coiAuthors().filter(function(a){ return a.id === COI_DET.id; })[0] || {id:COI_DET.id, name:COI_DET.name}; }
 function coiLine(a, t){ t = String(t || "").trim(); return {a:a, text:t, line:t ? a.name + " declares: " + t + (/[.!?]$/.test(t) ? "" : ".") : ""}; }
 function coiRows(){
-  var v = coiV(), all = coiAuthors(), da = coiDetAuthor();
-  var extra = v.more === "yes" ? v.who.map(function(id){ return all.filter(function(a){ return a.id === id && a.id !== da.id; })[0]; }).filter(Boolean) : [];
-  var who = [coiLine(da, v.det)].concat(extra.map(function(a){ return coiLine(a, v.stmts[a.id]); }));
-  var others = all.filter(function(a){ return a.id !== da.id && extra.indexOf(a) < 0; }).length;
-  var ready = v.more === "no" || (v.more === "yes" && extra.length > 0);
-  return {who:who, more:v.more, ready:ready, rest:ready && others ? (others === 1 ? "The other author declares" : "The other authors declare") + " no competing interests." : ""};
+  var v = coiV(), all = coiAuthors();
+  var sel = all.filter(function(a){ return v.who.indexOf(a.id) >= 0; });
+  var who = sel.map(function(a){ return coiLine(a, v.stmts[a.id]); }), others = all.length - sel.length, ready = sel.length > 0;
+  return {who:who, ready:ready, rest:ready && others ? (others === 1 ? "The other author declares" : "The other authors declare") + " no competing interests." : ""};
 }
 function buildStmt(id){
   var v = S.D.decl[id].v;
@@ -3279,11 +3333,9 @@ function buildStmt(id){
     return "The data supporting this study are openly available in " + v.repo.trim() + " at " + v.doi.trim() + ".";
   }
   if (id === "ai") {
-    if (v.used === "no") return "No generative AI tools were used in this work.";
-    if (v.used !== "yes" || !v.uses.length || !v.tool.trim()) return "";
-    var names = v.uses.map(function(k){ return AI_USES.filter(function(u){ return u[0] === k; })[0][1].toLowerCase(); });
-    var list = names.length === 1 ? names[0] : names.slice(0, -1).join(", ") + " and " + names[names.length - 1];
-    return v.tool.trim() + " was used for " + list + ". The authors reviewed all output and take full responsibility for the content.";
+    if (v.used === "no") return "The authors declare that generative AI has not been used in the research, creation or development of this manuscript.";
+    if (v.used !== "yes") return "";
+    var P = aiParts(); return P.miss.length ? "" : P.out.join(" ");
   }
   if (id === "funding") {
     fundV(); if (v.mode === "none") return "The authors received no specific funding for this work.";
@@ -3293,7 +3345,7 @@ function buildStmt(id){
     var rs = fundRoleStmt(); return base && rs ? base + " " + rs : "";
   }
   if (id === "coi") {
-    if (v.mode === "none") return "The authors declare there are no competing interests.";
+    if (v.mode === "none") return "The authors declare no competing interests.";
     if (v.mode !== "declare") return "";
     var r = coiRows(); if (!r.ready || r.who.some(function(x){ return !x.text; })) return "";
     return r.who.map(function(x){ return x.line; }).join(" ") + (r.rest ? " " + r.rest : "");
@@ -3334,10 +3386,30 @@ function declPane(id){
     h += evid(v.where, "repo", "Found in your Data availability section: &ldquo;Data are deposited on Zenodo (10.5281/zenodo.1234567).&rdquo;") + seg("where", [["repo","In a public repository"],["supp","In the supplementary files"],["none","There are no data"]], null, "repo") + (v.where === "none" ? wmsg("Most journals ask authors to share their data. If there are none, you can carry on.") : "");
     if (v.where === "repo") h += '<div class="two">' + txt("repo", "Repository", "e.g. Zenodo", false, "Zenodo") + txt("doi", "DOI or link", "e.g. 10.5281/zenodo.1234567", false, "10.5281/zenodo.1234567") + '</div>';
   } else if (id === "ai") {
-    h += evid(v.used, "no", "We looked in your Methods and Acknowledgements for tools such as chatbots or image generators. None found.") + seg("used", [["no","No"],["yes","Yes"]], null, "no") + (v.used === "yes" ? wmsg("We didn&rsquo;t find AI tools in your file. If you did use them, please say how below.") : "");
-    if (v.used === "yes") h += '<div class="field"><span class="flabel">What did you use them for?</span><div class="seg">' + AI_USES.map(function(u){
-        return '<button type="button" data-a="dmulti" data-v="' + u[0] + '" aria-pressed="' + (v.uses.indexOf(u[0]) >= 0) + '">' + u[1] + '</button>'; }).join("") + '</div></div>' +
-      txt("tool", "Which tool?", "e.g. ChatGPT");
+    aiV();
+    var aic = function(n, title, body, sub){ return '<section class="ck3"><div class="ch"><h4>' + title + '</h4></div>' + (sub ? '<p class="src">' + sub + '</p>' : "") + body + '</section>'; };
+    h += evid(v.used, "yes", "Found in your Acknowledgements: &ldquo;" + AI_DET.text + "&rdquo;") + seg("used", [["no","No, it hasn\u2019t been used"],["yes","Yes"]], null, "yes") +
+      (v.used === "no" ? wmsg("Your file says generative AI was used to improve the language. If it wasn&rsquo;t, you can carry on.") : "");
+    if (v.used === "yes") {
+      var gs = aiGroups();
+      h += aic(2, "How have you used generative AI in your manuscript?",
+        '<div class="seg" role="group" aria-label="How you used generative AI. Select all that apply.">' + AI_USES.map(function(u){
+          return '<button type="button" data-a="dmulti" data-v="' + u[0] + '" aria-pressed="' + (v.uses.indexOf(u[0]) >= 0) + '">' + u[1] + '</button>'; }).join("") + '</div>' +
+        gs.map(function(g){ var q = AI_Q[g], lab = q[0];
+          return '<div class="field aifu"><label for="d-ai-x-' + g + '">' + lab + '</label><textarea class="inp" id="d-ai-x-' + g + '" data-d="ai" data-f="x:' + g + '" placeholder="' + esc(q[1]) + '">' + esc(v.det[g] || "") + '</textarea></div>'; }).join(""),
+        "Select all that apply, then explain each one.");
+      h += aic(3, "Which generative AI tools did you use?",
+        v.tools.map(function(x, i){ return '<div class="two aitool"><div class="field"><label for="d-ai-tn-' + i + '">Tool name</label><input class="inp" id="d-ai-tn-' + i + '" data-d="ai" data-f="tn:' + i + '" placeholder="e.g. ChatGPT" value="' + esc(x.name) + '"></div>' +
+          '<div class="field"><label for="d-ai-tv-' + i + '">Version</label><div class="aiver"><input class="inp" id="d-ai-tv-' + i + '" data-d="ai" data-f="tv:' + i + '" placeholder="e.g. GPT-4o, May 2025" value="' + esc(x.ver) + '">' +
+          (v.tools.length > 1 ? '<button type="button" class="link small quiet" data-a="aitoolrm" data-i="' + i + '">Remove</button>' : "") + '</div></div></div>'; }).join("") +
+        '<button type="button" class="link small" data-a="aitooladd">' + I.plus + ' Add another tool</button>',
+        "Write the name and version number of every tool you used.");
+      h += aic(4, "Have you checked the terms of use for each tool, to make sure it can be used for publication?", seg("terms", [["yes","Yes"],["no","No"]], "Have you checked the terms of use?") +
+        "");
+      h += aic(5, "Do you confirm that the authors take full responsibility for the integrity, originality and accuracy of all manuscript content, including references and any outputs of generative AI?",
+        seg("confirm", [["yes","Yes, I confirm"],["no","No, I don\u2019t confirm"]], "Do you confirm the authors take full responsibility?") +
+        "");
+    }
   } else if (id === "funding") {
     fundV(); var fch = v.funder !== FUND_DET.funder || v.grant !== FUND_DET.grant;
     h += evid(v.mode, "found", "Found in your Acknowledgements: &ldquo;" + FUND_FOUND + "&rdquo;") + seg("mode", [["found","Yes, funding detected"],["none","No specific funding"],["other","Different or extra funding"]], null, "found");
@@ -3350,18 +3422,17 @@ function declPane(id){
           return '<button type="button" data-a="dfrole" data-v="' + r[0] + '" aria-pressed="' + (v.roles.indexOf(r[0]) >= 0) + '">' + r[1] + '</button>'; }).join("") + '</div><p class="src" style="margin:0">Select all that apply.</p></div>';
     }
   } else if (id === "coi") {
-    coiV(); var da = coiDetAuthor(), dch = v.det !== COI_DET.text;
-    h += evid(v.mode, "declare", "Found in your end notes: &ldquo;J. Whitfield " + COI_DET.text + ".&rdquo;") + seg("mode", [["declare","Yes, competing interest detected"],["none","No competing interests"]], null, "declare");
+    coiV();
+    h += evid(v.mode, "declare", "Found in your end notes: &ldquo;J. Whitfield " + COI_DET.text + ".&rdquo;") + seg("mode", [["none","No"],["declare","Yes"]], "Do you have any competing interests to declare?", "declare");
     if (v.mode === "declare") {
-      h += '<section class="ck3" data-card="det"><div class="ch"><h4>' + esc(da.name) + (da.you ? " (you)" : "") + '</h4>' + (dch ? '<span class="dtag chg">You changed this</span>' : "") + '</div>' +
-        '<div class="field"><label for="d-coi-det">Statement for ' + esc(da.name) + '</label><textarea class="inp" id="d-coi-det" data-d="coi" data-f="det" placeholder="e.g. has received consultancy fees from Thames Water">' + esc(v.det) + '</textarea></div></section>';
-      h += '<div class="field"><span class="flabel">Do any other authors need to declare something?</span>' + seg("more", [["no","No"],["yes","Yes, add more"]], "Do any other authors need to declare something?") + '</div>';
-      if (v.more === "yes") { var rest = coiAuthors().filter(function(a){ return a.id !== da.id; });
-        h += '<div class="field"><span class="flabel">Which authors?</span><div class="seg" role="group" aria-label="Other authors with a competing interest. Select all that apply.">' + rest.map(function(a){
-            return '<button type="button" data-a="dcoiwho" data-v="' + esc(a.id) + '" aria-pressed="' + (v.who.indexOf(a.id) >= 0) + '">' + esc(a.name) + (a.you ? " (you)" : "") + '</button>'; }).join("") + '</div><p class="src" style="margin:0">Select all that apply. Each author you choose gets their own statement.</p></div>' +
-          v.who.map(function(id){ return rest.filter(function(a){ return a.id === id; })[0]; }).filter(Boolean).map(function(a){ var fid = "d-coi-s-" + esc(a.id);
-            return '<div class="field"><label for="' + fid + '">Statement for ' + esc(a.name) + (a.you ? " (you)" : "") + '</label><textarea class="inp" id="' + fid + '" data-d="coi" data-f="s:' + esc(a.id) + '" placeholder="e.g. holds shares in a company that makes filtration equipment">' + esc(v.stmts[a.id] || "") + '</textarea></div>'; }).join("");
-      }
+      var all = coiAuthors(), sel = all.filter(function(a){ return v.who.indexOf(a.id) >= 0; });
+      h += '<section class="ck3" data-card="who"><div class="ch"><h4>Name of author(s)</h4></div><p class="src">Which authors have a competing interest? Select all that apply.</p>' +
+        '<div class="seg" role="group" aria-label="Authors with a competing interest. Select all that apply.">' + all.map(function(a){
+          return '<button type="button" data-a="dcoiwho" data-v="' + esc(a.id) + '" aria-pressed="' + (v.who.indexOf(a.id) >= 0) + '">' + esc(a.name) + (a.you ? " (you)" : "") + '</button>'; }).join("") + '</div>' +
+        (sel.length ? "" : wmsg("Choose at least one author, or answer &ldquo;No&rdquo; above if nobody has a competing interest.")) + '</section>';
+      if (sel.length) h += '<section class="ck3" data-card="details"><div class="ch"><h4>Details of competing interest' + (sel.length > 1 ? "s" : "") + '</h4></div><p class="src">Describe each author&rsquo;s interest, for example consultancy, shares, patents, funding from an interested party, or a personal relationship.</p>' +
+        sel.map(function(a){ var fid = "d-coi-s-" + esc(a.id);
+          return '<div class="field"><label for="' + fid + '">' + esc(a.name) + (a.you ? " (you)" : "") + '</label><textarea class="inp" id="' + fid + '" data-d="coi" data-f="s:' + esc(a.id) + '" placeholder="e.g. has received consultancy fees from a company that makes filtration equipment">' + esc(v.stmts[a.id] || "") + '</textarea></div>'; }).join("") + '</section>';
     }
   }
   var stmt = buildStmt(id), saved = isSaved(id), left = reqLeft(), nx = nextDecl(id);
@@ -4920,10 +4991,12 @@ var ACT = {
   dwho:function(t){ var v = ev(), k = t.getAttribute("data-v"), w = v.who.filter(function(x){ return x !== "neither"; });
     if (k === "neither") v.who = v.who.indexOf("neither") >= 0 ? [] : ["neither"]; else { var i = w.indexOf(k); if (i >= 0) w.splice(i, 1); else w.push(k); v.who = w; }
     touch(); refresh(); var sc = document.querySelector('.dpane [data-card="who"]'), f = sc && sc.querySelector(".two input"); if (f && !f.value && v.who.indexOf(k) >= 0) f.focus({preventScroll:true}); },
-  dcoiwho:function(t){ var v = S.D.decl.coi.v, k = t.getAttribute("data-v"); if (!v.who) v.who = []; var i = v.who.indexOf(k); if (i >= 0) v.who.splice(i, 1); else v.who.push(k); if (!v.stmts) v.stmts = {}; touch(); refresh();
+  dcoiwho:function(t){ var v = coiV(), k = t.getAttribute("data-v"); if (!v.who) v.who = []; var i = v.who.indexOf(k); if (i >= 0) v.who.splice(i, 1); else v.who.push(k); if (!v.stmts) v.stmts = {}; touch(); refresh();
     var f = i < 0 && document.getElementById("d-coi-s-" + k); if (f && !f.value) f.focus({preventScroll:true}); },
   dfrole:function(t){ var v = fundV().roles, k = t.getAttribute("data-v"), i = v.indexOf(k); if (i >= 0) v.splice(i, 1); else v.push(k); touch(); refresh(); },
-  dmulti:function(t){ var v = S.D.decl.ai.v.uses, k = t.getAttribute("data-v"), i = v.indexOf(k); if (i >= 0) v.splice(i, 1); else v.push(k); touch(); refresh(); },
+  aitooladd:function(){ aiV().tools.push({name:"", ver:""}); touch(); refresh(); var n = aiV().tools.length - 1, f = document.getElementById("d-ai-tn-" + n); if (f) f.focus(); },
+  aitoolrm:function(t){ aiV().tools.splice(+t.getAttribute("data-i"), 1); touch(); refresh(); },
+  dmulti:function(t){ aiV(); var v = S.D.decl.ai.v.uses, k = t.getAttribute("data-v"), i = v.indexOf(k); if (i >= 0) v.splice(i, 1); else v.push(k); touch(); refresh(); },
   duse:function(t){
     var id = t.getAttribute("data-id"), st = buildStmt(id); if (!st) return;
     var d = S.D.decl[id]; d.text = st; d.done = true;
@@ -5281,7 +5354,10 @@ document.addEventListener("input", function(e){
   if (t.hasAttribute && t.hasAttribute("data-orcid")) return orcidInput(t);
   var d = t.getAttribute && t.getAttribute("data-d");
   if (d) {
-    var df = t.getAttribute("data-f"); if (df.indexOf("s:") === 0) coiV().stmts[df.slice(2)] = t.value; else S.D.decl[d].v[df] = t.value; touch();
+    var df = t.getAttribute("data-f"); if (df.indexOf("s:") === 0) coiV().stmts[df.slice(2)] = t.value;
+    else if (d === "ai" && df.indexOf("x:") === 0) aiV().det[df.slice(2)] = t.value;
+    else if (d === "ai" && /^t[nv]:/.test(df)) aiV().tools[+df.slice(3)][df.charAt(1) === "n" ? "name" : "ver"] = t.value;
+    else S.D.decl[d].v[df] = t.value; touch();
     var st = buildStmt(d), pv = document.getElementById("pv-" + d), use = document.getElementById("use-" + d);
     if (pv) { pv.innerHTML = pvHTML(d); pv.classList.add("preview"); }
     if (use) { use.disabled = !st || isSaved(d); use.innerHTML = nextDecl(d) ? "Save and go to next" : "Save"; }
@@ -5723,7 +5799,7 @@ function seedTo(r){
   if (idx > 0) {
     if (!S.D) S.D = newDraft(SAMPLE_FILE);
     if (idx >= 2) { S.D.t0 = Date.now() - 60000; S.D.journal = S.D.journal || "jfe"; S.D.journalAt = Date.now() - 60000; S.D.type = S.D.type || "research"; }
-    if (idx >= 3) ["ethics","data","ai"].forEach(function(k){ var d = S.D.decl[k]; if (!d.done) { if (k === "ethics") d.v.who = ["neither"]; if (k === "data") d.v.where = "supp"; if (k === "ai") d.v.used = "no"; d.text = buildStmt(k); d.done = true; } });
+    if (idx >= 3) ["ethics","data","ai"].forEach(function(k){ var d = S.D.decl[k]; if (!d.done) { if (k === "ethics") d.v.who = ["neither"]; if (k === "data") d.v.where = "supp"; if (k === "ai") { var av = aiV(); av.used = "yes"; if (!av.uses.length) av.uses = AI_DET.uses.slice(); if (!av.det.copy) av.det.copy = AI_DET.det.copy; if (!aiTools().length) av.tools = [{name:AI_DET.tool.name, ver:AI_DET.tool.ver}]; av.terms = av.terms || "yes"; av.confirm = av.confirm || "yes"; } d.text = buildStmt(k); d.done = true; } });
     if (idx >= 4 || (idx >= 2 && newDet()) || r === "declarations") {
       if (idx >= 4) { S.D.iss.title = true; S.D.iss.abstract = true; S.D.iss.symbol = S.D.iss.symbol || "fixed"; S.D.iss.caption = S.D.iss.caption || "skipped"; }
       [["whitfield","Dr James Whitfield","University of Reading","j.whitfield@reading.ac.uk",true],["marques","Prof. Sofia Marques","University of Lisbon","smarques@ulisboa.pt",true],["liwei","Li Wei","Environment Agency","li.wei@environment-agency.gov.uk",false],["price","Dr Hannah Price","Environment Agency","hannah.price@environment-agency.gov.uk",true],["raman","Dr Priya Raman","Cefas","priya.raman@cefas.gov.uk",true],["carter","Ben Carter","Freshwater Biological Association","ben.carter.rivers@outlook.com",false]].forEach(function(x){
