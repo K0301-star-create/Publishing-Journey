@@ -246,6 +246,10 @@ a.row:hover{background:var(--n50)}
 .rcomm{padding:18px 0;border-top:1px solid var(--n200)}
 .rcomm h4{font-size:16px;display:flex;gap:10px;align-items:center}
 .rcomm p{font-family:var(--serif);font-size:15.5px;line-height:26px;margin-top:8px}
+.gsecs .gsec + .gsec{margin-top:10px}
+.gsecs h5{font-family:inherit;font-size:13px;line-height:18px;font-weight:700;color:var(--n600);text-transform:none;margin:0}
+.gsecs p{margin:2px 0 0}
+.rcomm .gsecs h5{font-size:14px;margin-top:12px}
 .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 28px;margin:0}
 .fields .f{display:flex;flex-direction:column;gap:4px;min-width:0}
 .fields .f.w{grid-column:1/-1}
@@ -730,7 +734,14 @@ body.flow .proto{bottom:84px}
 .cmt .cma{display:flex;gap:14px;margin-top:6px}
 .ptext{padding:16px 20px 20px;display:flex;flex-direction:column;gap:12px}
 .ptext textarea{min-height:320px;font-family:var(--serif);font-size:16px;line-height:24px}
-.ptext .wc{font-size:14px;color:var(--n600);margin-top:-6px}
+.rvsec{display:flex;flex-direction:column;gap:8px;padding-bottom:20px;border-bottom:1px solid var(--n200)}
+.rvsec:last-of-type{border-bottom:0;padding-bottom:0}
+.rvsec h4{margin:0;font-size:16px;line-height:24px}
+.rvsec .qi{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:14px;line-height:20px;color:var(--n700)}
+.rvsec .qi li{display:flex;gap:8px;align-items:flex-start}
+.rvsec .qi li svg{flex:none;width:16px;height:16px;margin-top:2px;color:var(--n500)}
+.rvsec .hint{font-size:13px;line-height:18px;color:var(--n600);margin:0}
+.ptext .rvsec textarea{min-height:140px}
 .guide{font-size:14px;line-height:20px;border:1px solid var(--n200);border-radius:var(--r);padding:8px 12px}
 .guide summary{font-weight:600;color:var(--indigo);cursor:pointer}
 .guide ul{margin:8px 0 2px;padding-left:18px}
@@ -1411,7 +1422,10 @@ var FILE_AUTHORS = [
   {id:"me", name:"Amara Okafor", inst:"University of Reading", sup:1},
   {id:"whitfield", name:"James Whitfield", inst:"University of Reading", match:"whitfield", sup:1, email:"j.whitfield@reading.ac.uk"},
   {id:"liwei", name:"Li Wei", inst:"Environment Agency", match:null, sup:2, email:"liwei.rivers@gmail.com"},
-  {id:"marques", name:"Sofia Marques", inst:"University of Lisbon", match:"marques", sup:3, email:"smarques@ulisboa.pt"}
+  {id:"marques", name:"Sofia Marques", inst:"University of Lisbon", match:"marques", sup:3, email:"smarques@ulisboa.pt"},
+  {id:"price", name:"Hannah Price", inst:"Environment Agency", match:"price", sup:2, email:"hannah.price@environment-agency.gov.uk"},
+  {id:"raman", name:"Priya Raman", inst:"Cefas", match:"raman", sup:4, email:"priya.raman@cefas.gov.uk"},
+  {id:"carter", name:"Ben Carter", inst:"Freshwater Biological Association", match:null, sup:5, email:"ben.carter.rivers@outlook.com"}
 ];
 /* first build (no accounts): the institution is guessed from the email domain, so personal addresses give nothing */
 var EMAIL_INST = {"reading.ac.uk":"University of Reading", "ulisboa.pt":"University of Lisbon", "leeds.ac.uk":"University of Leeds", "uv.es":"University of Valencia",
@@ -1539,7 +1553,8 @@ function freshR(){
       inline:[
         seedC("r2", "methods2", "Accuracy was estimated by leave-one-out cross-validation.", "Leave-one-out validation on juveniles from a single year may overstate accuracy for adults born in earlier years. Could you test the model on juveniles from a second year, or discuss how much water chemistry varies between years?", 1),
         seedC("r2", "results", "although they make up only 18% of the spawning habitat", "How was spawning habitat measured? Please add this to the Methods, as this comparison is central to your conclusions.", 2)],
-      general:"This study uses otolith microchemistry to estimate where adult brown trout in the River Wye were born. The question matters for managers, the sampling is extensive and the paper is clearly written.\n\nMain issues\n1. The natal assignments rest on one year of water chemistry. "}
+      secs:{basic:"", design:"", validity:"", additional:""},
+      general:""}
   };
 }
 
@@ -1746,8 +1761,14 @@ var AUTH = {editor:"Dr Ruth Ellison",
     major:["Dear Dr Okafor,","Thank you for submitting your manuscript to Inland Waters. The reviewers agree the question is important, but they raise concerns that need substantial changes before I can make a final decision.","In particular, please address whether paired reaches are independent and how canopy cover was measured. This may need additional analysis.","Please send a revised manuscript with a short summary of what you changed. The revised version may go back to the reviewers."],
     reject:["Dear Dr Okafor,","Thank you for submitting your manuscript to Inland Waters. The reviewers found the topic important, but both had serious concerns about the study design, in particular whether paired reaches only 500 m apart are independent.","I&rsquo;m sorry we can&rsquo;t consider it further. I hope the reviewers&rsquo; comments are useful if you submit the work elsewhere."]},
   recs:{minor:["Minor revision","Minor revision"], major:["Minor revision","Major revision"], reject:["Major revision","Reject"]},
-  generals:["A clear and well-designed study with an important message for river managers. The paired design is a strength. My main question is whether reaches only 500 m apart are independent. Otherwise, my comments are minor.",
-    "The temperature results are convincing, but the link to invertebrates needs more support. Canopy cover was estimated from a single photograph per reach, and other differences between shaded and open reaches weren&rsquo;t measured. The claim about cost isn&rsquo;t supported."],
+  generals:[{basic:"The paper is clearly written and well structured, and the figures are easy to follow. Please share the temperature logger data alongside the paper.",
+      design:"The paired design across 18 reaches is a strength. My main question is whether reaches only 500 m apart are independent, as the shaded reach could cool water flowing into the open one.",
+      validity:"The temperature results are robust. Please give the test statistics for total invertebrate abundance, as you do for EPT abundance.",
+      additional:"A clear and well-designed study with an important message for river managers. Otherwise, my comments are minor."},
+    {basic:"Well written and easy to follow. The claim in the abstract that planting is low-cost isn&rsquo;t supported by data in the paper. Please remove it or add a reference.",
+      design:"Canopy cover was estimated from a single photograph per reach, which may not represent the whole reach. Other differences between shaded and open reaches, such as leaf litter, weren&rsquo;t measured.",
+      validity:"The temperature results are convincing, but the link to invertebrates needs more support, given the points above.",
+      additional:"A useful study. With the canopy and cost points addressed, it would make a strong contribution."}],
   own:[{id:"ep1", text:"Please add a data availability statement with a link to the temperature logger data.", grp:"req"}],
   comments:[
     {id:"p1", rv:0, blk:"methods", quote:"the two were no more than 500 m apart", text:"Reaches 500 m apart may not be independent, as the shaded reach could cool water flowing into the open one. Please discuss this, or show whether the order (shaded upstream or downstream) affected the results.", grp:"req"},
@@ -1773,8 +1794,14 @@ AMS.s4 = {ref:"PJLE-2026-1187", file:"Okafor_beaver_dams_v1.docx", kw:"beaver, e
 var AUTH4 = {editor:"Dr Laura Mendes", by:'<div class="by">Amara Okafor<sup>1</sup>, Li Wei<sup>2</sup></div>', v2pdf:"Okafor_beaver_dams_v2.pdf", v2doc:"Okafor_beaver_dams_v2.docx",
   letters:{minor:["Dear Dr Okafor,","Thank you for submitting your manuscript to PeerJ Life &amp; Environment. Both reviewers found it a clear and useful study, and it can be accepted after a few small amendments.","I&rsquo;ve marked the points you must address. Please also respond to the other comments, either by making a change or explaining why you haven&rsquo;t.","I&rsquo;ll check your changes myself, without sending the paper back to the reviewers."]},
   recs:{minor:["Minor revision","Minor revision"]},
-  generals:["A well-designed comparison across a good number of dam complexes, and a timely topic. My main concern is that family-level identification may hide real changes in the community. The other points are minor.",
-    "The results are clear and the conclusions are mostly supported. I&rsquo;d like more detail on how the upstream reaches were chosen, and the abstract overstates how easy beaver dams are to manage."],
+  generals:[{basic:"Clearly written and well structured. The figures are clear and the background is well referenced.",
+      design:"A well-designed comparison across a good number of dam complexes. My main concern is that family-level identification may hide real changes in the community, especially among mayflies.",
+      validity:"The conclusions follow from the family-level results, but should be limited to that level unless genus-level results can be added.",
+      additional:"A timely topic. The other points are minor."},
+    {basic:"The results are clearly presented. The abstract overstates how easy beaver dams are to manage. Please tone this down.",
+      design:"Please give more detail on how the upstream reaches were chosen, so readers can judge whether they are fair comparisons.",
+      validity:"The conclusions are mostly supported by the results.",
+      additional:"No further comments."}],
   own:[{id:"ep4", text:"Please state in the Methods whether you had landowner permission to sample on private land.", grp:"req"}],
   comments:[
     {id:"b1", rv:0, blk:"methods", quote:"identified to family", text:"Family-level identification may hide changes in species composition, especially among mayflies. Please discuss this limitation, or give genus-level results for a subset of samples.", grp:"req"},
@@ -1883,6 +1910,10 @@ function load(){ try { return JSON.parse(sessionStorage.getItem(KEY)); } catch(e
 var jSnap = false;   /* true while drawing journey-map miniatures, so nothing is saved */
 var jFake = null;    /* the address a miniature pretends to be on, so screens read the right ids */
 function save(){ if (jSnap) return; try { sessionStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+/* competing interest found in the sample file (end notes) */
+var COI_DET = {id:"whitfield", name:"James Whitfield", text:"has received consultancy fees from Thames Water, which funds river monitoring at two of the study sites"};
+/* funding found in the sample file (acknowledgements) */
+var FUND_DET = {funder:"Natural Environment Research Council (NERC)", grant:"NE/X012345/1"};
 function newDraft(file){
   return {
     file:file, t0:Date.now(), journal:null, journalAt:null, type:null, reached:1,
@@ -1892,8 +1923,8 @@ function newDraft(file){
       ethics:{done:false, text:"", v:{who:["animals"], body:"Animal Welfare and Ethical Review Body (AWERB)", ainst:"University of Reading", ref:"AWERB-2024-017", adate:"2024-03-12", hbody:"", hinst:"", href:"", hdate:"", trial:"no", reg:"", regno:"", tdate:"", consent:"na"}},
       data:{done:false, text:"", v:{where:"repo", repo:"Zenodo", doi:"10.5281/zenodo.1234567"}},
       ai:{done:false, text:"", v:{used:"no", uses:[], tool:""}},
-      funding:{done:false, text:"", v:{mode:"found", text:""}},
-      coi:{done:false, text:"", v:{mode:"none", text:""}}
+      funding:{done:false, text:"", v:{mode:"found", funder:FUND_DET.funder, grant:FUND_DET.grant, text:""}},
+      coi:{done:false, text:"", v:{mode:"declare", det:COI_DET.text, more:null, who:[], stmts:{}}}
     },
     iss:{title:false, abstract:false, symbol:null, caption:null, removed:[]},
     title:null, titleEditing:false, caption:"", edits:{}, agree:false, sel:null, edited:Date.now()
@@ -1950,7 +1981,7 @@ function checks(){
   var jDone = !!(D.journal && now >= jStart + 5000);
   var list = [
     {lab:"Removing hidden personal data from your file", ok:el >= 3, res:"Done: 14 images cleaned"},
-    {lab:"Finding title, authors and abstract", ok:el >= 9, res:"Found 4 authors and a 248-word abstract"},
+    {lab:"Finding title, authors and abstract", ok:el >= 9, res:"Found " + FILE_AUTHORS.length + " authors and a 248-word abstract"},
     {lab:"Checking figures, tables and references", ok:el >= 16, res:"4 figures, 2 tables, 52 references"},
     {lab:"Checking the journal&rsquo;s requirements", ok:jDone, res:"3 details to add", needsJournal:!D.journal}
   ];
@@ -2205,7 +2236,7 @@ SCREENS.sub = function(){
       ? '<h2 style="font-size:18px">Decision: ' + s.decision.title + '</h2><div class="small muted" style="margin:4px 0 12px">' + s.decision.editor + ', ' + s.decision.date + '</div>' +
         '<div class="letter">' + s.decision.letter.map(function(p){ return "<p>" + p + "</p>"; }).join("") + '</div>' +
         '<h2 style="font-size:18px;margin:28px 0 4px">Reviewers&rsquo; comments</h2>' +
-        s.reviews.map(function(r){ return '<div class="rcomm"><h4>' + r[0] + '<span class="badge">' + r[1] + '</span></h4><p>' + r[2] + '</p></div>'; }).join("") +
+        s.reviews.map(function(r){ return '<div class="rcomm"><h4>' + r[0] + '<span class="badge">' + r[1] + '</span></h4>' + genSecsHTML(r[2]) + '</div>'; }).join("") +
         (AUTHS[s.id] && AA() ? '<h2 style="font-size:18px;margin:28px 0 4px">Comments on your manuscript (' + (AU().comments.length + AU().own.length) + ')</h2>' + aCommentsRead() : "")
       : '<div class="card emptyst" style="padding:36px"><h3>No decision yet</h3><p>The editor&rsquo;s decision and the reviewers&rsquo; comments will appear here together.</p></div>';
   } else if (tab === "files") {
@@ -2422,7 +2453,6 @@ function dLong(d){ return fmtDate(d, {day:"numeric", month:"long"}); }
 function recLabel(k){ var o = REC.filter(function(x){ return x[0] === k; })[0]; return o ? o[1] : ""; }
 function secName(b){ return {abs:"Abstract", intro:"Introduction", methods:"Methods", methods2:"Methods", results:"Results", disc:"Discussion"}[b]; }
 function shortQ(t, n){ return t.length > n ? t.slice(0, n).replace(/\s+\S*$/, "") + "…" : t; }
-function words(t){ var n = t.trim() ? t.trim().split(/\s+/).length : 0; return n + " word" + (n === 1 ? "" : "s"); }
 function ago(ts){
   var m = Math.round((Date.now() - ts) / 6e4);
   if (m < 1) return "just now"; if (m < 60) return m + " minute" + (m === 1 ? "" : "s") + " ago";
@@ -2447,6 +2477,21 @@ function rvGuard(rt){
   if (rt === "rdone" && st !== "submitted") return "ra/" + r.id;
   return null;
 }
+/* first-round review to the authors: four structured sections, joined into R.general */
+var RV_SECS = [
+  ["basic", "Basic reporting", ["Clear, unambiguous, professional English throughout", "Literature references and enough background or context for the field", "Professional article structure, figures and tables. Raw data shared", "Self-contained, with results relevant to the hypotheses"], "Comment on areas where the article falls short, with suggested improvements. Enter &ldquo;No comment&rdquo; if you have nothing to add."],
+  ["design", "Experimental design", ["Original primary research within the aims and scope of the journal", "Research question well defined, relevant and meaningful. It says how the research fills an identified knowledge gap", "Rigorous investigation to a high technical and ethical standard", "Methods described in enough detail to replicate"], "Comment on areas where the article falls short, with suggested improvements. Enter &ldquo;No comment&rdquo; if you have nothing to add."],
+  ["validity", "Validity of the findings", ["Impact and novelty are not assessed. Meaningful replication is encouraged where the rationale and benefit to the literature are clearly stated", "All underlying data provided. They are robust, statistically sound and controlled", "Conclusions are well stated, linked to the original research question and limited to the supporting results"], "Comment on areas where the article falls short, with suggested improvements. Enter &ldquo;No comment&rdquo; if you have nothing to add."],
+  ["additional", "Additional comments", ["Anything not covered by the three areas above", "For example, overall impressions, strengths of the work, or suggestions for the authors"], "Any general comments not covered by the three areas above."]
+];
+function rvSecInit(R){ if (!R.secs) { R.secs = {basic:"", design:"", validity:"", additional:R.general || ""}; } return R.secs; }
+function rvJoin(R){ var sc = rvSecInit(R); R.general = RV_SECS.filter(function(x){ return (sc[x[0]] || "").trim(); }).map(function(x){ return x[1] + "\n" + sc[x[0]].trim(); }).join("\n\n"); }
+function rvSecsHTML(R){ var sc = rvSecInit(R);
+  return RV_SECS.map(function(x, i){ var id = "rvs-" + x[0];
+    return '<section class="rvsec"><h4><label for="' + id + '">' + (i + 1) + '. ' + x[1] + '</label></h4>' +
+      '<ul class="qi" aria-label="What to cover">' + x[2].map(function(q){ return '<li>' + I.check + '<span>' + q + '</span></li>'; }).join("") + '</ul>' +
+      '<textarea class="inp" id="' + id + '" data-rvs="' + x[0] + '" aria-describedby="' + id + '-h">' + esc(sc[x[0]] || "") + '</textarea>' +
+      '<p class="hint" id="' + id + '-h">' + x[3] + '</p></section>'; }).join(""); }
 function rvTouch(R){
   R.saved = Date.now();
   if (R.st === "accepted") { R.st = "progress"; R.startedAt = Date.now(); }
@@ -2741,8 +2786,9 @@ SCREENS.rw = function(){
   if (re) tabs.unshift(["points", "Your points", '<span class="c">' + ptDone(R, m) + '/' + m.prev.length + '</span>']);
   var pb = tab === "general"
     ? '<div class="ptext"><p class="small">' + (re ? "A short overall view of version 2: is it now ready, and what, if anything, is still needed? Shared with the authors and the editor." : "Your main review. It&rsquo;s shared with the authors and the editor, along with your comments on the text.") + '</p>' +
-      '<details class="guide"><summary>What to cover</summary><ul><li>A short summary of what the paper claims</li><li>Main issues: anything that affects whether the conclusions hold</li><li>Minor issues: clarity, presentation, references</li><li>Be specific and constructive. Leave out your recommendation and anything that could identify you.</li></ul></details>' +
-      '<label class="flabel" for="gIn">General comments to the author</label><textarea class="inp" id="gIn" data-rvf="general" placeholder="Summary&#10;&#10;Main issues&#10;&#10;Minor issues">' + esc(R.general) + '</textarea><div class="wc" id="wc-general">' + words(R.general) + '</div></div>'
+      (re ? '<details class="guide"><summary>What to cover</summary><ul><li>A short summary of what the paper claims</li><li>Main issues: anything that affects whether the conclusions hold</li><li>Minor issues: clarity, presentation, references</li><li>Be specific and constructive. Leave out your recommendation and anything that could identify you.</li></ul></details>' +
+      '<label class="flabel" for="gIn">General comments to the author</label><textarea class="inp" id="gIn" data-rvf="general" placeholder="Summary&#10;&#10;Main issues&#10;&#10;Minor issues">' + esc(R.general) + '</textarea>'
+        : '<p class="xs muted" style="margin:0">Be specific and constructive. Leave out your recommendation and anything that could identify you.</p>' + rvSecsHTML(R)) + '</div>'
     : tab === "editor"
     ? '<div class="ptext"><div class="banner priv"><span class="bi">' + I.lock + '</span><div><b>Only the editor sees this</b><p>It&rsquo;s never shared with the authors. Use it for anything you&rsquo;d rather not say to them, such as concerns about ethics or overlap with other work.</p></div></div>' +
       '<label class="flabel" for="eIn">Confidential comments to the editor <span class="optional">(optional)</span></label><textarea class="inp" id="eIn" data-rvf="editor" style="min-height:220px" placeholder="For example, how confident you are in your assessment, or anything else the editor should know.">' + esc(R.editor || "") + '</textarea></div>'
@@ -3157,7 +3203,7 @@ var DECL = {
   funding:{req:false, t:"Funding", q:"Who funded this work?",
     why:"We found a grant in your acknowledgements. Check it&rsquo;s right, or tell us about other funding.", detected:"Found in your acknowledgements: NERC grant NE/X012345/1"},
   coi:{req:false, t:"Competing interests", q:"Is there anything that could be seen as influencing the work?",
-    why:"For example consultancy, shares, patents, or personal relationships with people affected by the findings.", detected:"Detected from your file: a competing interests statement"}
+    why:"For example consultancy, shares, patents, or personal relationships with people affected by the findings.", detected:"Detected from your file: a competing interest to declare"}
 };
 var DECL_ORDER = ["ethics","data","ai","funding","coi"], DECL_NAV = DECL_ORDER;
 var ETH_DET = {who:["animals"], trial:"no", consent:"na", body:"Animal Welfare and Ethical Review Body (AWERB)", ainst:"University of Reading", ref:"AWERB-2024-017", adate:"2024-03-12"};
@@ -3180,9 +3226,49 @@ function isSaved(id){ var st = S.D.decl[id], b = buildStmt(id); return !!(st.don
 function pvHTML(id){
   if (id === "ethics") return [["Clinical trial", trialStmt()], ["People or animals", peopleStmt()], ["Consent to participate", consentStmt()]].map(function(r){
     return '<div class="pvr"><span class="pvl">' + r[0] + '</span>' + (r[1] ? esc(r[1]) : '<span class="ph">Add the details to see this.</span>') + '</div>'; }).join("");
+  if (id === "funding" && !buildStmt("funding")) { var fv = fundV(), fb0 = fv.mode === "found" ? (fv.funder.trim() && fv.grant.trim() ? "This work was funded by the " + fv.funder.trim() + ", grant " + fv.grant.trim() + "." : "") : fv.mode === "other" ? fv.text.trim() : "";
+    if (fb0) return esc(fb0) + " " + '<span class="ph">' + (fv.role === "yes" ? "[Choose what the funder was involved in]" : "[Answer whether the funder had a role]") + '</span>'; }
+  if (id === "coi" && S.D.decl.coi.v.mode === "declare") { var r = coiRows();
+    var parts = r.who.map(function(x){ return x.line ? esc(x.line) : '<span class="ph">[Add a statement for ' + esc(x.a.name) + ']</span>'; });
+    if (r.more === "yes" && r.who.length === 1) parts.push('<span class="ph">[Choose the other authors who need to declare something]</span>');
+    if (r.rest) parts.push(esc(r.rest));
+    return '<div class="pvr"><span class="pvl">Competing interests</span>' + parts.join(" ") + '</div>'; }
   var st = buildStmt(id); return st ? esc(st) : '<span class="ph">Answer the question to see the statement.</span>'; }
+function fundV(){ var v = S.D.decl.funding.v; if (v.funder === undefined) v.funder = FUND_DET.funder; if (v.grant === undefined) v.grant = FUND_DET.grant; if (v.role === undefined) v.role = null; if (!v.roles) v.roles = []; return v; }
+var FUND_ROLES = [["design","Study design","study design"],["data","Data collection and analysis","data collection and analysis"],["decision","Decision to publish","the decision to publish"],["prep","Preparation of the manuscript","preparation of the manuscript"]];
+function andList(a, w){ return a.length === 1 ? a[0] : a.slice(0, -1).join(", ") + " " + (w || "and") + " " + a[a.length - 1]; }
+function fundRoleStmt(){ var v = fundV();
+  if (v.role === "no") return "The funder had no role in " + andList(FUND_ROLES.map(function(r){ return r[2]; }), "or") + ".";
+  if (v.role !== "yes" || !v.roles.length) return "";
+  var had = FUND_ROLES.filter(function(r){ return v.roles.indexOf(r[0]) >= 0; }).map(function(r){ return r[2]; }),
+      not = FUND_ROLES.filter(function(r){ return v.roles.indexOf(r[0]) < 0; }).map(function(r){ return r[2]; });
+  return "The funder had a role in " + andList(had) + (not.length ? ", but had no role in " + andList(not, "or") : "") + "."; }
 var FUND_FOUND = "This work was funded by the Natural Environment Research Council (NERC), grant NE/X012345/1.";
 var AI_USES = [["language","Improving the language"],["code","Writing or checking code"],["analysis","Data analysis"],["images","Creating images or figures"]];
+/* competing interests: one statement per selected author, plus a line for everyone else */
+function coiV(){ var v = S.D.decl.coi.v; if (!v.stmts) v.stmts = {}; if (v.det === undefined) v.det = COI_DET.text; if (v.more === undefined) v.more = null;
+  v.who = (v.who || []).filter(function(x){ return x !== COI_DET.id; }); return v; }
+/* who can declare: everyone on the submission, plus anyone named in the file who hasn't been added or removed yet */
+function coiAuthors(){
+  var all = auths().slice(), D = S.D, gone = (D.iss && D.iss.removed || []).concat(fb() ? fbState().removed.map(function(x){ return x && x.id || x; }) : []);
+  FILE_AUTHORS.forEach(function(fa){
+    if (fa.id === "me" || gone.indexOf(fa.id) >= 0) return;
+    var d = fa.match && DIRECTORY.filter(function(p){ return p.id === fa.match; })[0], id = d ? d.id : fa.id;
+    if (all.some(function(a){ return a.id === id || a.id === fa.id || a.name.toLowerCase().indexOf(fa.name.toLowerCase()) >= 0; })) return;
+    all.push({id:id, name:d ? d.name : fa.name, inst:d ? d.inst : fa.inst, email:d ? d.email : fa.email || "", fromFile:true});
+  });
+  return all;
+}
+function coiDetAuthor(){ return coiAuthors().filter(function(a){ return a.id === COI_DET.id; })[0] || {id:COI_DET.id, name:COI_DET.name}; }
+function coiLine(a, t){ t = String(t || "").trim(); return {a:a, text:t, line:t ? a.name + " declares: " + t + (/[.!?]$/.test(t) ? "" : ".") : ""}; }
+function coiRows(){
+  var v = coiV(), all = coiAuthors(), da = coiDetAuthor();
+  var extra = v.more === "yes" ? v.who.map(function(id){ return all.filter(function(a){ return a.id === id && a.id !== da.id; })[0]; }).filter(Boolean) : [];
+  var who = [coiLine(da, v.det)].concat(extra.map(function(a){ return coiLine(a, v.stmts[a.id]); }));
+  var others = all.filter(function(a){ return a.id !== da.id && extra.indexOf(a) < 0; }).length;
+  var ready = v.more === "no" || (v.more === "yes" && extra.length > 0);
+  return {who:who, more:v.more, ready:ready, rest:ready && others ? (others === 1 ? "The other author declares" : "The other authors declare") + " no competing interests." : ""};
+}
 function buildStmt(id){
   var v = S.D.decl[id].v;
   if (id === "ethics") { var ps = peopleStmt(), ts = trialStmt(); return ps && ts && consentStmt() ? ts + " " + ps + " " + consentStmt() : ""; }
@@ -3199,8 +3285,19 @@ function buildStmt(id){
     var list = names.length === 1 ? names[0] : names.slice(0, -1).join(", ") + " and " + names[names.length - 1];
     return v.tool.trim() + " was used for " + list + ". The authors reviewed all output and take full responsibility for the content.";
   }
-  if (id === "funding") return v.mode === "found" ? FUND_FOUND : v.mode === "none" ? "The authors received no specific funding for this work." : v.mode === "other" ? v.text.trim() : "";
-  if (id === "coi") return v.mode === "none" ? "The authors declare there are no competing interests." : v.mode === "declare" ? v.text.trim() : "";
+  if (id === "funding") {
+    fundV(); if (v.mode === "none") return "The authors received no specific funding for this work.";
+    var base = "";
+    if (v.mode === "found") { var fu = v.funder.trim(), gr = v.grant.trim(); base = fu && gr ? "This work was funded by the " + fu + ", grant " + gr + "." : ""; }
+    else if (v.mode === "other") { base = v.text.trim(); if (base && !/[.!?]$/.test(base)) base += "."; }
+    var rs = fundRoleStmt(); return base && rs ? base + " " + rs : "";
+  }
+  if (id === "coi") {
+    if (v.mode === "none") return "The authors declare there are no competing interests.";
+    if (v.mode !== "declare") return "";
+    var r = coiRows(); if (!r.ready || r.who.some(function(x){ return !x.text; })) return "";
+    return r.who.map(function(x){ return x.line; }).join(" ") + (r.rest ? " " + r.rest : "");
+  }
   return "";
 }
 function reqLeft(){ return S.D ? ["ethics","data","ai"].filter(function(k){ return !S.D.decl[k].done; }).length : 3; }
@@ -3242,11 +3339,30 @@ function declPane(id){
         return '<button type="button" data-a="dmulti" data-v="' + u[0] + '" aria-pressed="' + (v.uses.indexOf(u[0]) >= 0) + '">' + u[1] + '</button>'; }).join("") + '</div></div>' +
       txt("tool", "Which tool?", "e.g. ChatGPT");
   } else if (id === "funding") {
-    h += evid(v.mode, "found", "Found in your Acknowledgements: &ldquo;" + FUND_FOUND + "&rdquo;") + seg("mode", [["found","NERC, grant NE/X012345/1"],["other","Different or extra funding"],["none","No specific funding"]], null, "found");
-    if (v.mode === "other") h += txt("text", "Funding statement", "Name each funder and grant number", true);
+    fundV(); var fch = v.funder !== FUND_DET.funder || v.grant !== FUND_DET.grant;
+    h += evid(v.mode, "found", "Found in your Acknowledgements: &ldquo;" + FUND_FOUND + "&rdquo;") + seg("mode", [["found","Yes, funding detected"],["none","No specific funding"],["other","Different or extra funding"]], null, "found");
+    if (v.mode === "found") h += '<section class="ck3" data-card="fund"><div class="ch"><h4>Funding we found</h4>' + (fch ? '<span class="dtag chg">You changed this</span>' : "") + '</div>' +
+      txt("funder", "Funder name", "e.g. Natural Environment Research Council (NERC)") + '<div class="two">' + txt("grant", "Grant number", "e.g. NE/X012345/1") + '</div></section>';
+    if (v.mode === "other") h += txt("text", "Funding statement", "Name each funder(s) and grant number(s)", true);
+    if (v.mode === "found" || v.mode === "other") {
+      h += '<div class="field"><span class="flabel">Did the funder have any role in this work?</span>' + seg("role", [["no","No, the funder had no role"],["yes","Yes, the funder had a role"]], "Did the funder have any role in this work?") + '</div>';
+      if (v.role === "yes") h += '<div class="field"><span class="flabel">What was the funder involved in?</span><div class="seg" role="group" aria-label="What was the funder involved in? Select all that apply.">' + FUND_ROLES.map(function(r){
+          return '<button type="button" data-a="dfrole" data-v="' + r[0] + '" aria-pressed="' + (v.roles.indexOf(r[0]) >= 0) + '">' + r[1] + '</button>'; }).join("") + '</div><p class="src" style="margin:0">Select all that apply.</p></div>';
+    }
   } else if (id === "coi") {
-    h += evid(v.mode, "none", "Found in your end notes: &ldquo;The authors declare no competing interests.&rdquo;") + seg("mode", [["none","Nothing to declare"],["declare","Yes, I need to declare something"]], null, "none");
-    if (v.mode === "declare") h += txt("text", "What do you need to declare?", "Describe the interest and who it applies to", true);
+    coiV(); var da = coiDetAuthor(), dch = v.det !== COI_DET.text;
+    h += evid(v.mode, "declare", "Found in your end notes: &ldquo;J. Whitfield " + COI_DET.text + ".&rdquo;") + seg("mode", [["declare","Yes, competing interest detected"],["none","No competing interests"]], null, "declare");
+    if (v.mode === "declare") {
+      h += '<section class="ck3" data-card="det"><div class="ch"><h4>' + esc(da.name) + (da.you ? " (you)" : "") + '</h4>' + (dch ? '<span class="dtag chg">You changed this</span>' : "") + '</div>' +
+        '<div class="field"><label for="d-coi-det">Statement for ' + esc(da.name) + '</label><textarea class="inp" id="d-coi-det" data-d="coi" data-f="det" placeholder="e.g. has received consultancy fees from Thames Water">' + esc(v.det) + '</textarea></div></section>';
+      h += '<div class="field"><span class="flabel">Do any other authors need to declare something?</span>' + seg("more", [["no","No"],["yes","Yes, add more"]], "Do any other authors need to declare something?") + '</div>';
+      if (v.more === "yes") { var rest = coiAuthors().filter(function(a){ return a.id !== da.id; });
+        h += '<div class="field"><span class="flabel">Which authors?</span><div class="seg" role="group" aria-label="Other authors with a competing interest. Select all that apply.">' + rest.map(function(a){
+            return '<button type="button" data-a="dcoiwho" data-v="' + esc(a.id) + '" aria-pressed="' + (v.who.indexOf(a.id) >= 0) + '">' + esc(a.name) + (a.you ? " (you)" : "") + '</button>'; }).join("") + '</div><p class="src" style="margin:0">Select all that apply. Each author you choose gets their own statement.</p></div>' +
+          v.who.map(function(id){ return rest.filter(function(a){ return a.id === id; })[0]; }).filter(Boolean).map(function(a){ var fid = "d-coi-s-" + esc(a.id);
+            return '<div class="field"><label for="' + fid + '">Statement for ' + esc(a.name) + (a.you ? " (you)" : "") + '</label><textarea class="inp" id="' + fid + '" data-d="coi" data-f="s:' + esc(a.id) + '" placeholder="e.g. holds shares in a company that makes filtration equipment">' + esc(v.stmts[a.id] || "") + '</textarea></div>'; }).join("");
+      }
+    }
   }
   var stmt = buildStmt(id), saved = isSaved(id), left = reqLeft(), nx = nextDecl(id);
   return '<div class="card dpane">' +
@@ -3367,7 +3483,7 @@ SCREENS.check = function(){
     '<div class="rh"><span>Okafor et al.</span><span>Microplastic ingestion by chub</span></div>' +
     '<span class="ptitle hl" data-a="title">' + esc(title()) + '</span>' +
     '<div class="by hl" data-a="authors">' + bylineHTML() + '</div>' +
-    '<div class="af"><sup>1</sup>School of Biological Sciences, University of Reading, UK. <sup>2</sup>Environment Agency, Wallingford, UK. <sup>3</sup>MARE, University of Lisbon, Portugal.</div>' +
+    '<div class="af"><sup>1</sup>School of Biological Sciences, University of Reading, UK. <sup>2</sup>Environment Agency, Wallingford, UK. <sup>3</sup>MARE, University of Lisbon, Portugal. <sup>4</sup>Cefas, Lowestoft, UK. <sup>5</sup>Freshwater Biological Association, Ambleside, UK.</div>' +
     '<h4>Abstract</h4><p data-blk="abs" class="hl" data-a="abstract">' + blk("abs") + '</p>' +
     '<p class="kw"><b>Keywords:</b> ' + (S.D.kw && S.D.kw.filled ? S.D.kw.list.map(kwHTML).join(", ") : FILE_KW.map(kwHTML).join(", ")) + '</p>' +
     '<h4>1. Introduction</h4><p data-blk="intro">' + blk("intro") + '</p>' +
@@ -4486,11 +4602,24 @@ function aCard(c, nums, extra){
     (c.own ? "" : '<span class="qt">&ldquo;' + esc(shortQ(c.quote, 120)) + '&rdquo;' + (extra && c.s < 0 ? ' <span class="xs muted">(you&rsquo;ve edited this text)</span>' : "") + '</span>') +
     '<div class="ct"' + (c.own ? ' style="margin-top:6px"' : "") + '>' + esc(c.text) + '</div>' + (extra ? extra.html : "") + '</div>';
 }
+/* a reviewer's general comments to the authors, under the same four headings the reviewer fills in */
+function genSecsHTML(g){
+  return '<div class="gsecs">' + RV_SECS.filter(function(x){ return (g[x[0]] || "").trim(); }).map(function(x){ return '<div class="gsec"><h5>' + x[1] + '</h5><p>' + g[x[0]] + '</p></div>'; }).join("") + '</div>';
+}
+/* each reviewer's general comments, shown in the comments list just before the comments on the text */
+function aGenHTML(){
+  return AU().recs[AA().k].map(function(r, i){ return '<div class="cmt own gen" id="cm-gen' + i + '"><div class="cmh">' + rvTag(i) + '<span>General comments</span><span class="badge" style="margin-left:auto">' + r + '</span></div><div class="ct" style="margin-top:6px">' + genSecsHTML(AU().generals[i]) + '</div></div>'; }).join("");
+}
+function aWithGen(its, card){
+  var out = "", done = false;
+  its.forEach(function(c){ if (!c.own && !done) { out += aGenHTML(); done = true; } out += card(c); });
+  return done ? out : out + aGenHTML();
+}
 function aLetterHTML(){
   var A = AA();
   return '<div class="ptext" style="gap:0"><div class="small muted">From ' + AU().editor + ', ' + fmtDate(A.at) + '</div><h4 style="margin:4px 0 10px;font-size:16px">Decision: ' + DEC_NAME[A.k].toLowerCase() + '</h4>' +
       '<div class="letter">' + AU().letters[A.k].map(function(p){ return "<p>" + p + "</p>"; }).join("") + '</div></div>' +
-    AU().recs[A.k].map(function(r, i){ return '<div class="ovr"><h4>' + rvTag(i) + '<span class="badge" style="margin-left:auto">' + r + '</span></h4><div class="letter" style="margin-top:10px;font-size:14.5px;line-height:23px;padding:12px 14px">' + AU().generals[i] + '</div></div>'; }).join("");
+    AU().recs[A.k].map(function(r, i){ return '<div class="ovr"><h4>' + rvTag(i) + '<span class="badge" style="margin-left:auto">' + r + '</span></h4><div class="letter" style="margin-top:10px;font-size:14.5px;line-height:23px;padding:12px 14px">' + genSecsHTML(AU().generals[i]) + '</div></div>'; }).join("");
 }
 
 /* step 1: everything the editor and reviewers said, on the manuscript, before deciding how to revise */
@@ -4505,7 +4634,7 @@ SCREENS.arr = function(){
   var paper = msPaper({m:AMS[AID], id:"apaper", title:s.title, right:"Version 1", by:AU().by,
     inner:function(b){ return markSpans(AMS[AID].text[b], cMarks(orig, nums, b)); }});
   var pb = tab === "letter" ? '<div class="ptext" style="padding-bottom:0">' + aDue() + '</div>' + aLetterHTML()
-    : '<div class="ptip">' + plural(its.length, "comment") + ', ' + req + ' marked <b>Must address</b>. Next, you choose how to revise.</div>' + its.map(function(c){ return aCard(c, nums); }).join("");
+    : '<div class="ptip">' + plural(its.length, "comment") + ', ' + req + ' marked <b>Must address</b>. Next, you choose how to revise.</div>' + aWithGen(its, function(c){ return aCard(c, nums); });
   var panel = '<aside class="cpanel" aria-labelledby="cpH"><div class="cph"><h3 id="cpH">The decision and reviews</h3>' +
       '<div class="ptabs" role="tablist" aria-label="Decision">' + [["letter","Decision and reports",""],["comments","Comments",'<span class="c">' + its.length + '</span>']].map(function(t){
         return '<button type="button" role="tab" aria-selected="' + (t[0] === tab) + '" data-a="wsTab" data-v="' + t[0] + '">' + t[1] + t[2] + '</button>'; }).join("") + '</div></div>' +
@@ -4597,10 +4726,10 @@ SCREENS.arev = function(){
     inner:function(b){ return ed ? esc(aText(b)) : markSpans(aText(b), cMarks(cs, nums, b)); }});
   if (tab === "letter") pb = aLetterHTML();
   else pb = '<div class="ptip">Reply to every comment. Say what you changed, or why you didn&rsquo;t.' + (up ? "" : " To change the text, choose Edit text above the document.") + '</div>' +
-    its.map(function(c){
+    aWithGen(its, function(c){
       var r = A.resp[c.id] || "";
       return aCard(c, nums, {done:!!r.trim(), html:'<div class="rsp"><label class="flabel" for="ar-' + c.id + '">Your response<span class="ok3">' + I.check + '</span></label><textarea class="inp" id="ar-' + c.id + '" data-ar="' + c.id + '" placeholder="What you changed, or why you didn&rsquo;t">' + esc(r) + '</textarea></div>'});
-    }).join("") +
+    }) +
     (up ? "" : '<details class="edl"' + (nEd ? " open" : "") + '><summary>Your changes to the text (' + nEd + ')</summary>' + aEditList() + '</details>');
   var panel = '<aside class="cpanel" aria-labelledby="cpH"><div class="cph"><h3 id="cpH">Respond to comments<span class="badge ' + (left ? "warn" : "ok") + '" id="arLeft">' + (left ? left + " left" : "All answered") + '</span></h3>' +
       '<div class="ptabs" role="tablist" aria-label="Decision">' + [["comments","Comments",'<span class="c">' + its.length + '</span>'],["letter","Decision and reports",""]].map(function(t){
@@ -4791,6 +4920,9 @@ var ACT = {
   dwho:function(t){ var v = ev(), k = t.getAttribute("data-v"), w = v.who.filter(function(x){ return x !== "neither"; });
     if (k === "neither") v.who = v.who.indexOf("neither") >= 0 ? [] : ["neither"]; else { var i = w.indexOf(k); if (i >= 0) w.splice(i, 1); else w.push(k); v.who = w; }
     touch(); refresh(); var sc = document.querySelector('.dpane [data-card="who"]'), f = sc && sc.querySelector(".two input"); if (f && !f.value && v.who.indexOf(k) >= 0) f.focus({preventScroll:true}); },
+  dcoiwho:function(t){ var v = S.D.decl.coi.v, k = t.getAttribute("data-v"); if (!v.who) v.who = []; var i = v.who.indexOf(k); if (i >= 0) v.who.splice(i, 1); else v.who.push(k); if (!v.stmts) v.stmts = {}; touch(); refresh();
+    var f = i < 0 && document.getElementById("d-coi-s-" + k); if (f && !f.value) f.focus({preventScroll:true}); },
+  dfrole:function(t){ var v = fundV().roles, k = t.getAttribute("data-v"), i = v.indexOf(k); if (i >= 0) v.splice(i, 1); else v.push(k); touch(); refresh(); },
   dmulti:function(t){ var v = S.D.decl.ai.v.uses, k = t.getAttribute("data-v"), i = v.indexOf(k); if (i >= 0) v.splice(i, 1); else v.push(k); touch(); refresh(); },
   duse:function(t){
     var id = t.getAttribute("data-id"), st = buildStmt(id); if (!st) return;
@@ -5142,12 +5274,14 @@ document.addEventListener("input", function(e){
   }
   if (t.getAttribute && t.getAttribute("data-pt")) { var Rp = S.R[parts()[1]], pid = t.getAttribute("data-pt"); Rp.pts[pid].note = t.value; rvTouch(Rp); return; }
   if (t.getAttribute && t.getAttribute("data-cn")) { rvUI.cn = t.value; var cb = $("#cnBtn"); if (cb) cb.disabled = !t.value.trim(); return; }
+  var rs = t.getAttribute && t.getAttribute("data-rvs");
+  if (rs) { var Rs = S.R[parts()[1]]; rvSecInit(Rs)[rs] = t.value; rvJoin(Rs); rvTouch(Rs); return; }
   var rf = t.getAttribute && t.getAttribute("data-rvf");
-  if (rf) { var R = S.R[parts()[1]]; R[rf] = t.value; rvTouch(R); var wc = $("#wc-" + rf); if (wc) wc.textContent = words(t.value); return; }
+  if (rf) { var R = S.R[parts()[1]]; R[rf] = t.value; rvTouch(R); return; }
   if (t.hasAttribute && t.hasAttribute("data-orcid")) return orcidInput(t);
   var d = t.getAttribute && t.getAttribute("data-d");
   if (d) {
-    S.D.decl[d].v[t.getAttribute("data-f")] = t.value; touch();
+    var df = t.getAttribute("data-f"); if (df.indexOf("s:") === 0) coiV().stmts[df.slice(2)] = t.value; else S.D.decl[d].v[df] = t.value; touch();
     var st = buildStmt(d), pv = document.getElementById("pv-" + d), use = document.getElementById("use-" + d);
     if (pv) { pv.innerHTML = pvHTML(d); pv.classList.add("preview"); }
     if (use) { use.disabled = !st || isSaved(d); use.innerHTML = nextDecl(d) ? "Save and go to next" : "Save"; }
@@ -5590,9 +5724,9 @@ function seedTo(r){
     if (!S.D) S.D = newDraft(SAMPLE_FILE);
     if (idx >= 2) { S.D.t0 = Date.now() - 60000; S.D.journal = S.D.journal || "jfe"; S.D.journalAt = Date.now() - 60000; S.D.type = S.D.type || "research"; }
     if (idx >= 3) ["ethics","data","ai"].forEach(function(k){ var d = S.D.decl[k]; if (!d.done) { if (k === "ethics") d.v.who = ["neither"]; if (k === "data") d.v.where = "supp"; if (k === "ai") d.v.used = "no"; d.text = buildStmt(k); d.done = true; } });
-    if (idx >= 4 || (idx >= 2 && newDet())) {
+    if (idx >= 4 || (idx >= 2 && newDet()) || r === "declarations") {
       if (idx >= 4) { S.D.iss.title = true; S.D.iss.abstract = true; S.D.iss.symbol = S.D.iss.symbol || "fixed"; S.D.iss.caption = S.D.iss.caption || "skipped"; }
-      [["whitfield","Dr James Whitfield","University of Reading","j.whitfield@reading.ac.uk",true],["marques","Prof. Sofia Marques","University of Lisbon","smarques@ulisboa.pt",true],["liwei","Li Wei","Environment Agency","li.wei@environment-agency.gov.uk",false]].forEach(function(x){
+      [["whitfield","Dr James Whitfield","University of Reading","j.whitfield@reading.ac.uk",true],["marques","Prof. Sofia Marques","University of Lisbon","smarques@ulisboa.pt",true],["liwei","Li Wei","Environment Agency","li.wei@environment-agency.gov.uk",false],["price","Dr Hannah Price","Environment Agency","hannah.price@environment-agency.gov.uk",true],["raman","Dr Priya Raman","Cefas","priya.raman@cefas.gov.uk",true],["carter","Ben Carter","Freshwater Biological Association","ben.carter.rivers@outlook.com",false]].forEach(function(x){
         if (!S.D.authors.some(function(a){ return a.id === x[0]; })) S.D.authors.push({id:x[0], name:x[1], inst:x[2], email:x[3], account:x[4], orcid:""}); });
     }
     S.D.reached = Math.max(S.D.reached, idx);
