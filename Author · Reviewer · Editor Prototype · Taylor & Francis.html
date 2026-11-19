@@ -1928,7 +1928,7 @@ function newDraft(file){
     authors:[{id:"me", name:USER.name, inst:USER.inst, email:USER.email, account:true, you:true, orcid:""}],
     corr:"me", declSel:"ethics",
     decl:{
-      ethics:{done:false, text:"", v:{who:["animals"], body:"Animal Welfare and Ethical Review Body (AWERB)", ainst:"University of Reading", ref:"AWERB-2024-017", adate:"2024-03-12", hbody:"", hinst:"", href:"", hdate:"", trial:"no", reg:"", regno:"", tdate:"", consent:"na"}},
+      ethics:{done:false, text:"", v:{who:["animals"], body:"Animal Welfare and Ethical Review Body (AWERB)", ainst:"University of Reading", ref:"AWERB-2024-017", adate:"2024-03-12", hbody:"", hinst:"", href:"", hdate:"", trial:"yes", reg:"ISRCTN", regno:"ISRCTN12345678", tdate:"2024-02-05", rdate:"2024-01-15", consent:"na"}},
       data:{done:false, text:"", v:{where:"repo", repo:"Zenodo", doi:"10.5281/zenodo.1234567"}},
       ai:{done:false, text:"", v:{used:"yes", uses:["copy"], det:{copy:"Used to improve the language and readability of the manuscript. The authors reviewed and edited all text."}, tools:[{name:"ChatGPT", ver:"GPT-4o"}], terms:null, confirm:null}},
       funding:{done:false, text:"", v:{mode:"found", funder:FUND_DET.funder, grant:FUND_DET.grant, text:""}},
@@ -3214,10 +3214,10 @@ var DECL = {
     why:"For example consultancy, shares, patents, or personal relationships with people affected by the findings.", detected:"Detected from your file: a competing interest to declare"}
 };
 var DECL_ORDER = ["ethics","data","ai","funding","coi"], DECL_NAV = DECL_ORDER;
-var ETH_DET = {who:["animals"], trial:"no", consent:"na", body:"Animal Welfare and Ethical Review Body (AWERB)", ainst:"University of Reading", ref:"AWERB-2024-017", adate:"2024-03-12"};
+var ETH_DET = {who:["animals"], trial:"yes", reg:"ISRCTN", regno:"ISRCTN12345678", tdate:"2024-02-05", rdate:"2024-01-15", consent:"na", body:"Animal Welfare and Ethical Review Body (AWERB)", ainst:"University of Reading", ref:"AWERB-2024-017", adate:"2024-03-12"};
 function wmsg(t){ return '<p class="wmsg" role="status">' + I.warn + '<span>' + t + '</span></p>'; }
 function hasW(k){ return ev().who.indexOf(k) >= 0; }
-function ev(){ var v = S.D.decl.ethics.v; if (typeof v.who === "string") v.who = v.who === "neither" ? ["neither"] : [v.who]; if (v.hbody === undefined) { v.hbody = ""; v.href = ""; } if (v.trial === undefined) { v.trial = "no"; v.reg = ""; v.regno = ""; } if (v.consent === undefined) v.consent = "na"; if (v.tdate === undefined) v.tdate = ""; if (v.adate === undefined) v.adate = ETH_DET.adate; if (v.hdate === undefined) v.hdate = ""; if (v.ainst === undefined) v.ainst = ""; if (v.hinst === undefined) v.hinst = ""; return v; }
+function ev(){ var v = S.D.decl.ethics.v; if (typeof v.who === "string") v.who = v.who === "neither" ? ["neither"] : [v.who]; if (v.hbody === undefined) { v.hbody = ""; v.href = ""; } if (v.trial === undefined) { v.trial = "no"; v.reg = ""; v.regno = ""; } if (v.consent === undefined) v.consent = "na"; if (v.tdate === undefined) v.tdate = ""; if (v.rdate === undefined) v.rdate = ""; if (v.adate === undefined) v.adate = ETH_DET.adate; if (v.hdate === undefined) v.hdate = ""; if (v.ainst === undefined) v.ainst = ""; if (v.hinst === undefined) v.hinst = ""; return v; }
 function peopleStmt(){ var v = ev(), w = v.who; if (!w.length) return "";
   if (w.indexOf("neither") >= 0) return "This research did not involve human participants or animals.";
   var a = w.indexOf("animals") >= 0, h = w.indexOf("humans") >= 0, out = [];
@@ -3226,8 +3226,8 @@ function peopleStmt(){ var v = ev(), w = v.who; if (!w.length) return "";
   return out.join(" "); }
 function fmtD(d){ var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d || ""); return m ? new Date(+m[1], +m[2] - 1, +m[3]).toLocaleDateString("en-GB", {day:"numeric", month:"long", year:"numeric"}) : ""; }
 function trialStmt(){ var v = ev(); if (v.trial === "no") return "This study was not a clinical trial.";
-  if (v.trial !== "yes" || !v.reg.trim() || !v.regno.trim() || !fmtD(v.tdate)) return "";
-  return "This clinical trial was registered with " + v.reg.trim() + " (" + v.regno.trim() + "). Trial date: " + fmtD(v.tdate) + "."; }
+  if (v.trial !== "yes" || !v.reg.trim() || !v.regno.trim() || !fmtD(v.tdate) || !fmtD(v.rdate)) return "";
+  return "This clinical trial was registered with " + v.reg.trim() + " (" + v.regno.trim() + ") on " + fmtD(v.rdate) + ". Clinical trial start date: " + fmtD(v.tdate) + "."; }
 function consentStmt(){ var v = ev(); if (v.consent === "yes") return "All participants gave informed consent to take part in this study.";
   if (v.consent === "na") return hasW("humans") || v.trial === "yes" ? "Consent to participate was not required for this study." : "Consent to participate does not apply, because this research did not involve human participants."; return ""; }
 function isSaved(id){ var st = S.D.decl[id], b = buildStmt(id); return !!(st.done && b && b === st.text); }
@@ -3242,7 +3242,8 @@ function pvHTML(id){
     if (r.rest) parts.push(esc(r.rest));
     return '<div class="pvr"><span class="pvl">Competing interests</span>' + parts.join(" ") + '</div>'; }
   if (id === "ai" && aiV().used === "yes" && !buildStmt("ai")) { var P = aiParts(), ph = 0;
-    return P.out.map(function(x){ return x ? esc(x) : (ph++ < 1 ? '<span class="ph">[' + esc(P.miss[0]) + ']</span>' : ""); }).join(" ") +
+    var mk = function(t){ return esc(t).replace(/⟦([^⟧]*)⟧/g, '<span class="ph">[$1]</span>'); };
+    return P.out.map(function(x){ return x ? mk(x) : (ph++ < 1 ? '<span class="ph">[' + esc(P.miss[0]) + ']</span>' : ""); }).join(" ") +
       (P.miss.length > 1 ? ' <span class="ph">(' + (P.miss.length - 1) + ' more to answer)</span>' : ""); }
   var st = buildStmt(id); return st ? esc(st) : '<span class="ph">Answer the question to see the statement.</span>'; }
 function fundV(){ var v = S.D.decl.funding.v; if (v.funder === undefined) v.funder = FUND_DET.funder; if (v.grant === undefined) v.grant = FUND_DET.grant; if (v.role === undefined) v.role = null; if (!v.roles) v.roles = []; return v; }
@@ -3294,7 +3295,12 @@ function aiParts(){
   var aiJoin = function(a){ return a.length > 1 && a.some(function(x){ return / and /.test(x); }) ? a.slice(0, -1).join("; ") + "; and " + a[a.length - 1] : andList(a); };
   out.push(names.length ? "The authors used generative AI for " + aiJoin(names) + "." : null); if (!names.length) miss.push("Choose how you used generative AI");
   aiGroups().forEach(function(g){ var t = (v.det[g] || "").trim(); out.push(t ? sent(t) : null); if (!t) miss.push(AI_Q[g][0].replace(/^Please /, "").replace(/^./, function(c){ return c.toUpperCase(); })); });
-  var tl = aiTools(); out.push(tl.length ? "The generative AI " + (tl.length === 1 ? "tool used was " : "tools used were ") + andList(tl.map(function(x){ return x.name.trim() + " (" + x.ver.trim() + ")"; })) + "." : null); if (!tl.length) miss.push("Add the name and version of each tool");
+  /* every tool row with anything typed shows as Name (Version); ⟦⟧ marks a placeholder for the preview */
+  var rows = v.tools.filter(function(x){ return x.name.trim() || x.ver.trim(); });
+  out.push(rows.length ? "The generative AI " + (rows.length === 1 ? "tool used was " : "tools used were ") + andList(rows.map(function(x){
+    return (x.name.trim() || "⟦add tool name⟧") + " (" + (x.ver.trim() || "⟦add version⟧") + ")"; })) + "." : null);
+  if (!rows.length) miss.push("Add the name and version of each tool");
+  rows.forEach(function(x){ if (!x.name.trim()) miss.push("Add the tool name for version " + x.ver.trim()); else if (!x.ver.trim()) miss.push("Add the version of " + x.name.trim()); });
   if (!v.terms) miss.push("Answer whether you checked the terms of use");
   out.push(v.confirm === "yes" ? AI_RESP : v.confirm === "no" ? AI_NORESP : null); if (!v.confirm) miss.push("Answer the responsibility question");
   return {out:out, miss:miss};
@@ -3369,9 +3375,9 @@ function declPane(id){
     var E = ev(), DT = ETH_DET;
     var card = function(n, title, src, f, opts, body){ var nz = function(x){ return Array.isArray(x) ? x.slice().sort().join() : x; }, ch = nz(E[f]) !== nz(DT[f]);
       return '<section class="ck3" data-card="' + f + '"><div class="ch"><h4>' + n + '. ' + title + '</h4><span class="dtag' + (ch ? " chg" : "") + '">' + (ch ? "You changed this" : I.spark + " Detected from your file") + '</span></div><p class="src">' + src + '</p>' + (typeof opts === "string" ? opts : seg(f, opts, title, DT[f])) + body + '</section>'; };
-    h += card(1, "Is this a clinical trial?", "We looked for a trial registration number, participants and an intervention. None found.", "trial",
+    h += card(1, "Is this a clinical trial?", "We found a trial registration number (ISRCTN12345678) in your Methods.", "trial",
       [["no","No"],["yes","Yes"]],
-      E.trial === "yes" ? (E.who.indexOf("humans") < 0 ? '' + wmsg('Clinical trials usually involve people, and &ldquo;People&rdquo; isn&rsquo;t selected below. If that&rsquo;s right, you can carry on.') + '' : "") + '<div class="two">' + txt("reg", "Which registry?", "e.g. ISRCTN or ClinicalTrials.gov") + txt("regno", "Registration number", "e.g. ISRCTN12345678") + '</div><div class="two"><div class="field"><label for="d-ethics-tdate">Trial date</label><input type="date" class="inp" id="d-ethics-tdate" data-d="ethics" data-f="tdate" value="' + esc(E.tdate) + '"></div></div>' : "");
+      E.trial === "yes" ? (E.who.indexOf("humans") < 0 ? '' + wmsg('Clinical trials usually involve people, and &ldquo;People&rdquo; isn&rsquo;t selected below. If that&rsquo;s right, you can carry on.') + '' : "") + '<div class="two">' + txt("reg", "Clinical trial registration name", "e.g. ISRCTN or ClinicalTrials.gov") + txt("regno", "Registration number", "e.g. ISRCTN12345678") + '</div><div class="two"><div class="field"><label for="d-ethics-tdate">Clinical trial start date</label><input type="date" class="inp" id="d-ethics-tdate" data-d="ethics" data-f="tdate" value="' + esc(E.tdate) + '"></div><div class="field"><label for="d-ethics-rdate">Clinical trial registration date</label><input type="date" class="inp" id="d-ethics-rdate" data-d="ethics" data-f="rdate" value="' + esc(E.rdate) + '"></div></div>' : "");
     var wsel = function(k){ return E.who.indexOf(k) >= 0; };
     var dfield = function(f, lab){ return '<div class="field"><label for="d-ethics-' + f + '">' + lab + '</label><input type="date" class="inp" id="d-ethics-' + f + '" data-d="ethics" data-f="' + f + '" value="' + esc(E[f]) + '"></div>'; };
     var whoSeg = '<div class="seg" role="group" aria-label="People or animals. Select all that apply.">' + [["animals","Animals"],["humans","People"],["neither","Neither"]].map(function(o){
