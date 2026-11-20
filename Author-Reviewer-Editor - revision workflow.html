@@ -2322,7 +2322,7 @@ function subCard(s){
     '<h3><a href="#sub/' + s.id + '">' + esc(s.title) + '</a></h3>' +
     '<div class="meta">Submitted ' + s.submitted + ', reference ' + s.ref + '</div>' +
     '<div class="tbox">' + tracker(s.stage) + '</div>' +
-    '<p class="now">' + s.now + '</p>' + (s.history && s.history.length ? '<p class="xs muted lastrec">Latest: ' + s.history[s.history.length - 1][1] + ', ' + s.history[s.history.length - 1][0] + ' &middot; <a href="#sub/' + s.id + '">See the full history</a></p>' : "") +
+    '<p class="now">' + s.now + '</p>' + (!isEd() && s.history && s.history.length ? '<p class="xs muted lastrec">Latest: ' + s.history[s.history.length - 1][1] + ', ' + s.history[s.history.length - 1][0] + ' &middot; <a href="#sub/' + s.id + '">See the full history</a></p>' : "") +
     '<div class="acts">' + (s.aOpen ? '<a class="btn pri sm" href="#' + s.aHref + '">' + s.aCta + '</a>' : "") +
       '<a class="btn sm" href="#sub/' + s.id + '">View submission</a></div></article>';
 }
