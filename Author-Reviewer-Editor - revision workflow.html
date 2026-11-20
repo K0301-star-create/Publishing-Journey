@@ -1261,7 +1261,7 @@ select.inp{padding-right:8px}
 .duebox .link{font-size:14px}
 .sumh{font-size:14px;margin:14px 0 6px;color:var(--indigo)}
 .paper.editing .fig,.paper.editing .cap,.paper.editing .refs{opacity:.5}
-/* ---------- reviewer: a revised version ---------- */
+/* ---------- reviewer: a revision ---------- */
 .paper ins{background:var(--mint-sem);text-decoration:none;box-shadow:inset 0 -2px 0 var(--mint-dark)}
 .paper del{color:var(--alert-dark);background:var(--alert-sem);text-decoration:line-through}
 .paper .chg{display:inline-flex;vertical-align:1px;margin-left:8px;padding:2px 8px;border-radius:999px;background:var(--saffron-neutral);color:var(--saffron-dark);font-size:12px;font-weight:600;line-height:16px}
@@ -1330,6 +1330,15 @@ html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset
 .rvdays button{height:36px;padding:0 14px;border:1px solid var(--n300);border-radius:999px;background:#fff;font:inherit;font-size:14px;font-weight:600;color:var(--carbon);cursor:pointer}
 .rvdays button:hover{border-color:var(--indigo)}
 .rvdays button[aria-checked="true"]{background:var(--indigo);border-color:var(--indigo);color:#fff}
+
+/* prototype-only shortcut buttons */
+.protobtn{border:1px dashed var(--cornflower);color:var(--ultramarine);background:#fff}
+.protobtn:hover{background:var(--brand-neutral)}
+
+/* re-review: your Revision 1 comment above each box */
+.rvprev{background:var(--n50);border-radius:var(--r-sm);padding:10px 12px;font-size:14px;line-height:20px;color:var(--carbon);margin:6px 0 10px}
+.rvprev .lab{display:block;font-size:13px;font-weight:600;color:var(--n600);margin-bottom:2px}
+.flabel.sm{font-size:14px}
 </style>
 </head>
 <body>
@@ -1395,6 +1404,7 @@ html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset
     <button data-p="ed" data-r="sum">9. Choose what to address (revisions)</button>
     <button data-p="ed" data-r="dec">10. Write and send</button>
     <button data-p="ed" data-r="done">11. Decision sent</button>
+    <button data-p="ed" data-r="rev2">12. Authors send Revision 2: check it</button>
     <button data-p="ed" data-r="reset">Reset editor articles</button>
     <hr>
     <div class="pg2">Author: revise after a decision</div>
@@ -1403,8 +1413,8 @@ html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset
     <button data-p="au" data-r="minorws">Make your changes</button>
     <button data-p="au" data-r="minorchk">Check and submit (changes made here)</button>
     <button data-p="au" data-r="major">Major revisions: notification</button>
-    <button data-p="au" data-r="majorup">Upload version 2</button>
-    <button data-p="au" data-r="majorchk">Check and submit (version 2)</button>
+    <button data-p="au" data-r="majorup">Upload Revision 2</button>
+    <button data-p="au" data-r="majorchk">Check and submit (Revision 2)</button>
     <button data-p="au" data-r="sent">Revision submitted</button>
     <button data-p="au" data-r="reject">Rejected: notification</button>
     <button data-p="au" data-r="rejectview">Rejected: decision and reviews</button>
@@ -1418,7 +1428,7 @@ html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset
     <button data-p="rv" data-r="concern1">Raise a concern: from the invitation</button>
     <button data-p="rv" data-r="concern2">Raise a concern: instead of a full review</button>
     <hr>
-    <div class="pg2">Reviewer: review a revised version</div>
+    <div class="pg2">Reviewer: review a revision</div>
     <button data-p="rv" data-r="re1">1. Invitation</button>
     <button data-p="rv" data-r="re2">2. Check your earlier points</button>
     <button data-p="rv" data-r="re3">3. Check and submit</button>
@@ -1527,11 +1537,11 @@ var SUBS = [
   {id:"s2", title:"A lightweight benchmark for detecting invasive plant species from smartphone images", j:"pjcs", type:"research",
    ref:"PJCS-2026-0412", submitted:"18 Feb 2026", updated:"3 Jun 2026", stage:5, done:true, status:["ok","Published"],
    now:"<b>Published</b> on 3 June 2026.",
-   history:[["18 Feb 2026","Submitted",""],["20 Feb 2026","Passed editor checks",""],["2 Apr 2026","Decision: minor revision","2 reviews"],["19 Apr 2026","Revision submitted","Version 2"],["2 May 2026","Accepted",""],["3 Jun 2026","Published","",1]],
-   decision:{title:"Minor revision", date:"2 Apr 2026", editor:"Dr Marco Bellini", letter:["Thank you for submitting your manuscript. Both reviewers found the benchmark useful and well documented.","Please address Reviewer 1&rsquo;s point about class imbalance, and add the inference timings Reviewer 2 asked for. I expect to be able to accept a revised version without further review."]},
+   history:[["18 Feb 2026","Submitted",""],["20 Feb 2026","Passed editor checks",""],["2 Apr 2026","Decision: minor revision","2 reviews"],["19 Apr 2026","Revision submitted","Revision 2"],["2 May 2026","Accepted",""],["3 Jun 2026","Published","",1]],
+   decision:{title:"Minor revision", date:"2 Apr 2026", editor:"Dr Marco Bellini", letter:["Thank you for submitting your manuscript. Both reviewers found the benchmark useful and well documented.","Please address Reviewer 1&rsquo;s point about class imbalance, and add the inference timings Reviewer 2 asked for. I expect to be able to accept a revision without further review."]},
    reviews:[["Reviewer 1","Minor revision","The benchmark fills a real gap. The authors should discuss class imbalance across the 14 species, as two species account for over half the images. A per-class breakdown in Table 3 would help readers judge the results."],
             ["Reviewer 2","Accept","Clear, reproducible and useful. It would be good to include inference time on a mid-range phone, since the paper argues for on-device use."]],
-   files:[["Manuscript (version 2)","Okafor_invasive_benchmark_v2.pdf"],["Response to reviewers","Response_letter.pdf"],["Manuscript (version 1)","Okafor_invasive_benchmark_v1.pdf"]], authors:"Amara Okafor, Wei Liang"},
+   files:[["Manuscript (Revision 2)","Okafor_invasive_benchmark_v2.pdf"],["Response to reviewers","Response_letter.pdf"],["Manuscript (Revision 1)","Okafor_invasive_benchmark_v1.pdf"]], authors:"Amara Okafor, Wei Liang"},
   {id:"s3", title:"Trace metal accumulation in estuarine bivalves near former mine sites in Cornwall", j:"cae", type:"research",
    ref:"CAE-2025-0217", submitted:"4 Mar 2025", updated:"21 May 2025", stage:3, done:true, declined:true, status:["alert","Not accepted"],
    now:"<b>Not accepted</b> on 21 May 2025.",
@@ -1547,12 +1557,12 @@ var REVIEWS = [
   {id:"r2", kind:"live", title:"Otolith microchemistry reveals natal origins of brown trout in upland streams", j:"jfe", type:"research"},
   {id:"r5", kind:"live", round:2, prev:"r3", title:"Macroinvertebrate recovery after dam removal on the River Monnow", j:"iw", type:"research"},
   {id:"r3", kind:"done", title:"Macroinvertebrate recovery after dam removal on the River Monnow", j:"iw", sent:"14 Aug 2026", rec:"Major revision",
-   outcome:"The editor asked for a major revision. The authors sent a revised version on 9 November, and the editor has asked you to look at it.", toAuthor:"The before-and-after comparison is convincing for the first two years, but the control reach is only 300 m upstream and may have been affected by the works. Please justify its suitability or add a second control.", toEditor:"A solid study. My main concern is the control reach, which the authors should be able to address."},
+   outcome:"The editor asked for a major revision. The authors sent a revision on 9 November, and the editor has asked you to look at it.", toAuthor:"The before-and-after comparison is convincing for the first two years, but the control reach is only 300 m upstream and may have been affected by the works. Please justify its suitability or add a second control.", toEditor:"A solid study. My main concern is the control reach, which the authors should be able to address."},
   {id:"r4", kind:"done", title:"Environmental DNA metabarcoding of fish communities in urban canals", j:"pjle", sent:"2 Mar 2026", rec:"Minor revision",
    outcome:"Published on 18 June 2026.", toAuthor:"Well designed and clearly written. Please report negative controls for each sequencing run and discuss detection of species known to be absent.", toEditor:"Happy to see this published after minor changes."}
 ];
 var REVIEW_DAYS = 21;   /* time to review once accepted */
-var RE_REVIEW_DAYS = 14;   /* time to review a revised version */
+var RE_REVIEW_DAYS = 14;   /* time to review a revision */
 var REC = [["accept","Accept","Ready to publish as it is, or with tiny corrections"],["minor","Minor revision","Small changes needed. The editor can check them without me"],
   ["major","Major revision","Substantial changes needed before it can be judged"],["reject","Reject","Not suitable for this journal, even with changes"]];
 var DECLINE = [["busy","I don&rsquo;t have time at the moment"],["expertise","It&rsquo;s outside my expertise"],["coi","I have a conflict of interest"],["other","Another reason"]];
@@ -1588,14 +1598,27 @@ var MS = {
       disc:"Our results show that trout in this catchment move widely between streams, and that some small tributaries are much more important nurseries than their size suggests. Assignment accuracy was high for most streams but lower for the two southern tributaries, which had similar water chemistry. Water chemistry can also vary from year to year, and we sampled only one year. Even so, the results support managing tributaries as a connected network rather than separately."
     }}
 };
-/* a revised manuscript (version 2) coming back to the same reviewer, who reviewed version 1 as r3 */
-MS.r5 = {ref:"IW-2026-0588", model:"Double-anonymous", editor:"Dr Ruth Ellison", invitedAgo:1, replyIn:4, size:"5,200 words, 4 figures, 2 tables", short:"Recovery after dam removal (version 2)",
+/* a revised manuscript (Revision 2) coming back to the same reviewer, who reviewed Revision 1 as r3 */
+MS.r5 = {ref:"IW-2026-0588", model:"Double-anonymous", editor:"Dr Ruth Ellison", invitedAgo:1, replyIn:4, size:"5,200 words, 4 figures, 2 tables", short:"Recovery after dam removal (Revision 2)",
   eth:"This research did not involve human participants. Invertebrate sampling does not need ethical approval in the UK. The weir removal was carried out under a permit from Natural Resources Wales.",
-  letter:["Dear Dr Okafor,","Thank you for reviewing this manuscript in August. The authors have sent a revised version and responded to each of your comments.","Could you look at version 2 and tell me whether your points have been addressed? You don’t need to review the whole manuscript again unless you think it’s needed."],
+  letter:["Dear Dr Okafor,","Thank you for reviewing this manuscript in August. The authors have sent a revision and responded to each of your comments.","Could you look at Revision 2 and tell me whether your points have been addressed? You don’t need to review the whole manuscript again unless you think it’s needed."],
   kw:"dam removal, weir, macroinvertebrates, river restoration, fine sediment, River Monnow",
   fig:"Figure 2. Taxon richness in downstream and control reaches, spring 2022 to autumn 2025.",
   ref1:"Bellmore JR, Duda JJ, Craig LS, Greene SL, Torgersen CE, Collins MJ, Vittum K. 2017. Status and trends of dam removal research in the United States. WIREs Water 4:e1164.",
   prevAt:"14 Aug 2026", prevRec:"Major revision",
+  /* what this reviewer wrote on Revision 1, under the four review headings */
+  prevSecs:{basic:"Clearly written and well structured. One figure doesn’t match the table of samples; please recheck the two autumn 2023 samples.",
+    design:"The control reach is only 300 m upstream and may have been disturbed by the works, for example by machinery or changes to flow. Please justify why it is suitable, or add a second control further away.",
+    validity:"How were taxa classed as sediment-sensitive? Please give the index or reference used. The drop in richness in the first year after removal should be reported and discussed, not only the recovery.",
+    additional:"The before-and-after comparison is convincing for the first two years. This will be a useful study once the control reach is addressed."},
+  /* every round so far, oldest first */
+  rounds:[
+    {who:"au", when:"12 Jun 2026", t:"Revision 1 submitted", d:"The authors submitted the manuscript."},
+    {who:"you", when:"14 Aug 2026", t:"You reviewed Revision 1", d:"Your recommendation: major revision.", secs:true},
+    {who:"ed", when:"22 Aug 2026", t:"The editor asked for major revisions", d:"Both reviews went to the authors. The other reviewer recommended minor revision."},
+    {who:"au", when:"9 Nov 2026", t:"Revision 2 received", d:"changes"},
+    {who:"ed", when:"invited", t:"You were invited to review Revision 2", d:"By the editor"}
+  ],
   changes:"We added a second control reach on the River Honddu and repeated the analysis with each control on its own. We explain how sediment-sensitive taxa were classed, corrected one figure after rechecking two samples, added the first-year drop in richness to the abstract, and softened our conclusion about how long recovery takes.",
   v1:{
     abs:"Dam removal is increasingly used to restore rivers, but the recovery of invertebrate communities afterwards is rarely followed for long. We sampled macroinvertebrates at four reaches downstream of a weir removed from the River Monnow in 2022, and at one control reach upstream, for one year before and three years after removal. Taxon richness downstream recovered to control levels within two years, and the proportion of sediment-sensitive taxa rose from 18% to 41%. Recovery was fastest in reaches with coarse gravel. Removing small weirs can lead to rapid recovery of invertebrate communities.",
@@ -1654,7 +1677,7 @@ var REJ_TXT = {scope:"The journal publishes research on the ecology of rivers, l
   method:"I don’t think the methods or data are strong enough to support the conclusions, so the manuscript isn’t ready to send to reviewers.",
   req:"The manuscript doesn’t meet the journal’s requirements: [say what is missing].", other:"[Explain your reason.]"};
 var DECS = [["accept","Accept","Publish as it is, or with tiny corrections"],["minor","Minor revisions","Small changes. You check them yourself, without more review"],
-  ["major","Major revisions","Substantial changes. The new version may go back to the reviewers"],["reject","Reject","Not suitable for this journal, even with changes"]];
+  ["major","Major revisions","Substantial changes. The new revision may go back to the reviewers"],["reject","Reject","Not suitable for this journal, even with changes"]];
 var DEC_DAYS = {minor:14, major:42};
 var DEC_NAME = {accept:"Accepted", minor:"Minor revisions", major:"Major revisions", reject:"Rejected"};
 /* the editor's role on each journal they handle; it signs their letters */
@@ -1729,7 +1752,7 @@ var ED = [
        {who:0, grp:"sug", blk:"disc", sec:"Discussion", t:"Could higher density reflect fish moving into restored reaches, rather than more young fish surviving?",
         resp:"A fair point. We added a paragraph saying we can’t separate movement from survival without tagging, and suggest PIT tagging for the next phase."}
      ]}},
-  /* a major revision that has come back as an uploaded version 2; the authors push back on one point */
+  /* a major revision that has come back as an uploaded Revision 2; the authors push back on one point */
   {id:"e8", title:"Floodplain reconnection and wading bird breeding success on the Somerset Levels", j:"jfe", type:"research", ref:"JFE-2026-0937", ago:58,
    authors:"Ruth Akande, Peter Sloan, Mia Castell", inst:"University of Bristol; RSPB", model:"Single-anonymous", kw:["waders","floodplains","wetland restoration","breeding success"],
    ms:{v1:{
@@ -1755,7 +1778,7 @@ var ED = [
      {k:"ver", at:-2, v:2, how:"upload", t:"Revision 2 received", file:"Akande_floodplain_waders_v2.docx", cur:true}
    ],
    rev:{how:"upload", sections:["Abstract","Methods","Results","Discussion"],
-     note:"Thank you for the helpful decision. We have uploaded version 2 with tracked changes. We have dealt with every point. For Reviewer 2’s request for a control site, we explain why this wasn’t possible and have compared our results with regional trends instead, and say clearly what this means for our conclusions.",
+     note:"Thank you for the helpful decision. We have uploaded Revision 2 with tracked changes. We have dealt with every point. For Reviewer 2’s request for a control site, we explain why this wasn’t possible and have compared our results with regional trends instead, and say clearly what this means for our conclusions.",
      pts:[
        {who:1, grp:"req", blk:"methods", sec:"Methods", push:true, t:"There is no control site. Please add one, or explain how the rise in breeding success can be put down to reconnection rather than other causes.",
         resp:"We couldn’t add a control site, because no comparable unreconnected floodplain was surveyed in 2023 to 2025. Instead we compare our results with regional breeding success from the BTO survey, which stayed flat. We’ve softened our conclusions and say clearly in the abstract and Discussion that we can’t rule out other causes."},
@@ -1897,8 +1920,8 @@ var E1REV = [
   {rec:"minor", secs:{basic:"This is a clearly written study on a timely question, as beaver reintroductions are expanding quickly in southern England.", design:"The sampling is regular and long enough to show seasonal differences. My main concern is the statistics: the paired t-test doesn’t account for the dependence between months.", validity:"The conclusions are mostly appropriately cautious. The uncertainty around the phosphorus store should be reported.", additional:"Minor points are in my comments on the text."},
    general:"This is a clearly written study on a timely question, as beaver reintroductions are expanding quickly in southern England. The sampling is regular and long enough to show seasonal differences, and the conclusions are mostly appropriately cautious.\n\nMy main concern is the statistics. The paired t-test doesn’t account for the dependence between months, and the uncertainty around the phosphorus store should be reported.\n\nMinor points are in my comments on the text.",
    editor:"A good paper. The fixes needed are modest, and I’d be happy for you to check them without sending it back to me."},
-  {rec:"major", secs:{basic:"The question is important and the dataset is valuable. The paper is well organised.", design:"I’m not convinced the design can attribute the change in phosphorus to the dams. The control reach is on a different tributary, and there are no data from the study reach before beavers arrived. Load calculations use a single downstream gauge, ignoring groundwater inputs along the reach.", validity:"Without a stronger control or data from before the dams, the conclusions should be limited to what the data can show.", additional:"The storm release is interesting and could be developed further. I’d like to see a revised version."},
-   general:"The question is important and the dataset is valuable. However, I’m not convinced the design can attribute the change in phosphorus to the dams.\n\nMain issues\n1. The control reach is on a different tributary, and there are no data from the study reach before beavers arrived.\n2. Load calculations use a single downstream gauge, ignoring groundwater inputs along the reach.\n\nThe storm release is interesting and could be developed further. I’d like to see a revised version.",
+  {rec:"major", secs:{basic:"The question is important and the dataset is valuable. The paper is well organised.", design:"I’m not convinced the design can attribute the change in phosphorus to the dams. The control reach is on a different tributary, and there are no data from the study reach before beavers arrived. Load calculations use a single downstream gauge, ignoring groundwater inputs along the reach.", validity:"Without a stronger control or data from before the dams, the conclusions should be limited to what the data can show.", additional:"The storm release is interesting and could be developed further. I’d like to see a revision."},
+   general:"The question is important and the dataset is valuable. However, I’m not convinced the design can attribute the change in phosphorus to the dams.\n\nMain issues\n1. The control reach is on a different tributary, and there are no data from the study reach before beavers arrived.\n2. Load calculations use a single downstream gauge, ignoring groundwater inputs along the reach.\n\nThe storm release is interesting and could be developed further. I’d like to see a revision.",
    editor:"The authors may not be able to fix the design issue, but they could be much clearer about what the data can and can’t show. Happy to look at a revision."}
 ];
 var E1C = [
@@ -1912,7 +1935,7 @@ var E1C = [
 var EDEC_TPL = {
   accept:"Dear Dr Owens,\n\nThank you for submitting your manuscript to the Journal of Freshwater Ecology. I’m pleased to tell you it has been accepted for publication.\n\nThe reviewers’ comments are below for your information. You don’t need to respond to them.\n\nDr Amara Okafor\nAssociate Editor",
   minor:"Dear Dr Owens,\n\nThank you for submitting your manuscript to the Journal of Freshwater Ecology. Both reviewers found it a clear and timely study, and I’d like to accept it after minor revisions.\n\nPlease respond to every reviewer comment below, saying what you changed or why you didn’t.\n\nI’ll check your changes myself, without sending the paper back to the reviewers.\n\nDr Amara Okafor\nAssociate Editor",
-  major:"Dear Dr Owens,\n\nThank you for submitting your manuscript to the Journal of Freshwater Ecology. The reviewers agree the question is important, but Reviewer 2 has concerns about whether the design can attribute the change in phosphorus to the dams.\n\nPlease respond to every reviewer comment below, saying what you changed or why you didn’t. Your revised version may go back to the reviewers.\n\nDr Amara Okafor\nAssociate Editor",
+  major:"Dear Dr Owens,\n\nThank you for submitting your manuscript to the Journal of Freshwater Ecology. The reviewers agree the question is important, but Reviewer 2 has concerns about whether the design can attribute the change in phosphorus to the dams.\n\nPlease respond to every reviewer comment below, saying what you changed or why you didn’t. Your revision may go back to the reviewers.\n\nDr Amara Okafor\nAssociate Editor",
   reject:"Dear Dr Owens,\n\nThank you for submitting your manuscript to the Journal of Freshwater Ecology. The reviewers found the question important, but have serious concerns about whether the design can attribute the change in phosphorus to the dams.\n\nI’m sorry we can’t consider it further. I hope the reviewers’ comments are useful if you submit the work elsewhere.\n\nDr Amara Okafor\nAssociate Editor"
 };
 
@@ -1931,7 +1954,7 @@ var AMS = {s1:{ref:"IW-2026-0931", file:"Okafor_riparian_shading_v3.docx", kw:"r
 var AUTH = {editor:"Dr Ruth Ellison",
   letters:{
     minor:["Dear Dr Okafor,","Thank you for submitting your manuscript to Inland Waters. Both reviewers found the study clear and useful, and I&rsquo;m pleased to say it can be accepted after minor revisions.","Please respond to each of the comments, either by making a change or explaining why you haven&rsquo;t.","I&rsquo;ll check your changes myself, without sending the paper back to the reviewers."],
-    major:["Dear Dr Okafor,","Thank you for submitting your manuscript to Inland Waters. The reviewers agree the question is important, but they raise concerns that need substantial changes before I can make a final decision.","In particular, please address whether paired reaches are independent and how canopy cover was measured. This may need additional analysis.","Please send a revised manuscript with a short summary of what you changed. The revised version may go back to the reviewers."],
+    major:["Dear Dr Okafor,","Thank you for submitting your manuscript to Inland Waters. The reviewers agree the question is important, but they raise concerns that need substantial changes before I can make a final decision.","In particular, please address whether paired reaches are independent and how canopy cover was measured. This may need additional analysis.","Please send a revised manuscript with a short summary of what you changed. The revision may go back to the reviewers."],
     reject:["Dear Dr Okafor,","Thank you for submitting your manuscript to Inland Waters. The reviewers found the topic important, but both had serious concerns about the study design, in particular whether paired reaches only 500 m apart are independent.","I&rsquo;m sorry we can&rsquo;t consider it further. I hope the reviewers&rsquo; comments are useful if you submit the work elsewhere."]},
   recs:{minor:["Minor revision","Minor revision"], major:["Minor revision","Major revision"], reject:["Major revision","Reject"]},
   generals:[{basic:"The paper is clearly written and well structured, and the figures are easy to follow. Please share the temperature logger data alongside the paper.",
@@ -2322,7 +2345,7 @@ function subCard(s){
     '<h3><a href="#sub/' + s.id + '">' + esc(s.title) + '</a></h3>' +
     '<div class="meta">Submitted ' + s.submitted + ', reference ' + s.ref + '</div>' +
     '<div class="tbox">' + tracker(s.stage) + '</div>' +
-    '<p class="now">' + s.now + '</p>' + (!isEd() && s.history && s.history.length ? '<p class="xs muted lastrec">Latest: ' + s.history[s.history.length - 1][1] + ', ' + s.history[s.history.length - 1][0] + ' &middot; <a href="#sub/' + s.id + '">See the full history</a></p>' : "") +
+    '<p class="now">' + s.now + '</p>' + "" +
     '<div class="acts">' + (s.aOpen ? '<a class="btn pri sm" href="#' + s.aHref + '">' + s.aCta + '</a>' : "") +
       '<a class="btn sm" href="#sub/' + s.id + '">View submission</a></div></article>';
 }
@@ -2453,7 +2476,7 @@ SCREENS.reviews = function(){
     var j = journalById(r.j), st = rvSt(r);
     if (st === "done") return '<li><a class="row" href="#rev/' + r.id + '"><div><h3>' + esc(r.title) + '</h3><div class="rm">' + esc(j.name) + '</div></div><div class="rs"><span class="badge">' + r.rec + '</span></div><div class="rd">Sent ' + r.sent + '</div><span class="chev">' + I.right + '</span></a></li>';
     if (st === "submitted" || st === "declined" || st === "concern") return '<li><a class="row" href="#ra/' + r.id + '"><div><h3>' + esc(r.title) + '</h3><div class="rm">' + esc(j.name) + '</div></div><div class="rs">' + rvBadge(r) + '</div><div class="rd">' + (st === "submitted" ? "Sent " + fmtDate(S.R[r.id].sentAt) : st === "concern" ? "Sent " + fmtDate(S.R[r.id].concernAt) : "Declined " + fmtDate(S.R[r.id].declinedAt)) + '</div><span class="chev">' + I.right + '</span></a></li>';
-    return '<li><div class="row"><div><h3><a href="#ra/' + r.id + '">' + esc(r.title) + '</a></h3><div class="rm">' + (r.round ? '<b>Version 2.</b> ' : "") + esc(j.name) + '. ' + TYPES[r.type] + '. ' + (st === "invite" ? "Reply by " : "Due ") + dLong(rvDate(r)) + '</div></div>' +
+    return '<li><div class="row"><div><h3><a href="#ra/' + r.id + '">' + esc(r.title) + '</a></h3><div class="rm">' + (r.round ? '<b>Revision 2.</b> ' : "") + esc(j.name) + '. ' + TYPES[r.type] + '. ' + (st === "invite" ? "Reply by " : "Due ") + dLong(rvDate(r)) + '</div></div>' +
       '<div class="rs">' + rvBadge(r) + '</div><div class="rd">' + rvAction(r) + '</div><span></span></div></li>';
   }).join("") + '</ul>';
   return '<div class="wrap"><div class="pgh"><h1>Reviews</h1><p>Manuscripts you&rsquo;ve been asked to review, and the reviews you&rsquo;ve sent.</p></div>' + poolOffer("reviews") +
@@ -2468,7 +2491,7 @@ SCREENS.rev = function(){
     '<section class="card sdcard" aria-labelledby="rdH2"><div class="sdh"><h2 id="rdH2">Review details</h2><span class="badge ok">Sent</span></div>' +
       '<div class="sdb">' + fields([["Manuscript title", esc(r.title), 1], ["Journal", esc(j.name)], ["Your recommendation", r.rec], ["Sent", r.sent]]) + '</div></section>' +
     '<div class="dlay2"><div><h2 style="font-size:18px;margin-bottom:10px">What happened next</h2><div class="banner info"><span class="bi">' + I.info + '</span><div><p style="font-size:16px">' + r.outcome + '</p>' +
-      (r.id === "r3" && isRv() ? '<div class="bact"><a class="btn sm" href="#ra/r5">' + (S.R.r5.st === "invite" ? "Reply to the invitation" : "Go to version 2") + '</a></div>' : "") + '</div></div>' +
+      (r.id === "r3" && isRv() ? '<div class="bact"><a class="btn sm" href="#ra/r5">' + (S.R.r5.st === "invite" ? "Reply to the invitation" : "Go to Revision 2") + '</a></div>' : "") + '</div></div>' +
       '<h2 style="font-size:18px;margin:28px 0 10px">Your comments to the authors</h2><div class="letter"><p>' + r.toAuthor + '</p></div>' +
       '<h2 style="font-size:18px;margin:28px 0 10px">Your private note to the editor</h2><div class="letter" style="border-left-color:var(--n400)"><p>' + r.toEditor + '</p></div></div>' +
     '</div></div>';
@@ -2665,6 +2688,14 @@ var RV_SECS = [
 ];
 function rvSecInit(R){ if (!R.secs) { R.secs = {basic:"", design:"", validity:"", additional:R.general || ""}; } return R.secs; }
 function rvJoin(R){ var sc = rvSecInit(R); R.general = RV_SECS.filter(function(x){ return (sc[x[0]] || "").trim(); }).map(function(x){ return x[1] + "\n" + sc[x[0]].trim(); }).join("\n\n"); }
+/* re-review: the same four headings, with what you wrote on Revision 1 above each box */
+function rvSecsReHTML(R, m){ var sc = rvSecInit(R), pv = m.prevSecs || {};
+  return RV_SECS.map(function(x, i){ var id = "rvs-" + x[0];
+    return '<section class="rvsec"><h4><label for="' + id + '">' + (i + 1) + '. ' + x[1] + '</label></h4>' +
+      '<ul class="qi" aria-label="What to cover">' + x[2].map(function(q){ return '<li>' + I.check + '<span>' + q + '</span></li>'; }).join("") + '</ul>' +
+      (pv[x[0]] ? '<div class="rvprev"><span class="lab">You wrote on Revision 1</span>' + esc(pv[x[0]]) + '</div>' : "") +
+      '<label class="flabel sm" for="' + id + '">On Revision 2</label><textarea class="inp" id="' + id + '" data-rvs="' + x[0] + '" aria-describedby="' + id + '-h" placeholder="Has this been dealt with? What, if anything, is still needed?">' + esc(sc[x[0]] || "") + '</textarea>' +
+      '<p class="hint" id="' + id + '-h">' + x[3] + '</p></section>'; }).join(""); }
 function rvSecsHTML(R){ var sc = rvSecInit(R);
   return RV_SECS.map(function(x, i){ var id = "rvs-" + x[0];
     return '<section class="rvsec"><h4><label for="' + id + '">' + (i + 1) + '. ' + x[1] + '</label></h4>' +
@@ -2747,17 +2778,17 @@ function respondCard(r, choice){
 function rvInvite(r){
   var m = MS[r.id], j = journalById(r.j), choice = parts()[2] || "", re = !!r.round;
   return '<div class="wrap">' + rvCrumbs(r) + '<div class="dlay2" style="padding-top:16px"><div>' +
-    (re ? '<div class="banner info" style="margin-bottom:16px"><span class="bi">' + I.doc + '</span><div><b>A revised version of a manuscript you reviewed</b><p>You reviewed version 1 on ' + m.prevAt + ' and recommended ' + m.prevRec.toLowerCase() + '. The authors have responded to each of your ' + m.prev.length + ' comments. <a href="#rev/' + r.prev + '">See your earlier review</a></p></div></div>' : "") +
-    '<section class="card sdcard" style="margin-top:0" aria-labelledby="ivH"><div class="sdh"><h2 id="ivH">' + (re ? "Invitation to review version 2" : "Invitation to review") + '</h2><span class="badge warn">Reply by ' + dLong(rvDate(r)) + '</span></div><div class="sdb">' +
+    (re ? '<div class="banner info" style="margin-bottom:16px"><span class="bi">' + I.doc + '</span><div><b>A revision of a manuscript you reviewed</b><p>You reviewed Revision 1 on ' + m.prevAt + ' and recommended ' + m.prevRec.toLowerCase() + '. The authors have responded to each of your ' + m.prev.length + ' comments. <a href="#rev/' + r.prev + '">See your earlier review</a></p></div></div>' : "") +
+    '<section class="card sdcard" style="margin-top:0" aria-labelledby="ivH"><div class="sdh"><h2 id="ivH">' + (re ? "Invitation to review Revision 2" : "Invitation to review") + '</h2><span class="badge warn">Reply by ' + dLong(rvDate(r)) + '</span></div><div class="sdb">' +
       fields([["Manuscript title", esc(r.title), 1], ["Journal", esc(j.name) + ' <span class="muted">(' + esc(j.pub) + ')</span>'], ["Article type", TYPES[r.type]],
-        ["Review model", modelHTML(m)], ["Time to review", rvDaysFor(r) + " days from accepting"], ["Manuscript ID", m.ref], [re ? "Version" : "Length", re ? "Version 2. " + rvChanged(m) + " of " + MSBLK.length + " sections changed" : m.size],
+        ["Review model", modelHTML(m)], ["Time to review", rvDaysFor(r) + " days from accepting"], ["Manuscript ID", m.ref], [re ? "Revision" : "Length", re ? "Revision 2. " + rvChanged(m) + " of " + MSBLK.length + " sections changed" : m.size],
         ["Handling editor", m.editor], ["Invited", fmtDate(addDays(-m.invitedAgo))]]) + '</div></section>' +
     '<div style="padding:28px 0 0"><h2 class="secth">Message from the editor</h2><div class="letter">' + m.letter.map(function(p){ return "<p>" + p + "</p>"; }).join("") + '</div>' +
       (re ? '<h2 class="secth">What the authors changed</h2><div class="letter"><p>' + esc(m.changes) + '</p></div>' : "") +
-      '<h2 class="secth">Abstract' + (re ? " (version 2)" : "") + '</h2><p class="abstract">' + esc(m.text.abs) + '</p><p class="small muted" style="margin-top:10px"><b>Keywords:</b> ' + esc(m.kw) + '</p>' +
-      '<div class="banner info" style="margin-top:24px"><span class="bi">' + I.doc + '</span><div><b>Want to read more before you decide?</b><p>Download the full anonymised manuscript as a PDF. It&rsquo;s confidential, so please don&rsquo;t share it or upload it to AI tools.' + (re ? " Once you accept, you&rsquo;ll see every change marked against version 1." : "") + '</p>' +
-      '<div class="bact"><button class="btn sm" type="button" data-a="pdf" data-id="' + r.id + '">' + I.download + (re ? "Download version 2 (PDF)" : "Download the full manuscript (PDF)") + '</button>' +
-        (re ? '<button class="btn sm" type="button" data-a="pdf" data-id="' + r.id + '" data-v="1">' + I.download + 'Download version 1 (PDF)</button>' : "") + '</div></div></div></div>' +
+      '<h2 class="secth">Abstract' + (re ? " (Revision 2)" : "") + '</h2><p class="abstract">' + esc(m.text.abs) + '</p><p class="small muted" style="margin-top:10px"><b>Keywords:</b> ' + esc(m.kw) + '</p>' +
+      '<div class="banner info" style="margin-top:24px"><span class="bi">' + I.doc + '</span><div><b>Want to read more before you decide?</b><p>Download the full anonymised manuscript as a PDF. It&rsquo;s confidential, so please don&rsquo;t share it or upload it to AI tools.' + (re ? " Once you accept, you&rsquo;ll see every change marked against Revision 1." : "") + '</p>' +
+      '<div class="bact"><button class="btn sm" type="button" data-a="pdf" data-id="' + r.id + '">' + I.download + (re ? "Download Revision 2 (PDF)" : "Download the full manuscript (PDF)") + '</button>' +
+        (re ? '<button class="btn sm" type="button" data-a="pdf" data-id="' + r.id + '" data-v="1">' + I.download + 'Download Revision 1 (PDF)</button>' : "") + '</div></div></div></div>' +
     '</div><aside>' + respondCard(r, choice) + '</aside></div></div>';
 }
 /* raising a concern: a short reason instead of a full review, for clear problems only. The editor decides what happens next */
@@ -2800,21 +2831,36 @@ function rvDeclined(r){
     '<aside><div class="card sidecard"><h3>Changed your mind?</h3><p class="small">Contact the editor, ' + m.editor + ', quoting ' + m.ref + '. They may already have invited someone else.</p>' +
       '<button class="btn sm" style="margin-top:12px" type="button" data-a="soon" data-msg="Opens a message to the editor.">Contact the editor</button></div></aside></div></div>';
 }
+/* the rounds so far, in the same simple style as the review history: date, what happened, one line */
+function rvRoundsHTML(r){
+  var m = MS[r.id], R = S.R[r.id]; if (!m.rounds) return "";
+  var line = {"Revision 1 submitted":"By the authors", "You reviewed Revision 1":"Your recommendation: major revision",
+    "The editor asked for major revisions":"Both reviews went to the authors", "Revision 2 received":"The authors responded to " + plural((m.prev || []).length, "point") + " you raised",
+    "You were invited to review Revision 2":"By " + m.editor + ", " + esc(journalById(r.j).name)};
+  var inv = Math.min(addDays(-m.invitedAgo), R.acceptedAt || Infinity, R.startedAt || Infinity);
+  var h = m.rounds.map(function(x){ return [x.when === "invited" ? fmtDate(inv) : x.when, x.t, line[x.t] || ""]; });
+  if (R.acceptedAt) h.push([fmtDate(R.acceptedAt), "Invitation accepted", "Review due " + fmtDate(R.due)]);
+  if (R.startedAt) h.push([fmtDate(R.startedAt), "Review started", ""]);
+  if (R.sentAt) { h.push([fmtDate(R.sentAt), "Review of Revision 2 submitted", "Your recommendation: " + recLabel(R.rec)]); h.push(["Now", "Awaiting editor decision", "The editor decides once all the reviews are in. We&rsquo;ll email you the outcome."]); }
+  else h.push(["Now", "Review Revision 2", "Due " + fmtDate(R.due)]);
+  return '<ol class="hist">' + h.reverse().map(function(x, i){ return '<li class="' + (i === 0 ? "now" : "") + '"><span class="hd">' + x[0] + '</span><b>' + x[1] + '</b>' + (x[2] ? '<div class="hx">' + x[2] + '</div>' : "") + '</li>'; }).join("") + '</ol>';
+}
 function rvHistory(r){
   var R = S.R[r.id], m = MS[r.id];
   var h = [[fmtDate(addDays(-m.invitedAgo)), "Invited to review", "By " + m.editor + ", " + esc(journalById(r.j).name)]];
   if (R.acceptedAt) h.push([fmtDate(R.acceptedAt), "Invitation accepted", "Review due " + fmtDate(R.due)]);
   if (R.startedAt) h.push([fmtDate(R.startedAt), "Review started", ""]);
   if (R.sentAt) { h.push([fmtDate(R.sentAt), "Review submitted", "Your recommendation: " + recLabel(R.rec)]); h.push(["Now", "Awaiting editor decision", "The editor decides once all the reviews are in. We&rsquo;ll email you the outcome."]); }
+  if (r.round && m.rounds) return rvRoundsHTML(r);
   return '<ol class="hist">' + h.reverse().map(function(x, i){ return '<li class="' + (i === 0 ? "now" : "") + '"><span class="hd">' + x[0] + '</span><b>' + x[1] + '</b>' + (x[2] ? '<div class="hx">' + x[2] + '</div>' : "") + '</li>'; }).join("") + '</ol>';
 }
 function rvSummaryHTML(r, editable){
   var R = S.R[r.id], cs = sortedC(r.id), g = R.general.trim(), e = (R.editor || "").trim();
   var ed = function(tab){ return editable ? '<button class="link" type="button" data-a="rvEdit" data-v="' + tab + '" data-id="' + r.id + '">Edit</button>' : ""; };
   var shared = '<span class="badge brand">Shared with the authors</span>', priv = '<span class="badge priv">' + I.lock + 'Editor only</span>';
-  var m = MS[r.id], pts = r.round ? '<section class="rsec"><div class="rh"><h3>Your earlier points (' + ptDone(R, m) + ' of ' + m.prev.length + ' checked)</h3>' + shared + ed("points") + '</div>' +
+  var m = MS[r.id], pts = r.round ? '<section class="rsec"><div class="rh"><h3>Your earlier points (' + m.prev.length + ')</h3>' + shared + ed("points") + '</div>' +
       m.prev.map(function(p, i){ var st = (R.pts || {})[p.id] || {};
-        return '<div class="scm"><span class="n">' + (i + 1) + '</span><div><div class="sec2">' + secName(p.blk) + ' &middot; <b style="color:' + (st.v === "yes" ? "var(--mint-dark)" : st.v ? "var(--saffron-dark)" : "var(--alert-dark)") + '">' + ptName(st.v) + '</b></div><p>' + esc(shortQ(p.text, 140)) + '</p>' +
+        return '<div class="scm"><span class="n">' + (i + 1) + '</span><div><div class="sec2">' + secName(p.blk) + '</div><p>' + esc(shortQ(p.text, 140)) + '</p>' +
           ((st.note || "").trim() ? '<div class="letter ltext" style="margin-top:8px;font-size:14.5px;line-height:22px;padding:10px 14px">' + esc(st.note) + '</div>' : "") + '</div></div>'; }).join("") + '</section>' : "";
   return '<div class="card">' +
     (editable ? "" : '<section class="rsec"><div class="rh"><h3>Your recommendation</h3></div><span class="badge dark" style="height:28px;padding:0 12px;font-size:14px">' + recLabel(R.rec) + '</span></section>') + pts +
@@ -2834,23 +2880,23 @@ function rvArticle(r){
   var main;
   if (tab === "history") main = rvHistory(r);
   else if (tab === "files") main = '<div class="banner priv" style="margin-bottom:14px"><span class="bi">' + I.lock + '</span><div><p>These files are anonymised and confidential. Please don&rsquo;t share them.</p></div></div>' +
-    '<div class="card" style="padding:4px 20px">' + (r.round ? [["Manuscript, version 2 (anonymised)", m.ref + "_v2_anonymised.pdf", ""], ["Manuscript, version 1 (anonymised)", m.ref + "_v1_anonymised.pdf", "1"], ["Authors&rsquo; responses to comments", m.ref + "_responses.pdf"], ["Figures", m.ref + "_figures.pdf"]]
+    '<div class="card" style="padding:4px 20px">' + (r.round ? [["Manuscript, Revision 2 (anonymised)", m.ref + "_v2_anonymised.pdf", ""], ["Manuscript, Revision 1 (anonymised)", m.ref + "_v1_anonymised.pdf", "1"], ["Authors&rsquo; responses to comments", m.ref + "_responses.pdf"], ["Figures", m.ref + "_figures.pdf"]]
       : [["Manuscript (anonymised)", m.ref + "_anonymised.pdf", ""], ["Figures", m.ref + "_figures.pdf"], ["Supplementary material", m.ref + "_supplementary.xlsx"]]).map(function(f){
       return '<div class="filerow"><span class="fext">' + f[1].split(".").pop().toUpperCase() + '</span><div><div style="font-weight:600;color:var(--indigo)">' + f[0] + '</div><div class="xs muted">' + esc(f[1]) + '</div></div>' +
         (f[2] != null ? '<button class="btn sm" style="margin-left:auto" data-a="pdf" data-id="' + r.id + '" data-v="' + f[2] + '">Download</button>' : '<button class="btn sm" style="margin-left:auto" data-a="soon" data-msg="The file would download here.">Download</button>') + '</div>'; }).join("") + '</div>';
   else if (tab === "review") main = rvSummaryHTML(r, false);
-  else main = (r.round ? '<h2 class="secth" style="margin-top:0">What the authors changed</h2><div class="letter"><p>' + esc(m.changes) + '</p></div><h2 class="secth">Abstract (version 2)</h2>' : "") +
+  else main = (r.round ? '<h2 class="secth" style="margin-top:0">What the authors changed</h2><div class="letter"><p>' + esc(m.changes) + '</p></div><h2 class="secth">Abstract (Revision 2)</h2>' : "") +
     '<p class="abstract">' + esc(m.text.abs) + '</p><p class="small muted" style="margin-top:10px"><b>Keywords:</b> ' + esc(m.kw) + '</p>' +
-    '<p style="margin-top:20px"><a class="btn" href="#rw/' + r.id + '">' + I.doc + (r.round ? "See what changed" : "Read the full manuscript") + '</a></p>';
+    '<p style="margin-top:20px"><a class="btn" href="#rw/' + r.id + '">' + I.doc + "Read the full manuscript" + '</a></p>';
   var banner = sub
-    ? '<div class="banner ok" style="margin-top:16px"><span class="bi">' + I.checkM + '</span><div><b>Review submitted &ndash; awaiting editor decision</b><p>You sent your review on ' + fmtDate(R.sentAt, {day:"numeric", month:"long"}) + '. Nothing more is needed from you unless the editor asks you to look at a revised version.</p></div></div>'
+    ? '<div class="banner ok" style="margin-top:16px"><span class="bi">' + I.checkM + '</span><div><b>Review submitted &ndash; awaiting editor decision</b><p>You sent your review on ' + fmtDate(R.sentAt, {day:"numeric", month:"long"}) + '. Nothing more is needed from you unless the editor asks you to look at a revision.</p></div></div>'
     : rvUI.justAccepted === r.id ? '<div class="banner ok" style="margin-top:16px"><span class="bi">' + I.checkM + '</span><div><b>Thanks for accepting</b><p>Your review is due by ' + fmtDate(R.due, {day:"numeric", month:"long"}) + '. It saves as you go, so you can stop and come back any time.</p></div></div>' : "";
   var d = rvDays(r), nIn = R.inline.length, g = R.general.trim(), e = (R.editor || "").trim();
   var li = function(ok, lab, v){ return '<li class="' + (ok ? "ok" : "") + '"><span class="t">' + (ok ? I.check : "") + '</span>' + lab + '<span class="v">' + v + '</span></li>'; };
   var side = sub
     ? ''
     : '<div class="card sidecard rvside"><h3>Your review</h3><div class="big' + (d <= 3 ? " urgent" : "") + '"><b>' + d + '</b><span class="small muted">days left. Due ' + dLong(new Date(R.due)) + '</span></div>' +
-        '<ul class="rprog">' + (r.round ? li(ptDone(R, m) === m.prev.length, "Your earlier points", ptDone(R, m) + " of " + m.prev.length + " checked") : "") + li(nIn > 0, "Comments on the text", nIn || (r.round ? "Optional" : "None yet")) + li(!!g, "General comments", g ? "Started" : "Not started") +
+        '<ul class="rprog">' + (r.round ? li(ptDone(R, m) > 0, "Your earlier points", ptDone(R, m) ? plural(ptDone(R, m), "comment") : "Optional") : "") + li(nIn > 0, "Comments on the text", nIn || (r.round ? "Optional" : "None yet")) + li(!!g, "General comments", g ? "Started" : "Not started") +
         li(!!e, "Note to the editor", e ? "Added" : "Optional") + li(!!R.rec, "Recommendation", R.rec ? recLabel(R.rec) : "Not chosen") + '</ul>' +
         '<a class="btn pri block" href="#rw/' + r.id + '">' + cta + '</a>' + (R.saved ? '<p class="xs muted" style="margin-top:8px;text-align:center">Last saved ' + ago(R.saved) + '</p>' : "") + '</div>' +
       '<div class="card sidecard"><h3>Help</h3><ul class="hlinks">' +
@@ -2868,7 +2914,7 @@ function rvArticle(r){
     '<div class="dlay2"><div>' + main + '</div><aside>' + side + '</aside></div></div>';
 }
 
-/* ---------- re-review: a revised version back to the same reviewer ---------- */
+/* ---------- re-review: a revision back to the same reviewer ---------- */
 /* word-level changes between two versions of a paragraph */
 function wdiff(a, b){
   var A = a.split(/(\s+)/), B = b.split(/(\s+)/), n = A.length, m = B.length, L = [], i, j;
@@ -2892,27 +2938,25 @@ function rvDiffPaper(r){
       (b[0] === "abs" ? '<p class="kw"><b>Keywords:</b> ' + esc(m.kw) + '</p>' : "") +
       (b[0] === "results" ? '<div class="fig">' + esc(m.fig.split(".")[0]) + '</div><div class="cap">' + esc(m.fig) + '</div>' : "");
   }).join("");
-  return '<article class="paper diff" id="rpaper" aria-label="Changes between version 1 and version 2"><div class="rh"><span>' + m.ref + '</span><span>Changes since version 1</span></div>' +
+  return '<article class="paper diff" id="rpaper" aria-label="Changes between Revision 1 and Revision 2"><div class="rh"><span>' + m.ref + '</span><span>Changes since Revision 1</span></div>' +
     '<span class="ptitle">' + esc(r.title) + '</span><div class="anon">' + I.lock + 'Author names and affiliations are hidden for ' + m.model.toLowerCase() + ' review</div>' + body +
     ethSec(m.eth) + '<h4>References</h4><p class="refs">' + esc(m.ref1) + '<br>And 41 more references.</p><div class="pgn">Page 1 of 17</div></article>';
 }
-function ptDone(R, m){ return m.prev.filter(function(p){ return R.pts && R.pts[p.id] && R.pts[p.id].v; }).length; }
+function ptDone(R, m){ return m.prev.filter(function(p){ return R.pts && R.pts[p.id] && (R.pts[p.id].note || "").trim(); }).length; }
 var PT = [["yes","Yes"],["partly","Partly"],["no","No"]];
 function ptName(v){ return {yes:"Addressed", partly:"Partly addressed", no:"Not addressed"}[v] || "Not checked"; }
 function pointsHTML(r){
   var R = S.R[r.id], m = MS[r.id], prev = rvById(r.prev);
-  return '<div class="ptip">Check each point you raised on version 1. Your answers and notes are shared with the authors and the editor.</div>' +
-    '<details class="guide prevr"><summary>Your review of version 1 (' + m.prevRec.toLowerCase() + ', ' + m.prevAt + ')</summary><p class="small" style="margin-top:8px">' + prev.toAuthor + '</p></details>' +
+  return '<div class="ptip">Read the authors&rsquo; response to each point you raised on Revision 1. Add a comment if anything is still missing. Your comments are shared with the authors and the editor.</div>' +
+    '<details class="guide prevr"><summary>Your review of Revision 1 (' + m.prevRec.toLowerCase() + ', ' + m.prevAt + ')</summary><p class="small" style="margin-top:8px">' + prev.toAuthor + '</p></details>' +
     '<div class="chgsum"><b>What the authors say they changed</b><p>' + esc(m.changes) + '</p></div>' +
     m.prev.map(function(p, i){
       var st = (R.pts || {})[p.id] || {}, v = st.v;
-      return '<div class="cmt pt' + (v ? " done" : "") + '" id="pt-' + p.id + '"><div class="cmh"><span class="n">' + (i + 1) + '</span>' + secName(p.blk) +
+      return '<div class="cmt pt" id="pt-' + p.id + '"><div class="cmh"><span class="n">' + (i + 1) + '</span>' + secName(p.blk) +
           '<button class="link small" style="margin-left:auto" type="button" data-a="ptGo" data-v="' + p.blk + '">Show changes</button></div>' +
         '<span class="qt">&ldquo;' + esc(shortQ(p.quote, 120)) + '&rdquo;</span><div class="ct"><span class="lab">You wrote</span>' + esc(p.text) + '</div>' +
         '<div class="aresp"><span class="lab">The authors&rsquo; response</span>' + esc(p.resp) + '</div>' +
-        '<div class="ptq"><span class="lab" id="ptl-' + p.id + '">Has this been addressed?</span><div class="seg" role="group" aria-labelledby="ptl-' + p.id + '">' + PT.map(function(o){
-          return '<button type="button" data-a="ptSet" data-id="' + p.id + '" data-v="' + o[0] + '" aria-pressed="' + (v === o[0]) + '">' + o[1] + '</button>'; }).join("") + '</div></div>' +
-        (v && v !== "yes" ? '<label class="flabel" for="ptn-' + p.id + '" style="margin-top:10px;display:block">What still needs doing?</label><textarea class="inp" id="ptn-' + p.id + '" data-pt="' + p.id + '" style="min-height:72px;margin-top:6px" placeholder="Tell the authors what&rsquo;s still missing">' + esc(st.note || "") + '</textarea>' : "") +
+        '<label class="flabel" for="ptn-' + p.id + '" style="margin-top:10px;display:block">Your comment <span class="optional">(optional)</span></label><textarea class="inp" id="ptn-' + p.id + '" data-pt="' + p.id + '" style="min-height:72px;margin-top:6px" placeholder="Anything still missing, for the authors">' + esc(st.note || "") + '</textarea>' +
         '</div>';
     }).join("");
 }
@@ -2954,27 +2998,27 @@ function inlineHTML(cs){
 SCREENS.rw = function(){
   var r = rvById(parts()[1]), R = S.R[r.id], m = MS[r.id], re = !!r.round, cs = sortedC(r.id);
   if (!re && rvUI.tab === "points") rvUI.tab = "inline";
-  var tab = rvUI.tab, dv = re && rvUI.view !== "v2";
-  /* a revised version opens on the changes since version 1; comments go on the clean version 2 */
+  if (rvUI.tab === "history") rvUI.tab = re ? "points" : "inline";
+  var tab = rvUI.tab, dv = re && rvUI.view === "diff";
+  /* a revision opens on the changes since Revision 1; comments go on the clean Revision 2 */
   var docbar = re
-    ? '<div class="docbar"><div class="mode" role="group" aria-label="View"><button type="button" data-a="rvView" data-v="diff" aria-pressed="' + dv + '">Changes since version 1</button><button type="button" data-a="rvView" data-v="v2" aria-pressed="' + !dv + '">Version 2</button></div>' +
-      (dv ? '<div class="legend" aria-hidden="true"><span><i class="lg-ins"></i>Added</span><span><i class="lg-del"></i>Removed</span></div><span class="tip">' + I.info + rvChanged(m) + ' of ' + MSBLK.length + ' sections changed. Switch to Version 2 to comment</span>'
+    ? '<div class="docbar"><div class="mode" role="group" aria-label="View"><button type="button" data-a="rvView" data-v="v2" aria-pressed="' + !dv + '">Revision 2</button><button type="button" data-a="rvView" data-v="diff" aria-pressed="' + dv + '">Changes since Revision 1</button></div>' +
+      (dv ? '<div class="legend" aria-hidden="true"><span><i class="lg-ins"></i>Added</span><span><i class="lg-del"></i>Removed</span></div><span class="tip">' + I.info + rvChanged(m) + ' of ' + MSBLK.length + ' sections changed. Switch to Revision 2 to comment</span>'
         : '<span class="tip">' + I.cmt + 'Select any text to comment on it</span>') + '</div>'
     : '<div class="docbar"><span class="fn">' + I.doc + m.ref + '_anonymised.pdf</span><span class="tip">' + I.cmt + 'Select any text to comment on it</span></div>';
   var doc = '<div class="docpane" data-keep="doc">' + docbar + (dv ? rvDiffPaper(r) : rvPaper(r, true)) + '<button type="button" class="selpop" id="selpop" data-a="cNew" hidden>' + I.cmt + 'Comment</button></div>';
   var dot = '<span class="dot2" aria-hidden="true"></span>';
   var tabs = [["inline", re ? "New" : "Comments", cs.length ? '<span class="c">' + cs.length + '</span>' : ""], ["general", re ? "To author" : "To the author", R.general.trim() ? dot : ""], ["editor", I.lock + (re ? "Editor" : "To the editor"), (R.editor || "").trim() ? dot : ""]];
-  if (re) tabs.unshift(["points", "Your points", '<span class="c">' + ptDone(R, m) + '/' + m.prev.length + '</span>']);
+  if (re) tabs.unshift(["points", "Your points", '<span class="c">' + m.prev.length + '</span>']);
   var pb = tab === "general"
-    ? '<div class="ptext"><p class="small">' + (re ? "A short overall view of version 2: is it now ready, and what, if anything, is still needed? Shared with the authors and the editor." : "Your main review. It&rsquo;s shared with the authors and the editor, along with your comments on the text.") + '</p>' +
-      (re ? '<details class="guide"><summary>What to cover</summary><ul><li>A short summary of what the paper claims</li><li>Main issues: anything that affects whether the conclusions hold</li><li>Minor issues: clarity, presentation, references</li><li>Be specific and constructive. Leave out your recommendation and anything that could identify you.</li></ul></details>' +
-      '<label class="flabel" for="gIn">General comments to the author</label><textarea class="inp" id="gIn" data-rvf="general" placeholder="Summary&#10;&#10;Main issues&#10;&#10;Minor issues">' + esc(R.general) + '</textarea>'
+    ? '<div class="ptext"><p class="small">' + (re ? "Your review of Revision 2, under the same four headings as before. Your comments on Revision 1 are shown above each box. Shared with the authors and the editor." : "Your main review. It&rsquo;s shared with the authors and the editor, along with your comments on the text.") + '</p>' +
+      (re ? rvSecsReHTML(R, m)
         : '<p class="xs muted" style="margin:0">Be specific and constructive. Leave out your recommendation and anything that could identify you.</p>' + rvSecsHTML(R)) + '</div>'
     : tab === "editor"
     ? '<div class="ptext"><div class="banner priv"><span class="bi">' + I.lock + '</span><div><b>Only the editor sees this</b><p>It&rsquo;s never shared with the authors. Use it for anything you&rsquo;d rather not say to them, such as concerns about ethics or overlap with other work.</p></div></div>' +
       '<label class="flabel" for="eIn">Confidential comments to the editor <span class="optional">(optional)</span></label><textarea class="inp" id="eIn" data-rvf="editor" style="min-height:220px" placeholder="For example, how confident you are in your assessment, or anything else the editor should know.">' + esc(R.editor || "") + '</textarea></div>'
     : tab === "points" ? pointsHTML(r)
-    : (re && !cs.length && !rvUI.pend ? '<div class="phelp"><div class="ic">' + I.cmtL + '</div><b>New comments on version 2</b>Optional. Switch to <b>Version 2</b> above the document, select any words, then choose <b>Comment</b>.<p class="xs muted" style="margin-top:12px">Use this for anything new. Check your earlier points under Your points.</p></div>' : inlineHTML(cs));
+    : (re && !cs.length && !rvUI.pend ? '<div class="phelp"><div class="ic">' + I.cmtL + '</div><b>New comments on Revision 2</b>Optional. Switch to <b>Revision 2</b> above the document, select any words, then choose <b>Comment</b>.<p class="xs muted" style="margin-top:12px">Use this for anything new. Check your earlier points under Your points.</p></div>' : inlineHTML(cs));
   var panel = '<aside class="cpanel" aria-labelledby="cpH"><div class="cph"><h3 id="cpH">Your review<span class="badge brand">Draft</span></h3>' +
       '<div class="ptabs" role="tablist" aria-label="Parts of your review">' + tabs.map(function(t){ return '<button type="button" role="tab" aria-selected="' + (t[0] === tab) + '" data-a="ptab" data-v="' + t[0] + '">' + t[1] + t[2] + '</button>'; }).join("") + '</div></div>' +
     '<div class="cpb" data-keep="rvb">' + pb + '</div></aside>';
@@ -3029,14 +3073,14 @@ function rvPick(id, scrollDoc){
 SCREENS.rs = function(){
   var r = rvById(parts()[1]), R = S.R[r.id], j = journalById(r.j), g = R.general.trim();
   var chk = function(ok, lab){ return '<li class="' + (ok ? "ok" : "") + '"><span class="t">' + (ok ? I.check : "") + '</span>' + lab + '</li>'; };
-  var body = '<div class="wrap sbody"><h2 class="pg">Check and submit your review' + (r.round ? " of version 2" : "") + '</h2>' +
+  var body = '<div class="wrap sbody"><h2 class="pg">Check and submit your review' + (r.round ? " of Revision 2" : "") + '</h2>' +
     '<p class="lede">This is everything you&rsquo;re sending to the editor of ' + esc(j.name) + '. The authors won&rsquo;t see your name.</p>' +
     '<div class="rlay"><div>' + rvSummaryHTML(r, true) + '</div>' +
     '<aside class="card ready" aria-labelledby="recH"><h3 id="recH">Your recommendation</h3><p class="small muted" style="margin-top:4px">The editor makes the final decision, using all the reviews.</p>' +
       '<fieldset class="recs"><legend class="sr">Recommendation</legend>' + REC.map(function(o){
         return '<label class="opt"><input type="radio" name="rec" value="' + o[0] + '" data-a="rvRec"' + (R.rec === o[0] ? " checked" : "") + '><span><b>' + o[1] + '</b><span>' + o[2] + '</span></span></label>'; }).join("") + '</fieldset>' +
-      '<ul class="chkl">' + (r.round ? chk(ptDone(R, MS[r.id]) === MS[r.id].prev.length, "Every earlier point checked") : "") + chk(!!g, "General comments added") + chk(!!R.rec, "Recommendation chosen") + '</ul>' +
-      '<button class="btn pri lg block" type="button" data-a="rvSubmit" data-id="' + r.id + '"' + (g && R.rec && (!r.round || ptDone(R, MS[r.id]) === MS[r.id].prev.length) ? "" : " disabled") + '>Submit review</button>' +
+      '<ul class="chkl">' + chk(!!g, "General comments added") + chk(!!R.rec, "Recommendation chosen") + '</ul>' +
+      '<button class="btn pri lg block" type="button" data-a="rvSubmit" data-id="' + r.id + '"' + (g && R.rec ? "" : " disabled") + '>Submit review</button>' +
       '<p class="xs muted" style="margin-top:10px;text-align:center">You can&rsquo;t change your review after you submit it.</p></aside></div></div>';
   return rvShell(r, 1, body);
 };
@@ -3051,7 +3095,7 @@ SCREENS.rdone = function(){
     '<section class="card" style="padding:24px;margin-bottom:28px"><h3 style="margin-bottom:8px">What happens next</h3><ul class="next">' +
       '<li><span class="nn">1</span><div><b>The editor reads all the reviews</b>They wait until every reviewer has replied.</div><span class="when">Usually 1 to 3 weeks</span></li>' +
       '<li><span class="nn">2</span><div><b>The editor makes a decision</b>The authors get it with all the reviewers&rsquo; comments. Your name isn&rsquo;t shared.</div><span class="when">We&rsquo;ll email you the outcome</span></li>' +
-      '<li><span class="nn">3</span><div><b>If the authors revise it</b>The editor may ask you to look at the new version. That would come to you as a new invitation.</div><span class="when">Only if asked</span></li></ul>' +
+      '<li><span class="nn">3</span><div><b>If the authors revise it</b>The editor may ask you to look at the new revision. That would come to you as a new invitation.</div><span class="when">Only if asked</span></li></ul>' +
       '<div class="banner ok" style="margin-top:14px"><span class="bi">' + I.checkM + '</span><div><b>Nothing more is needed from you</b><p>Your dashboard now shows this as &ldquo;Review submitted &ndash; awaiting editor decision&rdquo;.</p></div></div></section>' +
     '<div style="display:flex;gap:12px;justify-content:center;padding-bottom:56px;flex-wrap:wrap"><a class="btn pri lg" href="#dashboard">Go to your dashboard</a><a class="btn lg" href="#ra/' + r.id + '">View your review</a></div></div>';
 };
@@ -3767,7 +3811,7 @@ SCREENS.check = function(){
     '<div class="mode" role="group" aria-label="Mode"><button type="button" data-a="editOff" aria-pressed="' + !editing + '">' + I.read + 'Review</button><button type="button" data-a="editOn" aria-pressed="' + editing + '">' + I.edit + 'Edit text</button></div>' +
     '<div class="legend" aria-hidden="true"><span><i style="background:var(--saffron-neutral);box-shadow:inset 0 -2px 0 var(--saffron)"></i>To check</span><span><i style="box-shadow:inset 0 -2px 0 var(--mint-50);background:#fff;border:1px solid var(--n200)"></i>Checked</span>' +
       (nEdits ? '<span><i style="background:var(--cornflower);width:3px"></i>Edited (' + nEdits + ')</span>' : "") + '</div>' +
-    (editing ? '<div class="editnote">Minor edits only: typos, symbols and small wording changes. For anything bigger, <button class="link" data-a="step" data-r="upload">upload a new version</button>.</div>' : "") + '</div>';
+    (editing ? '<div class="editnote">Minor edits only: typos, symbols and small wording changes. For anything bigger, <button class="link" data-a="step" data-r="upload">upload a new revision</button>.</div>' : "") + '</div>';
   var paper = '<article class="paper' + (editing ? " editing" : "") + '" id="paper" aria-label="Your manuscript">' +
     '<div class="rh"><span>Okafor et al.</span><span>Microplastic ingestion by chub</span></div>' +
     '<span class="ptitle hl" data-a="title">' + esc(title()) + '</span>' +
@@ -3863,7 +3907,7 @@ function editListHTML(){
     var n = changedChars(plainText(BLK[k]), plainText(D.edits[k]));
     return '<div class="er"><span style="color:var(--cornflower);display:flex">' + I.edit + '</span>' + BLKNAME[k] + ' <span class="muted">' + n + ' characters changed</span>' +
       '<button class="link small" style="margin-left:auto" data-a="undoEdit" data-id="' + k + '">Undo</button></div>' +
-      (n > 120 ? '<div class="small" style="color:var(--saffron-dark);margin:0 0 6px 22px">That&rsquo;s more than a minor edit. Consider uploading a new version.</div>' : "");
+      (n > 120 ? '<div class="small" style="color:var(--saffron-dark);margin:0 0 6px 22px">That&rsquo;s more than a minor edit. Consider uploading a new revision.</div>' : "");
   }).join("") + '</div>';
 }
 
@@ -4096,7 +4140,53 @@ function edList(){ return S.load === "light" ? ED : ED.concat(ED_MORE); }
 function edJournals(){ var o = []; edList().forEach(function(m){ if (o.indexOf(m.j) < 0) o.push(m.j); }); return o; }
 function multiJ(){ return edJournals().length > 1; }
 function jPre(m){ return multiJ() ? esc(journalById(m.j).name) + ", " : ""; }
-function edById(id){ return ED.concat(ED_MORE).filter(function(m){ return m.id === id; })[0]; }
+function edById(id){ var m = ED.concat(ED_MORE).filter(function(m){ return m.id === id; })[0]; if (m && id === "e1") e1Rev(m); return m; }
+/* ================= e1: the authors send Revision 2, built from the decision you sent on Revision 1 ================= */
+/* each reviewer comment: the authors' response, and whether they disagree */
+var E1RESP = {
+  a1:["We replaced the paired t-test with a linear mixed model with month as a random effect (section 2.3). The seasonal difference is still significant (p = 0.004).", false],
+  a2:["We now give a 95% interval of 31 to 63 kg, from bootstrapping the depth survey and the 18 sediment cores.", false],
+  a3:["We don’t have suspended sediment data from the control reach, so we have made this point more tentative in the Discussion.", false],
+  b1:["We agree this is a limitation, but no water-quality data exist for the study reach before 2021. We added Environment Agency monitoring from 2 km upstream (2018 to 2025), which shows no trend, and discuss the limitation. We don’t think a new control site is possible.", true],
+  b2:["We added a second gauge midway along the reach in March 2025 and now estimate loads from both. Groundwater inputs change the retention estimate by less than 3%.", false],
+  b3:["We estimate 4.1 kg of phosphorus was released over the three days. The beavers rebuilt both dams within six weeks. Both points are now in the Results.", false]
+};
+/* the text of Revision 2: the changes the authors describe above */
+var E1EDITS = {
+  methods:[["served as a control.", "served as a control. No water-quality data exist for the study reach before 2021, so we also used Environment Agency monitoring 2 km upstream (2018 to 2025) to check for wider trends."]],
+  methods2:[["using discharge from a flow gauge at the downstream end of the reach", "using discharge from two flow gauges, one midway along the reach and one at its downstream end"],
+    ["Seasonal differences were tested with a paired t-test.", "Seasonal differences were tested with a linear mixed model with month as a random effect."]],
+  results:[["held an estimated 46 kg of phosphorus", "held an estimated 46 kg of phosphorus (95% interval 31 to 63 kg)"],
+    ["rose sevenfold for three days.", "rose sevenfold for three days, releasing an estimated 4.1 kg of phosphorus. The beavers rebuilt both dams within six weeks."]],
+  disc:[["probably because chalk streams carry less sediment", "possibly because chalk streams carry less sediment, although we lack sediment data from the control reach to test this"]]
+};
+function e1Rev(m){
+  var E = S.E.e1;
+  if (!E || !E.dec || !E.rev || !isRevK(E.dec.k)) { if (m._revAt) { delete m.rev; delete m.hist; delete m.ms; delete m._revAt; } return; }
+  if (m._revAt === E.rev.at) return;
+  m._revAt = E.rev.at;
+  var sum = eSum("e1"), now = Date.now(), rel = function(t){ return Math.round((t - now) / 864e5); };
+  var pts = dCs("e1").map(function(c){
+    var r = E1RESP[c.id] || ["We have dealt with this point.", false], ed = ecmTxt(sum, c.id);
+    return {who:c.rv, grp:(sum.inc && sum.inc[c.id]) || c.grp || "sug", blk:c.blk, sec:secName(c.blk), t:c.text + (ed ? " Your comment: " + ed : ""), resp:r[0], push:r[1]};
+  });
+  if ((sum.note || "").trim()) pts.push({who:"ed", grp:"req", blk:"disc", sec:"Discussion", t:sum.note.trim(), resp:"Thank you. We have taken this into account in the Discussion.", push:false});
+  var v1 = {}, v2 = {}, k;
+  for (k in MS.e1.text) { v1[k] = MS.e1.text[k]; v2[k] = (E1EDITS[k] || []).reduce(function(t, e){ return t.replace(e[0], e[1]); }, MS.e1.text[k]); }
+  v1.data = v2.data = "";
+  m.ms = {v1:v1, text:v2};
+  var subs = E.inv.filter(function(v){ return v.st === "submitted"; }), inAt = subs.length ? Math.max.apply(null, subs.map(function(v){ return v.at; })) : E.dec.at;
+  var sent = Math.min.apply(null, E.inv.map(function(v){ return v.sentAt || now; }).concat([E.dec.at]));
+  m.hist = [
+    {k:"sub", at:Math.min(rel(sent) - 2, -m.ago), v:1, t:"Revision 1 submitted", file:"Owens_beaver_phosphorus_v1.docx"},
+    {k:"rvw", at:rel(inAt), t:"Both reviews in", d:subs.map(function(v){ return esc(v.name) + " recommends " + recLabel(v.rec).toLowerCase(); }).join(". ") + "."},
+    {k:"dec", at:rel(E.dec.at), dk:E.dec.k, t:"You asked for " + DEC_NAME[E.dec.k].toLowerCase(), d:"You sent " + plural(pts.length, "point") + " for the authors to address, with both reviews.", cur:true},
+    {k:"ver", at:rel(E.rev.at), v:2, how:"edit", t:"Revision 2 received", cur:true}
+  ];
+  m.rev = {how:"edit", sections:["Methods","Results","Discussion"], pts:pts,
+    note:"Thank you for the helpful decision and the reviewers’ comments. We have responded to every point and made the changes online. The main changes are a new statistical model, uncertainty around the phosphorus estimate, a second flow gauge, and more detail on the dam failures. For Reviewer 2’s point about the control reach, we explain why a new control site isn’t possible and have added long-term monitoring data instead."};
+}
+
 function cById(id){ return CAND.filter(function(c){ return c.id === id; })[0]; }
 function eInv(id){
   var now = Date.now(), g = {acc:[], sub:[], pend:[], late:[], dec:[], wd:[], ovd:[], bak:[]};
@@ -4214,7 +4304,7 @@ var ROLE_TAG = {ed:'<span class="badge dark">Editing</span>', rv:'<span class="b
 function needsYou(){
   var out = [];
   /* editing work has its own home (the Editing tab); the dashboard only summarises it */
-  if (isRv()) todoRevs().forEach(function(r){ var st = rvSt(r), iv = st === "invite"; out.push({role:"rv", task:"reviews", what:r.round ? (iv ? "Reply to an invitation to review a revised version" : "Review the revised version") : iv ? "Reply to an invitation to review" : st === "accepted" ? "Start your review" : "Finish your review",
+  if (isRv()) todoRevs().forEach(function(r){ var st = rvSt(r), iv = st === "invite"; out.push({role:"rv", task:"reviews", what:r.round ? (iv ? "Reply to an invitation to review a revision" : "Review the revision") : iv ? "Reply to an invitation to review" : st === "accepted" ? "Start your review" : "Finish your review",
     title:r.title, href:"#" + (iv ? "ra/" : "rw/") + r.id, btn:iv ? "View and respond" : st === "accepted" ? "Start review" : "Continue review", due:rvDate(r).getTime(), late:false,
     sub:esc(journalById(r.j).name) + ". " + (iv ? "Reply by " : "Review due ") + dLong(rvDate(r)) + "."}); });
   AREV.forEach(function(id){ withA(id, function(){
@@ -4255,7 +4345,7 @@ function nyHTML(ny){
 /* ================= author: a decision on submission s1 ================= */
 function aOpen(){ return !!(AA() && AA().k !== "reject" && AA().st === "open"); }
 function aStart(){ var A = AA(); return !A.read ? "arr/" + AID : A.how === "upload" ? (A.file && (A.changes || "").trim() ? "arevs/" + AID : "aup/" + AID) : "arev/" + AID; }
-function aProg(){ var A = AA(); return A.how === "upload" ? (A.file ? "Version 2 uploaded." : "Version 2 not uploaded yet.") : aAnswered() + " of " + aItems().length + " comments answered."; }
+function aProg(){ var A = AA(); return A.how === "upload" ? (A.file ? "Revision 2 uploaded." : "Revision 2 not uploaded yet.") : aAnswered() + " of " + aItems().length + " comments answered."; }
 function aCta(){ return AA().read ? "Continue your revision" : "Read the reviews"; }
 function aText(b){ var e = AA() && AA().edits[b]; return e != null ? e : AMS[AID].text[b]; }
 /* the editor's own points first, then every reviewer comment in reading order, re-anchored to any edited text */
@@ -4285,8 +4375,8 @@ function subView1(s){
   if (k !== "reject") {
     var hx = [], nR = aAnswered(), nG = aGenResp().length, nE = Object.keys(A.edits || {}).length;
     if (A.read) hx.push([fmtDate(A.readAt || A.at), "You read the reviews", plural(aItems().length, "comment") + " and general notes from " + plural(AU().recs[k].length, "reviewer")]);
-    if (A.startAt) hx.push([fmtDate(A.startAt), "You started your revision", A.how === "upload" ? "Uploading a revised version" : "Making changes online"]);
-    if (A.file) hx.push([fmtDate(A.file.at || A.startAt || Date.now()), "Version 2 uploaded", esc(A.file.name)]);
+    if (A.startAt) hx.push([fmtDate(A.startAt), "You started your revision", A.how === "upload" ? "Uploading a revision" : "Making changes online"]);
+    if (A.file) hx.push([fmtDate(A.file.at || A.startAt || Date.now()), "Revision 2 uploaded", esc(A.file.name)]);
     if (A.st === "open" && A.startAt) hx.push([fmtDate(Date.now()), "In progress", nR + " of " + aItems().length + " comments answered" + (nG ? ", " + plural(nG, "general note") + " answered" : "") + (nE ? ", " + plural(nE, "section") + " edited" : "") + ". Due " + dLong(new Date(A.due))]);
     o.history = o.history.map(function(h){ return h.slice(0, 3); }).concat(hx);
     if (A.st === "open") o.history[o.history.length - 1].push(1);
@@ -4294,8 +4384,8 @@ function subView1(s){
   if (k !== "reject" && A.st !== "open") {
     o.status = ["brand","Revision submitted"]; o.now = "<b>Revision submitted</b> on " + fmtDate(A.sentAt, {day:"numeric", month:"long"}) + ". The editor is checking your changes.";
     var up = A.how === "upload";
-    o.history.push([fmtDate(A.sentAt), "Revision submitted", up ? "Version 2, with a summary of what changed" + (nR ? ", and " + plural(nR, "response") + " to comments" : "") : "Changes made online: " + (nE ? plural(nE, "section") + " edited, " : "") + plural(nR, "response") + " to comments" + (nG ? " and " + plural(nG, "response") + " to general notes" : ""), 1]);
-    o.files = [up && A.file ? ["Manuscript (version 2)", A.file.name] : ["Manuscript (version 2, edited online)", AU().v2pdf]].concat(up ? [["Summary of changes", "Summary_of_changes.pdf"]] : [["Responses to comments", "Responses_to_comments.pdf"]], s.files);
+    o.history.push([fmtDate(A.sentAt), "Revision submitted", up ? "Revision 2, with a summary of what changed" + (nR ? ", and " + plural(nR, "response") + " to comments" : "") : "Changes made online: " + (nE ? plural(nE, "section") + " edited, " : "") + plural(nR, "response") + " to comments" + (nG ? " and " + plural(nG, "response") + " to general notes" : ""), 1]);
+    o.files = [up && A.file ? ["Manuscript (Revision 2)", A.file.name] : ["Manuscript (Revision 2, edited online)", AU().v2pdf]].concat(up ? [["Summary of changes", "Summary_of_changes.pdf"]] : [["Responses to comments", "Responses_to_comments.pdf"]], s.files);
   }
   return o;
 }
@@ -4315,7 +4405,7 @@ function aBanner(tab){
   var A = AA();
   if (A.k === "reject") return '<div class="banner alert" style="margin-top:16px"><span class="bi">' + I.info + '</span><div><b>Not accepted</b><p>The editor&rsquo;s decision is final, so this submission can&rsquo;t be revised. ' + (tab === "reviews" ? "The decision and reviews are below." : '<a href="#sub/' + AID + '/reviews">Read the decision and reviews</a>.') + '</p></div></div>';
   if (A.st === "sent") return '<div class="banner ok" style="margin-top:16px"><span class="bi">' + I.checkM + '</span><div><b>Revision submitted</b><p>You sent your revision on ' + fmtDate(A.sentAt, {day:"numeric", month:"long"}) + '. The editor will check your changes and let you know.</p></div></div>';
-  return '<div class="banner warn" style="margin-top:16px"><span class="bi">' + I.info + '</span><div><b>' + DEC_NAME[A.k] + ' requested. Send your revision by ' + dLong(new Date(A.due)) + '</b><p>Read the reviews and comments, then make your changes here or upload a new version.</p>' +
+  return '<div class="banner warn" style="margin-top:16px"><span class="bi">' + I.info + '</span><div><b>' + DEC_NAME[A.k] + ' requested. Send your revision by ' + dLong(new Date(A.due)) + '</b><p>Read the reviews and comments, then make your changes here or upload a new revision.</p>' +
     '<div class="bact"><a class="btn pri sm" href="#' + aStart() + '">' + aCta() + '</a></div></div></div>';
 }
 /* what the author sent back, once the revision is submitted */
@@ -4326,7 +4416,7 @@ function aRevRecord(){
     return '<div class="scm"><span class="n' + (c.own ? " ed" : c.rv ? " r2" : "") + '">' + (c.own ? "E" : ++n) + '</span><div><div class="sec2">' + (c.own ? '<span class="rvk ed">Editor</span>' : rvTag(c.rv) + ' &middot; ' + secName(c.blk)) + '</div>' +
       '<p style="color:var(--n600)">' + esc(shortQ(c.text, 140)) + '</p>' + (r ? '<div class="letter ltext" style="margin-top:8px;font-size:14.5px;line-height:22px;padding:10px 14px">' + esc(r) + '</div>' : '<p class="xs muted" style="margin-top:6px">No response</p>') + '</div></div>'; };
   var rows = its.map(row);
-  return '<h2 style="font-size:18px;margin:32px 0 4px">Your revision</h2><div class="small muted" style="margin:0 0 12px">Submitted ' + fmtDate(A.sentAt) + '. ' + (A.how === "upload" && A.file ? "Version 2: " + esc(A.file.name) + ". " : "") + plural(aAnswered(), "response") + ' to comments' + (gr.length ? ', ' + plural(gr.length, "response") + ' to general notes' : "") + '.</div>' +
+  return '<h2 style="font-size:18px;margin:32px 0 4px">Your revision</h2><div class="small muted" style="margin:0 0 12px">Submitted ' + fmtDate(A.sentAt) + '. ' + (A.how === "upload" && A.file ? "Revision 2: " + esc(A.file.name) + ". " : "") + plural(aAnswered(), "response") + ' to comments' + (gr.length ? ', ' + plural(gr.length, "response") + ' to general notes' : "") + '.</div>' +
     (A.how === "upload" && (A.changes || "").trim() ? '<h4 class="sumh">What you changed</h4><div class="letter ltext" style="font-size:14.5px;line-height:22px;padding:10px 14px;margin-bottom:12px">' + esc(A.changes) + '</div>' : "") +
     rows.slice(0, SHOW).join("") + (rows.length > SHOW ? '<details class="dcmore"><summary><span class="dcm-o">View ' + plural(rows.length - SHOW, "more response") + '</span><span class="dcm-c">View less</span></summary>' + rows.slice(SHOW).join("") + '</details>' : "") +
     (gr.length ? '<h4 class="sumh" style="margin-top:16px">Your responses to general notes</h4>' + gr.map(function(x){ return '<div class="scm"><span class="n' + (x.i ? " r2" : "") + '">' + (x.i + 1) + '</span><div><div class="sec2">' + rvTag(x.i) + ' &middot; ' + x.h + '</div><div class="letter ltext" style="margin-top:8px;font-size:14.5px;line-height:22px;padding:10px 14px">' + esc(x.v) + '</div></div></div>'; }).join("") : "");
@@ -4520,7 +4610,8 @@ SCREENS.ed = function(){
   else if (st.key === "revised") banner = bn("ok", "The authors have sent their revision", "Revision " + revInfo(m).v + " arrived " + dLong(new Date(E.rev.at)) + ", the " + revInfo(m).ord + " round of revision. They answered all " + m.rev.pts.length + " points you asked them to address" + (m.rev.pts.some(function(x){ return x.push; }) ? ", but disagree with " + plural(m.rev.pts.filter(function(x){ return x.push; }).length, "point") : "") + ". " + revNext(m) + " Please decide by " + dLong(new Date(st.due)) + ".",
     '<a class="btn pri" href="#erev/' + m.id + '">Check the revision</a>', true);
   else if (E.rev && E.rev.out && m.rev) banner = bn(rvK(E.rev.out.k) === "accept" ? "ok" : "info", RV_DONE[rvK(E.rev.out.k)], rvdOutTxt(m), '<a class="btn sm" href="#erevdone/' + m.id + '">See what you sent</a>');
-  else if (E.dec) banner = bn(st.done ? "info" : "ok", "Decision sent: " + DEC_NAME[E.dec.k].toLowerCase(), st.done ? "This article is closed." : "The authors have until " + dLong(new Date(E.dec.due)) + " to send their revision. It&rsquo;ll come back to you here, and on your dashboard.");
+  else if (E.dec) banner = bn(st.done ? "info" : "ok", "Decision sent: " + DEC_NAME[E.dec.k].toLowerCase(), st.done ? "This article is closed." : "The authors have until " + dLong(new Date(E.dec.due)) + " to send their revision. It&rsquo;ll come back to you here, and on your dashboard.",
+    m.id === "e1" && isRevK(E.dec.k) && !E.rev ? '<button class="btn sm protobtn" type="button" data-a="e1Rev" title="Prototype shortcut">Prototype: the authors send Revision 2</button>' : "");
   var det = '<section class="card sdcard" aria-labelledby="edH"><div class="sdh"><h2 id="edH">Article details</h2><span class="badge ' + st.badge[0] + '">' + st.badge[1] + '</span></div><div class="sdb">' +
     fields([["Manuscript title", esc(m.title), 1], ["Reference", m.ref], ["Journal", esc(j.name)], ["Article type", TYPES[m.type]], ["Submitted", fmtDate(dAt(-m.ago))],
       ["Authors", esc(m.authors) + ' <span class="muted">(' + esc(m.inst) + ')</span>', 1], ["Review model", m.model], ["Keywords", esc(m.kw.join(", "))]]) +
@@ -4841,7 +4932,7 @@ function decComments(id, sentAt, inline){
 /* step 2: choose the decision, with the recommendations beside it and what each choice leads to */
 var DEC_NEXT = {accept:"It goes to production. The authors don&rsquo;t need to do anything more.",
   minor:"The authors have " + DEC_DAYS.minor + " days to respond. You check their changes yourself, without the reviewers.",
-  major:"The authors have " + DEC_DAYS.major + " days to send a new version. You decide whether it goes back to the reviewers.",
+  major:"The authors have " + DEC_DAYS.major + " days to send a new revision. You decide whether it goes back to the reviewers.",
   reject:"The submission closes. The authors get the reviews to help them submit elsewhere."};
 SCREENS.edec = function(){
   var id = parts()[1], sum = eSum(id), revs = dRevs(id), k = sum.k;
@@ -4931,7 +5022,7 @@ function decTpl(k, id){
   return open + {
     accept:"I’m pleased to tell you it has been accepted for publication.\n\nThe reviewers’ comments are below for your information. You don’t need to respond to them.",
     minor:"The reviewers found it a useful study, and I’d like to accept it after minor revisions.\n\nPlease respond to every reviewer comment below, saying what you changed or why you didn’t.\n\nI’ll check your changes myself, without sending the paper back to the reviewers.",
-    major:"The reviewers agree the question is important, but they raise concerns that need substantial changes before I can make a final decision.\n\nPlease respond to every reviewer comment below, saying what you changed or why you didn’t. Your revised version may go back to the reviewers.",
+    major:"The reviewers agree the question is important, but they raise concerns that need substantial changes before I can make a final decision.\n\nPlease respond to every reviewer comment below, saying what you changed or why you didn’t. Your revision may go back to the reviewers.",
     reject:"The reviewers found the question important, but have serious concerns about the study, and I’m sorry we can’t consider it further.\n\nI hope the reviewers’ comments are useful if you submit the work elsewhere."}[k] + sign;
 }
 /* the message starts from the template for the chosen decision, and follows the decision if it changes before they edit it */
@@ -4964,7 +5055,7 @@ SCREENS.edone = function(){
   var id = parts()[1], m = edById(id), E = S.E[id], k = E.dec.k, st = eStatus(id);
   var nx = {
     minor:[["The authors revise","They respond to each comment and make minor edits.","Due " + dLong(new Date(E.dec.due))],["You check their changes","Their responses come back to you, in To do on your editing page.","When they submit"],["You make a final decision","Accept it, or ask for more changes.",""]],
-    major:[["The authors revise","They send a new version with a summary of what they changed.","Due " + dLong(new Date(E.dec.due))],["You read the revision","You decide whether it goes back to the reviewers.","When they submit"],["You make a decision","",""]],
+    major:[["The authors revise","They send a new revision with a summary of what they changed.","Due " + dLong(new Date(E.dec.due))],["You read the revision","You decide whether it goes back to the reviewers.","When they submit"],["You make a decision","",""]],
     accept:[["Production","The accepted manuscript goes to the production team.","Usually within a week"]],
     reject:[["The authors are told","They can read your decision and the reviews. They can&rsquo;t revise this submission.","Today"]]}[k];
   var more = eLists().todo.filter(function(x){ return x.st.key === "decide"; }).sort(function(a, b){ return a.st.due - b.st.due; }), next = more[0];
@@ -4977,11 +5068,12 @@ SCREENS.edone = function(){
     '<section class="card" style="padding:24px;margin-bottom:20px"><h3 style="margin-bottom:18px">Where it is now</h3>' + tracker(st.stage, {lg:true, labels:st.labels}) + '</section>' +
     '<section class="card" style="padding:24px;margin-bottom:28px"><h3 style="margin-bottom:8px">What happens next</h3><ul class="next">' +
       nx.map(function(x, i){ return '<li><span class="nn">' + (i + 1) + '</span><div><b>' + x[0] + '</b>' + x[1] + '</div><span class="when">' + x[2] + '</span></li>'; }).join("") + '</ul></section>' +
-    '<div style="display:flex;gap:12px;justify-content:center;padding-bottom:56px;flex-wrap:wrap"><a class="btn ' + (next ? "" : "pri ") + 'lg" href="#editing">Back to editing</a><a class="btn lg" href="#ed/' + id + '">View article</a></div></div>';
+    '<div style="display:flex;gap:12px;justify-content:center;padding-bottom:56px;flex-wrap:wrap"><a class="btn ' + (next ? "" : "pri ") + 'lg" href="#editing">Back to editing</a><a class="btn lg" href="#ed/' + id + '">View article</a></div>' +
+    (id === "e1" && isRevK(k) && !E.rev ? '<p class="small muted" style="text-align:center;margin:-36px 0 56px">Prototype: skip the wait. <button class="btn sm protobtn" type="button" data-a="e1Rev">The authors send Revision 2</button></p>' : "") + '</div>';
 };
 
 /* ================= author: respond to a decision ================= */
-/* read the reviews, choose how to revise: edit here and respond to each comment, or upload version 2 with a summary of changes; then submit */
+/* read the reviews, choose how to revise: edit here and respond to each comment, or upload Revision 2 with a summary of changes; then submit */
 function aSteps(){
   var h = AA().how;
   return [["arr/" + AID,"Read the reviews"], [(h === "upload" ? "aup/" : "arev/") + AID, "Make your changes"], ["arevs/" + AID,"Check and submit"]];
@@ -5046,10 +5138,10 @@ SCREENS.arr = function(){
   wsFor("arr", "letter");
   var A = AA(), s = subView(subById(AID)), its = aItems(), cs = its.filter(function(c){ return !c.own; }), nums = numsOf(cs), tab = ["comments","general"].indexOf(wsUI.tab) >= 0 ? wsUI.tab : "letter";
   if (!A.seen) { A.seen = true; save(); }
-  /* version 1 as the reviewers saw it, so marks use the original positions */
+  /* Revision 1 as the reviewers saw it, so marks use the original positions */
   var orig = cs.map(function(c){ var o = {}, k; for (k in c) o[k] = c[k]; o.s = c.o; o.e = c.o < 0 ? -1 : c.o + c.quote.length; return o; });
-  var docbar = '<div class="docbar"><span class="fn">' + I.doc + 'Version 1, with the reviewers&rsquo; comments</span>' + legendRv() + '<span class="tip">' + I.cmt + 'Select a highlight to read the comment</span></div>';
-  var paper = msPaper({m:AMS[AID], id:"apaper", title:s.title, right:"Version 1", by:AU().by,
+  var docbar = '<div class="docbar"><span class="fn">' + I.doc + 'Revision 1, with the reviewers&rsquo; comments</span>' + legendRv() + '<span class="tip">' + I.cmt + 'Select a highlight to read the comment</span></div>';
+  var paper = msPaper({m:AMS[AID], id:"apaper", title:s.title, right:"Revision 1", by:AU().by,
     inner:function(b){ return markSpans(AMS[AID].text[b], cMarks(orig, nums, b)); }});
   var pb = tab === "letter" ? '<div class="ptext" style="padding-bottom:0">' + aDue() + '</div>' + aLetterHTML()
     : tab === "general" ? aGenNotes(false)
@@ -5063,12 +5155,12 @@ SCREENS.arr = function(){
 };
 AFTER.arr = function(){ $("#apaper").addEventListener("click", function(e){ var mk = e.target.closest(".rcm[data-c]"); if (mk) wsPick(mk.getAttribute("data-c"), false, "apaper"); }); };
 
-/* step 2: edit here (text only) or upload a new version */
+/* step 2: edit here (text only) or upload a new revision */
 var HOW = {
   edit:{t:"Make the changes here", d:"Edit the text in your browser, and reply to each comment beside it.", best:"Best for small changes to the text",
     can:["Change wording, fix typos and correct numbers", "Add or remove sentences and short paragraphs", "Respond to each comment next to the text it&rsquo;s about", "The editor and reviewers see exactly what you changed"],
     cant:["Add, remove or edit references", "Change tables", "Add, replace or edit figures", "Change equations, layout or formatting"]},
-  upload:{t:"Upload a revised version", d:"Make the changes in your own file, then upload it as version 2.", best:"Best for larger changes",
+  upload:{t:"Upload a revision", d:"Make the changes in your own file, then upload it as Revision 2.", best:"Best for larger changes",
     can:["Make any change, including references, tables and figures", "Show your changes with tracked changes, if you can", "Describe what you changed in a short summary. No need to reply to each comment"], cant:[]}
 };
 SCREENS.ahow = function(){
@@ -5079,13 +5171,13 @@ SCREENS.ahow = function(){
       '<span class="hh"><b>' + o.t + '</b>' + (v === sug ? '<span class="badge ok">Suggested for ' + DEC_NAME[A.k].toLowerCase() + '</span>' : "") + '</span>' +
       '<span>' + o.d + ' ' + o.best + '.</span>' +
       '<ul class="hl">' + o.can.map(function(x){ return '<li class="y"><span class="t">' + I.check + '</span>' + x + '</li>'; }).join("") + '</ul>' +
-      (o.cant.length ? '<span class="hcant">You can&rsquo;t do these here. Upload a revised version instead:</span><ul class="hl">' + o.cant.map(function(x){ return '<li class="n"><span class="t">&times;</span>' + x + '</li>'; }).join("") + '</ul>' : "") +
+      (o.cant.length ? '<span class="hcant">You can&rsquo;t do these here. Upload a revision instead:</span><ul class="hl">' + o.cant.map(function(x){ return '<li class="n"><span class="t">&times;</span>' + x + '</li>'; }).join("") + '</ul>' : "") +
       '</span></label>';
   };
-  var warn = h === "upload" && nEd ? '<div class="banner warn" style="margin-top:16px"><span class="bi">' + I.warn + '</span><div><b>You&rsquo;ve made ' + plural(nEd, "edit") + ' here</b><p>If you upload a new version, these edits and your replies to comments won&rsquo;t be sent. Make the same changes in your file.</p></div></div>'
+  var warn = h === "upload" && nEd ? '<div class="banner warn" style="margin-top:16px"><span class="bi">' + I.warn + '</span><div><b>You&rsquo;ve made ' + plural(nEd, "edit") + ' here</b><p>If you upload a new revision, these edits and your replies to comments won&rsquo;t be sent. Make the same changes in your file.</p></div></div>'
     : h === "edit" && A.file ? '<div class="banner warn" style="margin-top:16px"><span class="bi">' + I.warn + '</span><div><b>You&rsquo;ve uploaded ' + esc(A.file.name) + '</b><p>If you make the changes here instead, that file and your summary won&rsquo;t be sent.</p></div></div>' : "";
   var body = '<div class="wrap sbody"><h2 class="pg">Choose how to revise your manuscript</h2>' +
-    '<p class="lede">Make small changes here, or upload a new version for anything bigger. You can change your mind later.</p>' +
+    '<p class="lede">Make small changes here, or upload a new revision for anything bigger. You can change your mind later.</p>' +
     '<div style="max-width:560px;margin-bottom:20px">' + aDue() + '</div>' +
     '<fieldset class="howgrid"><legend class="sr">How do you want to revise?</legend>' + opt("edit") + opt("upload") + '</fieldset>' + warn + '</div>';
   var act = '<a class="btn" href="#arr/' + AID + '">Back to the reviews</a><span class="msg ' + (h ? "ok" : "todo") + '">' + (h ? I.checkM + HOW[h].t : "Choose one to continue") + '</span>' +
@@ -5093,13 +5185,13 @@ SCREENS.ahow = function(){
   return aShell("ahow", body, act);
 };
 
-/* upload route, step 3: version 2 and a short summary of what changed */
+/* upload route, step 3: Revision 2 and a short summary of what changed */
 SCREENS.aup = function(){
   var A = AA(), chg = (A.changes || "").trim(), ok = !!(A.file && chg);
   var body = '<div class="wrap sbody"><div class="upwrap"><h2 class="pg">Upload your revised manuscript</h2>' +
-    '<p class="lede">It&rsquo;s added to your existing submission, ' + AMS[AID].ref + ', as version 2. Your journal, authors and declarations stay as they are.</p>' +
-    '<div class="fchip" style="margin:0 0 16px"><span class="fext">DOCX</span><div><div class="fn">Version 1: ' + AMS[AID].file + '</div><div class="fm">Submitted ' + subById(AID).submitted + '. The reviewers&rsquo; comments are on this version.</div></div></div>' +
-    (A.file ? '<div class="vchip"><span class="fext" style="background:#fff">' + esc(A.file.ext) + '</span><div style="flex:1;min-width:0"><div style="font-weight:600;color:var(--indigo);overflow-wrap:anywhere">Version 2: ' + esc(A.file.name) + '</div><div class="xs muted">' + fmtSize(A.file.size) + '. Added to this submission</div></div><button class="link small" type="button" data-a="aRmFile">Replace</button></div>'
+    '<p class="lede">It&rsquo;s added to your existing submission, ' + AMS[AID].ref + ', as Revision 2. Your journal, authors and declarations stay as they are.</p>' +
+    '<div class="fchip" style="margin:0 0 16px"><span class="fext">DOCX</span><div><div class="fn">Revision 1: ' + AMS[AID].file + '</div><div class="fm">Submitted ' + subById(AID).submitted + '. The reviewers&rsquo; comments are on this revision.</div></div></div>' +
+    (A.file ? '<div class="vchip"><span class="fext" style="background:#fff">' + esc(A.file.ext) + '</span><div style="flex:1;min-width:0"><div style="font-weight:600;color:var(--indigo);overflow-wrap:anywhere">Revision 2: ' + esc(A.file.name) + '</div><div class="xs muted">' + fmtSize(A.file.size) + '. Added to this submission</div></div><button class="link small" type="button" data-a="aRmFile">Replace</button></div>'
       : '<div class="drop" id="drop"><div class="ic">' + I.upload + '</div><h3>Drag and drop your revised manuscript</h3><div class="or2">or</div><button class="btn pri" type="button" data-a="pick">Choose a file</button>' +
         '<input type="file" id="file" class="sr" accept=".docx,.doc,.pdf,.tex,.zip,.rtf,.odt" tabindex="-1"><div class="fmt">Word, PDF, LaTeX, RTF or ODT, up to 100 MB. Please show your changes, for example with tracked changes.</div></div>' +
         '<p class="small muted" style="margin-top:20px;text-align:center">Testing without a file? <button class="link" type="button" data-a="aSample">Use the sample revised manuscript</button></p>') +
@@ -5111,8 +5203,8 @@ SCREENS.aup = function(){
     '<button class="btn pri lg" type="button" id="aUpGo" data-a="step" data-r="arevs/' + AID + '"' + (ok ? "" : " disabled") + '>Continue: check and submit</button>';
   return aShell("aup", body, act);
 };
-function aUpMsg(){ var A = AA(), chg = (A.changes || "").trim(); return A.file && chg ? I.checkM + "Version 2 added" : !A.file ? "Upload your revised version to continue" : "Describe what you changed to continue"; }
-function aFile(f){ var mm = /\.([a-z0-9]+)$/i.exec(f.name || ""); AA().file = {name:f.name, size:f.size, ext:(mm ? mm[1] : "docx").toUpperCase(), at:Date.now()}; if (!AA().startAt) AA().startAt = Date.now(); save(); refresh(); toast("Version 2 added to your submission"); }
+function aUpMsg(){ var A = AA(), chg = (A.changes || "").trim(); return A.file && chg ? I.checkM + "Revision 2 added" : !A.file ? "Upload your revision to continue" : "Describe what you changed to continue"; }
+function aFile(f){ var mm = /\.([a-z0-9]+)$/i.exec(f.name || ""); AA().file = {name:f.name, size:f.size, ext:(mm ? mm[1] : "docx").toUpperCase(), at:Date.now()}; if (!AA().startAt) AA().startAt = Date.now(); save(); refresh(); toast("Revision 2 added to your submission"); }
 AFTER.aup = function(){
   var drop = $("#drop"), input = $("#file"); if (!drop) return;
   input.addEventListener("change", function(){ if (input.files[0]) aFile(input.files[0]); });
@@ -5135,16 +5227,16 @@ SCREENS.arev = function(){
   var A = AA(), s = subView(subById(AID)), up = A.how === "upload", its = aItems(), cs = its.filter(function(c){ return !c.own; }), nums = numsOf(cs), ed = !up && aUI.editing;
   if (!A.seen) { A.seen = true; save(); }
   var left = its.length - aAnswered(), nEd = Object.keys(A.edits).length, tab = ["letter","general"].indexOf(wsUI.tab) >= 0 ? wsUI.tab : "comments", pb;
-  var docbar = '<div class="docbar"><span class="fn">' + I.doc + (up ? "Version 1, with the reviewers&rsquo; comments" : AMS[AID].file) + '</span>' +
-    (up ? '<span class="tip">' + I.info + 'Your changes are in version 2. Respond to each comment here.</span>'
+  var docbar = '<div class="docbar"><span class="fn">' + I.doc + (up ? "Revision 1, with the reviewers&rsquo; comments" : AMS[AID].file) + '</span>' +
+    (up ? '<span class="tip">' + I.info + 'Your changes are in Revision 2. Respond to each comment here.</span>'
       : '<div class="mode" role="group" aria-label="Mode"><button type="button" data-a="aEdit" data-v="" aria-pressed="' + !ed + '">' + I.cmt + 'Comments</button><button type="button" data-a="aEdit" data-v="1" aria-pressed="' + ed + '">' + I.edit + 'Edit text</button></div>' +
         legendRv().replace('</div>', (nEd ? '<span><i style="background:var(--cornflower);width:3px"></i>Edited (' + nEd + ')</span>' : "") + '</div>') +
-        (ed ? '<div class="editnote"><b>Text only.</b> You can&rsquo;t change references, tables or figures here. For those, <button class="link small" type="button" data-a="aHowSet" data-v="upload">upload a revised version</button> instead.</div>' : "")) + '</div>';
-  var paper = msPaper({m:AMS[AID], id:"apaper", title:s.title, right:up ? "Version 1" : "Your revision", by:AU().by, edit:ed,
+        (ed ? '<div class="editnote"><b>Text only.</b> You can&rsquo;t change references, tables or figures here. For those, <button class="link small" type="button" data-a="aHowSet" data-v="upload">upload a revision</button> instead.</div>' : "")) + '</div>';
+  var paper = msPaper({m:AMS[AID], id:"apaper", title:s.title, right:up ? "Revision 1" : "Your revision", by:AU().by, edit:ed,
     inner:function(b){ return ed ? esc(aText(b)) : markSpans(aText(b), cMarks(cs, nums, b)); }});
   if (tab === "letter") pb = aLetterHTML();
   else if (tab === "general") pb = aGenNotes(true);
-  else pb = '<div class="ptip">The reviewers&rsquo; and editor&rsquo;s comments, as sent by the editor. Reply to each comment as you make your changes. Say what you changed, or why you didn&rsquo;t.' + (up ? "" : " To change the text, choose Edit text above the document. Bigger changes, like references, tables or figures? <button class=\"link small\" type=\"button\" data-a=\"aHowSet\" data-v=\"upload\">Upload a revised version</button>") + '</div>' +
+  else pb = '<div class="ptip">The reviewers&rsquo; and editor&rsquo;s comments, as sent by the editor. Reply to each comment as you make your changes. Say what you changed, or why you didn&rsquo;t.' + (up ? "" : " To change the text, choose Edit text above the document. Bigger changes, like references, tables or figures? <button class=\"link small\" type=\"button\" data-a=\"aHowSet\" data-v=\"upload\">Upload a revision</button>") + '</div>' +
     its.map(function(c){
       var r = A.resp[c.id] || "";
       return aCard(c, nums, {done:!!r.trim(), html:'<div class="rsp"><label class="flabel" for="ar-' + c.id + '">Your response<span class="ok3">' + I.check + '</span></label><textarea class="inp" id="ar-' + c.id + '" data-ar="' + c.id + '" placeholder="What you changed, or why you didn&rsquo;t">' + esc(r) + '</textarea></div>'});
@@ -5185,7 +5277,7 @@ SCREENS.arevs = function(){
       (r ? '<div class="letter ltext" style="margin-top:8px;font-size:14.5px;line-height:22px;padding:10px 14px">' + esc(r) + '</div>'
         : '<div class="small" style="color:var(--alert-dark);font-weight:600;margin-top:6px;display:flex;gap:6px;align-items:center">' + I.warn + 'No response yet. <button class="link small" type="button" data-a="aGoC" data-id="' + c.id + '">Respond</button></div>') + '</div></div>';
   }).join("");
-  var changes = up ? (A.file ? fields([["Version 2", esc(A.file.name)], ["Replaces", "Version 1, " + AMS[AID].file]]) : '<div class="banner alert"><span class="bi">' + I.warn + '</span><div><b>Upload your revised version</b><p><button class="link" type="button" data-a="step" data-r="aup/' + AID + '">Upload it now</button></p></div></div>') +
+  var changes = up ? (A.file ? fields([["Revision 2", esc(A.file.name)], ["Replaces", "Revision 1, " + AMS[AID].file]]) : '<div class="banner alert"><span class="bi">' + I.warn + '</span><div><b>Upload your revision</b><p><button class="link" type="button" data-a="step" data-r="aup/' + AID + '">Upload it now</button></p></div></div>') +
       (chg ? '<h4 class="sumh">What you changed</h4><div class="letter ltext" style="font-size:14.5px;line-height:22px;padding:10px 14px">' + esc(chg) + '</div>' : '<div class="banner alert" style="margin-top:12px"><span class="bi">' + I.warn + '</span><div><b>Describe what you changed</b><p><button class="link" type="button" data-a="step" data-r="aup/' + AID + '">Add a summary</button></p></div></div>')
     : nEd ? '<dl style="margin:0">' + Object.keys(A.edits).map(function(k){ return dlRow([secName(k), changedChars(AMS[AID].text[k], A.edits[k]) + " characters changed"]); }).join("") + '</dl><p class="xs muted" style="margin-top:8px">The editor and reviewers see each change marked in the text.</p>'
     : '<p class="none2">No changes to the text. That&rsquo;s fine if your responses explain why.</p>';
@@ -5195,17 +5287,17 @@ SCREENS.arevs = function(){
       (up ? "" : '<section class="rsec"><div class="rh"><h3>Your responses (' + (its.length - left) + ' of ' + its.length + ')</h3><button class="link" type="button" data-a="step" data-r="arev/' + AID + '">Edit</button></div>' + rows + '</section>') +
       (up || !aGenResp().length ? "" : '<section class="rsec"><div class="rh"><h3>Your responses to general notes (' + aGenResp().length + ')</h3><button class="link" type="button" data-a="aGoG">Edit</button></div>' + aGenResp().map(function(x){
         return '<div class="scm"><span class="n' + (x.i ? " r2" : "") + '">' + (x.i + 1) + '</span><div><div class="sec2">' + rvTag(x.i) + ' &middot; ' + x.h + '</div><p style="color:var(--n600)">' + shortQ(x.q, 140) + '</p><div class="letter ltext" style="margin-top:8px;font-size:14.5px;line-height:22px;padding:10px 14px">' + esc(x.v) + '</div></div></div>'; }).join("") + '</section>') + '</div>' +
-    '<aside class="card ready" aria-labelledby="asH"><h3 id="asH">Ready to send?</h3><ul class="chkl" style="margin-top:14px">' + (up ? chkLi(!!A.file, "Version 2 uploaded") + chkLi(!!chg, "Changes described") : chkLi(!left, "Every comment answered")) + '</ul>' +
+    '<aside class="card ready" aria-labelledby="asH"><h3 id="asH">Ready to send?</h3><ul class="chkl" style="margin-top:14px">' + (up ? chkLi(!!A.file, "Revision 2 uploaded") + chkLi(!!chg, "Changes described") : chkLi(!left, "Every comment answered")) + '</ul>' +
       '<p class="small muted" style="margin:-4px 0 14px">Due ' + dLong(new Date(A.due)) + '. ' + (A.k === "major" ? "The editor may send it back to the same reviewers." : "The editor checks it without sending it back to the reviewers.") + '</p>' +
       '<button class="btn pri lg block" type="button" data-a="aSubmit"' + (ok ? "" : " disabled") + '>Submit revision</button><p class="xs muted" style="margin-top:10px;text-align:center">You can&rsquo;t change your revision after you submit.</p></aside></div></div>';
   return aShell("arevs", body);
 };
 SCREENS.arevdone = function(){
   var A = AA(), s = subView(subById(AID)), maj = A.k === "major", up = A.how === "upload", at = new Date(A.sentAt);
-  var nx = maj ? [["The editor reads your revision","They read " + (up ? "version 2 and your summary of changes" : "your changes and responses") + ".","Usually within a week"],["The same reviewers look again","Where possible, the reviewers who read version 1 see the new version and what changed.","Usually 2 to 3 weeks"],["Decision","You&rsquo;ll get the editor&rsquo;s decision.","We&rsquo;ll email you"]]
-    : [["The editor checks your changes","They read " + (up ? "version 2 and your summary of changes" : "your responses alongside your edits") + ".","Usually within a week"],["Decision","You&rsquo;ll get the editor&rsquo;s decision.","We&rsquo;ll email you"]];
+  var nx = maj ? [["The editor reads your revision","They read " + (up ? "Revision 2 and your summary of changes" : "your changes and responses") + ".","Usually within a week"],["The same reviewers look again","Where possible, the reviewers who read Revision 1 see the new revision and what changed.","Usually 2 to 3 weeks"],["Decision","You&rsquo;ll get the editor&rsquo;s decision.","We&rsquo;ll email you"]]
+    : [["The editor checks your changes","They read " + (up ? "Revision 2 and your summary of changes" : "your responses alongside your edits") + ".","Usually within a week"],["Decision","You&rsquo;ll get the editor&rsquo;s decision.","We&rsquo;ll email you"]];
   return '<div class="wrap" style="max-width:820px"><div class="done-hero"><div class="tick">' + I.checkL + '</div><h1>Revision submitted</h1>' +
-      '<p class="ref">' + (up ? "Version 2 and your summary of changes have" : "Your changes and responses have") + ' gone to ' + AU().editor + ', the editor of ' + esc(journalById(s.j).name) + '.</p>' +
+      '<p class="ref">' + (up ? "Revision 2 and your summary of changes have" : "Your changes and responses have") + ' gone to ' + AU().editor + ', the editor of ' + esc(journalById(s.j).name) + '.</p>' +
       '<p class="small muted" style="margin-top:4px">Sent ' + fmtDate(at, {day:"numeric", month:"long", year:"numeric"}) + ' at ' + at.toLocaleTimeString("en-GB", {hour:"2-digit", minute:"2-digit"}) + '. We&rsquo;ve emailed a copy to ' + USER.email + '.</p></div>' +
     '<section class="card" style="padding:24px;margin-bottom:20px"><h3 style="margin-bottom:18px">Where it is now</h3>' + tracker(3, {lg:true}) + '</section>' +
     '<section class="card" style="padding:24px;margin-bottom:28px"><h3 style="margin-bottom:8px">What happens next</h3><ul class="next">' +
@@ -5390,7 +5482,7 @@ var ACT = {
   rvAccept:function(t){
     var id = t.getAttribute("data-id"), now = Date.now();
     S.R[id] = {st:"accepted", acceptedAt:now, due:now + rvDaysFor(rvById(id)) * 864e5, inline:[], general:"", editor:"", rec:null, pts:{}};
-    rvUI.justAccepted = id; rvUI.tab = rvById(id).round ? "points" : "inline"; rvUI.view = "diff"; save(); go("ra/" + id);
+    rvUI.justAccepted = id; rvUI.tab = rvById(id).round ? "points" : "inline"; rvUI.view = "v2"; save(); go("ra/" + id);
   },
   rvDecline:function(t){
     var id = t.getAttribute("data-id"), r = $('#respond input[name="dr"]:checked');
@@ -5507,9 +5599,9 @@ ACT.pkPick = function(){ var v = $("#pkT").value; if (!v) return; pKwAdd(v); ref
 ACT.pkType = function(){ var i = $("#pkIn"), v = i.value.trim(); if (!v) { i.focus(); return; } var ok = pKwAdd(v); refresh(); toast(ok ? "Added “" + v + "”" : "You already have “" + v + "”"); var f = $("#pkIn"); if (f) f.focus(); };
 ACT.pdf = function(t){
   var k = t.getAttribute("data-k"), id = t.getAttribute("data-id"), v = t.getAttribute("data-v");
-  if (k === "scr") { var e = edById(id), ms = msFor(id); pdfDownload(ms, {title:e.title, by:e.authors + " (" + e.inst + ")", head:ms.ref + " - Version 1", file:ms.ref + "_manuscript.pdf"}); return; }
+  if (k === "scr") { var e = edById(id), ms = msFor(id); pdfDownload(ms, {title:e.title, by:e.authors + " (" + e.inst + ")", head:ms.ref + " - Revision 1", file:ms.ref + "_manuscript.pdf"}); return; }
   var r = rvById(id), m = MS[id], v1 = v === "1";
-  pdfDownload(m, {title:r.title, by:"Author names and affiliations are hidden for " + m.model.toLowerCase() + " review.", head:m.ref + " - Anonymised for review" + (m.v1 ? (v1 ? " - Version 1" : " - Version 2") : ""),
+  pdfDownload(m, {title:r.title, by:"Author names and affiliations are hidden for " + m.model.toLowerCase() + " review.", head:m.ref + " - Anonymised for review" + (m.v1 ? (v1 ? " - Revision 1" : " - Revision 2") : ""),
     text:v1 ? m.v1 : null, file:m.ref + (m.v1 ? (v1 ? "_v1" : "_v2") : "") + "_anonymised.pdf"});
 };
 ACT.nyAll = function(){ nyAll = !nyAll; refresh(); };
@@ -5627,16 +5719,16 @@ ACT.aRmFile = function(){ AA().file = null; save(); refresh(); };
 ACT.aGoC = function(t){ wsUI.page = "arev"; wsUI.tab = "comments"; wsUI.sel = aUI.focus = t.getAttribute("data-id"); go("arev/" + AID); };
 ACT.aGoG = function(){ wsUI.page = "arev"; wsUI.tab = "general"; go("arev/" + AID); };
 ACT.aRead = function(){ var A = AA(); A.read = true; A.readAt = A.readAt || Date.now(); A.how = A.how || "edit"; aUI.editing = false; save(); go((A.how === "upload" ? "aup/" : "arev/") + AID); };
-/* switch between making the changes here and uploading version 2, without a separate step */
+/* switch between making the changes here and uploading Revision 2, without a separate step */
 ACT.aHowSet = function(t){ var A = AA(), v = t.getAttribute("data-v"), nEd = Object.keys(A.edits).length;
   var sw = function(){ A.how = v; aUI.editing = false; save(); go((v === "upload" ? "aup/" : "arev/") + AID); };
-  if (v === "upload" && nEd) modal({title:"Upload a revised version instead?", body:"You&rsquo;ve made " + plural(nEd, "edit") + " here. They won&rsquo;t be sent if you upload a new version, so make the same changes in your file. Your responses to comments are kept.", confirm:"Upload instead", from:t, onYes:sw});
+  if (v === "upload" && nEd) modal({title:"Upload a revision instead?", body:"You&rsquo;ve made " + plural(nEd, "edit") + " here. They won&rsquo;t be sent if you upload a new revision, so make the same changes in your file. Your responses to comments are kept.", confirm:"Upload instead", from:t, onYes:sw});
   else if (v === "edit" && A.file) modal({title:"Make the changes here instead?", body:"Your uploaded file, " + esc(A.file.name) + ", won&rsquo;t be sent.", confirm:"Make changes here", from:t, onYes:sw});
   else sw(); };
 ACT.aHow = function(t){ AA().how = t.getAttribute("data-v"); save(); keepScroll = 'input[name="how"][data-v="' + AA().how + '"]'; refresh(); };
 ACT.aHowGo = function(){ var A = AA(); A.read = true; save(); aUI.editing = A.how === "edit" && !Object.keys(A.edits).length; go(A.how === "upload" ? "aup/" + AID : "arev/" + AID); };
 ACT.aSubmit = function(t){
-  modal({title:"Submit your revision?", body:(AA().how === "upload" ? "Version 2 and your summary of changes" : "Your changes and your responses") + " will go to the editor, " + AU().editor + ". You can&rsquo;t change them after you submit.",
+  modal({title:"Submit your revision?", body:(AA().how === "upload" ? "Revision 2 and your summary of changes" : "Your changes and your responses") + " will go to the editor, " + AU().editor + ". You can&rsquo;t change them after you submit.",
     confirm:"Submit revision", from:t, onYes:function(){ AA().st = "sent"; AA().sentAt = Date.now(); save(); go("arevdone/" + AID); }});
 };
 
@@ -5715,7 +5807,7 @@ document.addEventListener("input", function(e){
     if (t.getAttribute("data-own")) sE.own.forEach(function(o){ if (o.id === eid) o.text = t.value; });
     else { sE.edits = sE.edits || {}; sE.edits[eid] = t.value; }
     t.rows = tRows(t.value, t.closest(".cpanel") ? 48 : 95); rvTouch(sE); return; }
-  if (t.getAttribute && t.getAttribute("data-pt")) { var Rp = S.R[parts()[1]], pid = t.getAttribute("data-pt"); Rp.pts[pid].note = t.value; rvTouch(Rp); return; }
+  if (t.getAttribute && t.getAttribute("data-pt")) { var Rp = S.R[parts()[1]], pid = t.getAttribute("data-pt"); Rp.pts = Rp.pts || {}; Rp.pts[pid] = Rp.pts[pid] || {}; Rp.pts[pid].note = t.value; rvTouch(Rp); return; }
   if (t.getAttribute && t.getAttribute("data-cn")) { rvUI.cn = t.value; var cb = $("#cnBtn"); if (cb) cb.disabled = !t.value.trim(); return; }
   var rs = t.getAttribute && t.getAttribute("data-rvs");
   if (rs) { var Rs = S.R[parts()[1]]; rvSecInit(Rs)[rs] = t.value; rvJoin(Rs); rvTouch(Rs); return; }
@@ -5800,7 +5892,7 @@ function searchAuthors(q){
 
 /* ================= editor: check a revision that has come back (e7) ================= */
 var RVBLK = MSBLK.concat([["data","Data availability"]]);
-var rvwUI = {view:"clean", tab:"resp"};
+var rvwUI = {view:"diff", tab:"resp"};
 function revInfo(m){
   var vs = m.hist.filter(function(h){ return h.k === "ver"; }), ds = m.hist.filter(function(h){ return h.k === "dec"; }), v = vs[vs.length - 1].v;
   return {v:v, prev:v - 1, round:ds.length, dk:ds[ds.length - 1].dk, ord:["first","second","third","fourth"][ds.length - 1] || ds.length + "th"};
@@ -5808,7 +5900,7 @@ function revInfo(m){
 function revAnd(a){ return a.join(", ").replace(/, ([^,]*)$/, " and $1"); }
 function revHowTxt(m){ return m.rev.how === "upload" ? "Uploaded a revised file with tracked changes. Changed: " + revAnd(m.rev.sections) : "Made the changes online. Changed: " + revAnd(m.rev.sections); }
 function revNext(m){ return "Accept the manuscript, send it to the reviewers, or send it back to the authors."; }
-function revNextOld(m){ return revInfo(m).dk === "major" ? "Major revisions can go back to the reviewers: decide now, or send version " + revInfo(m).v + " to them first." : "Minor revisions don&rsquo;t go back to the reviewers, so you can decide now."; }
+function revNextOld(m){ return revInfo(m).dk === "major" ? "Major revisions can go back to the reviewers: decide now, or send Revision " + revInfo(m).v + " to them first." : "Minor revisions don&rsquo;t go back to the reviewers, so you can decide now."; }
 function ptNo(a, i){ if (a[i].who === "ed") return "E"; for (var j = 0, k = 0; j <= i; j++) if (a[j].who !== "ed") k++; return k; }
 function pushTag(x){ return x.push ? ' <span class="badge alert">Authors disagree</span>' : ""; }
 function revWho(x){ return x.who === "ed" ? "Your comment" : "Reviewer " + (x.who + 1) + (x.sec ? " &middot; " + x.sec : ""); }
@@ -5845,7 +5937,7 @@ function revHistory(m, compact){
   var items = H.map(function(h, i){
     var w = who[h.k], body = "", pts = ptsFor(h, i);
     if (h.k === "dec") round++;
-    if (h.k === "sub" || h.k === "ver") body = '<div class="xs muted">' + I.doc + ' ' + esc(h.file || m.ref + "_version" + h.v + ".docx") + (h.how ? ' &middot; ' + (h.how === "upload" ? "Uploaded a revised file" : "Made the changes online") : "") + '</div>';
+    if (h.k === "sub" || h.k === "ver") body = '<div class="xs muted">' + I.doc + ' ' + esc(h.file || m.ref + "_revision" + h.v + ".docx") + (h.how ? ' &middot; ' + (h.how === "upload" ? "Uploaded a revised file" : "Made the changes online") : "") + '</div>';
     if (h.k === "ver") { var note = h.note || m.rev.note;
       body += '<div class="letter ltext rvnote">' + esc(note) + '</div>' +
         (pts ? '<details class="rvd"' + (h.cur && !compact ? " open" : "") + '><summary>' + (h.cur ? "Their response to each point" : "Their response to each point") + ' (' + pts.length + ' of ' + pts.length + ' answered)</summary>' + ptList(pts, true) + '</details>' : ""); }
@@ -5869,8 +5961,8 @@ function revHistory(m, compact){
 }
 SCREENS.erev = function(){
   var id = parts()[1], m = edById(id), E = S.E[id], st = eStatus(id), diff = rvwUI.view === "diff", pts = m.rev.pts, ri = revInfo(m);
-  var docbar = '<div class="docbar"><span class="fn">' + I.doc + m.ref + '_version' + ri.v + '.docx</span>' +
-    '<div class="mode" role="group" aria-label="View"><button type="button" data-a="rvwView" data-v="clean" aria-pressed="' + !diff + '">Revision ' + ri.v + '</button><button type="button" data-a="rvwView" data-v="diff" aria-pressed="' + diff + '">Changes since Revision ' + ri.prev + '</button></div>' +
+  var docbar = '<div class="docbar"><span class="fn">' + I.doc + m.ref + '_revision' + ri.v + '.docx</span>' +
+    '<div class="mode" role="group" aria-label="View"><button type="button" data-a="rvwView" data-v="diff" aria-pressed="' + diff + '">Changes since Revision ' + ri.prev + '</button><button type="button" data-a="rvwView" data-v="clean" aria-pressed="' + !diff + '">Revision ' + ri.v + '</button></div>' +
     (diff ? '<div class="legend"><span><i class="lg-ins"></i>Added</span><span><i class="lg-del"></i>Removed</span></div>' : "") + '</div>';
   var cards = pts.map(function(x, i){
     return '<div class="cmt pt rvpt" id="cm-rv' + i + '"><div class="cmh"><span class="n' + (x.who === "ed" ? " ed" : x.who ? " r2" : "") + '">' + ptNo(pts, i) + '</span>' +
@@ -6028,6 +6120,8 @@ SCREENS.erevdone = function(){
     '<section class="card" style="padding:24px;margin-bottom:28px">' + sent + '</section>' +
     '<div style="display:flex;gap:12px;justify-content:center;padding-bottom:56px;flex-wrap:wrap"><a class="btn pri lg" href="#editing">Back to Editing</a><a class="btn lg" href="#ed/' + id + '">View article</a></div></div>';
 };
+/* prototype: the authors send Revision 2 (only after minor or major revisions) */
+ACT.e1Rev = function(){ var E = S.E.e1; if (!E.dec || !isRevK(E.dec.k) || E.rev) return; E.rev = {at:Date.now()}; save(); go("ed/e1"); toast("Revision 2 received from the authors"); };
 ACT.rvdK = function(t){ var U = rvdFor(parts()[1]); if (U.k !== t.value) { U.k = t.value; if (!U.edited) U.letter = ""; } refresh(); };
 ACT.rvdInc = function(t){ var i = +t.getAttribute("data-i"); rvdUI.inc[i] = !rvdUI.inc[i]; refresh(); };
 ACT.rvdRev = function(t){ var i = +t.getAttribute("data-i"); rvdUI.revs[i] = !rvdUI.revs[i]; refresh(); };
@@ -6095,7 +6189,7 @@ var JST = [
     gets:"Marks each one in the text and offers one-click fixes.",
     doesL:["Confirms the title and abstract.", "Fixes an unreadable symbol and adds a missing figure caption. Minor edits only."],
     getsL:["Shows the manuscript like an editor would, with each item highlighted where it appears.", "Suggests fixes, such as changing &ldquo;?m&rdquo; to &ldquo;&micro;m&rdquo; in 3 places with one click."],
-    why:"The author sees exactly what the journal will get. Bigger changes mean uploading a new version.",
+    why:"The author sees exactly what the journal will get. Bigger changes mean uploading a new revision.",
     old:{does:"Checks the 5 things the platform flagged in the document.", doesL:["Confirms the title and abstract.", "Compares the authors named in the file with the authors on the submission.", "Fixes an unreadable symbol and adds a missing figure caption. Minor edits only."]}},
   {r:"review", ph:"submit", name:"Review and submit",
     does:"Checks one summary page and submits.",
@@ -6455,6 +6549,8 @@ function edSeed(w1){
   if (w1 === "read" || w1 === "choose") { if (eStatus("e1").key !== "decide") allin(); wsUI.page = null; return (w1 === "read" ? "erv" : "edec") + "/e1"; }
   if (w1 === "sum") { if (eStatus("e1").key !== "decide") allin(); var s9 = S.E.e1.sum; if (!isRevK(s9.k)) s9.k = "minor"; return "esum/e1"; }
   if (w1 === "dec") { if (eStatus("e1").key !== "decide") allin(); var s10 = seedSum(); s10.k = s10.k || "minor"; return "elet/e1"; }
+  if (w1 === "rev2") { var d2 = S.E.e1.dec; if (!d2 || !isRevK(d2.k)) { S.E.e1.dec = null; allin(); var sr = seedSum(); sr.k = isRevK(sr.k) ? sr.k : "minor"; sr.letter = sr.letter || EDEC_TPL[sr.k];
+      S.E.e1.dec = {k:sr.k, at:n1 - 20 * dd, due:n1 + (DEC_DAYS[sr.k] - 20) * dd, letter:sr.letter}; } if (!S.E.e1.rev) S.E.e1.rev = {at:n1}; return "ed/e1"; }
   if (w1 === "done") { if (!S.E.e1.dec) { allin(); var sm = seedSum(); sm.k = sm.k || "minor"; sm.letter = sm.letter || EDEC_TPL[sm.k];
     S.E.e1.dec = {k:sm.k, at:n1, due:DEC_DAYS[sm.k] ? n1 + DEC_DAYS[sm.k] * dd : null, letter:sm.letter}; } return "edone/e1"; }
   return "editing";
@@ -6522,7 +6618,7 @@ $("#proto").addEventListener("click", function(e){
       var R5 = S.R.r5;
       if (w === "re3") { R5.pts = {x1:{v:"yes"}, x2:{v:"yes"}, x3:{v:"partly", note:"The new sentence helps, but the abstract still says recovery is rapid. Please match the Discussion."}, x4:{v:"yes"}};
         R5.general = R5.general.trim() || "The authors have dealt with my main concern well. The second control on the Honddu makes the before-after comparison much more convincing, and the results hold with either control. One small point remains about how strongly the abstract describes recovery."; R5.rec = R5.rec || "minor"; }
-      rvUI.tab = "points"; rvUI.view = "diff"; save(); go(w === "re2" ? "rw/r5" : "rs/r5"); return;
+      rvUI.tab = "points"; rvUI.view = "v2"; save(); go(w === "re2" ? "rw/r5" : "rs/r5"); return;
     }
     /* the in-progress review (r2) drives the later steps */
     if (S.R.r2.st !== "progress" && S.R.r2.st !== "accepted" && !(w === "done" && S.R.r2.st === "submitted")) S.R.r2 = freshR().r2;
